@@ -7,7 +7,7 @@ Static site. No build step. GitHub → Netlify → Cloudflare DNS, the same stac
 1. **GitHub.** Create private repo `AlertifyProjects/bpc-website`. Push this folder to `main`.
 2. **Netlify.** Add new site → Import from GitHub → pick the repo. Build command: blank. Publish directory: `.`
 3. **Forms.** Netlify → Site → Forms → enable form detection → redeploy. The `quote-request` form appears after the redeploy.
-   Then go to Forms → Notifications → Email → `bruce@brisplastics.com.au`.
+   Then go to Forms → Notifications → Email → `sales@brisplastics.com.au`.
 4. **Domain.** Netlify → Domain management → add `brisplastics.com.au` and `www.brisplastics.com.au`. Set the apex as primary.
 5. **Cloudflare DNS.**
    - Apex: CNAME `brisplastics.com.au` → `<site>.netlify.app` (Cloudflare flattens it).

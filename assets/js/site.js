@@ -13,7 +13,7 @@
     err.textContent='';
     var file=f.files[0]; if(!file)return;
     if(!/\.(pdf|jpe?g)$/i.test(file.name)){err.textContent='Upload a PDF or JPG file.';f.value='';return;}
-    if(file.size>MAX){err.textContent='File is over 8 MB. Email larger files to bruce@brisplastics.com.au.';f.value='';}
+    if(file.size>MAX){err.textContent='File is over 8 MB. Email larger files to sales@brisplastics.com.au.';f.value='';}
   });
 })();
 
