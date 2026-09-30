@@ -20,14 +20,163 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css">
+<style>/* Brisbane Plastics Company — holding site. Tokens first. */
+:root{
+  --ink:#122B4A;          /* navy: text, dark bands */
+  --blue:#1E5FD9;         /* signal blue: actions */
+  --blue-deep:#16479F;
+  --sheet:#D6E4F8;        /* pale blue: tints */
+  --paper:#F4F7FB;        /* page */
+  --white:#FFFFFF;
+  --steel:#55667C;        /* secondary text */
+  --rule:#D5DDE8;
+  /* stock PVC colours: used only for the sheet and index-tab device */
+  --pvc-red:#E0443C; --pvc-yellow:#F2C230; --pvc-green:#2FA866; --pvc-blue:#2E7DE1; --pvc-clear:#BFD3EA;
+  --f-head:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --wrap:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--f-body);-webkit-font-smoothing:antialiased}
+img,svg{max-width:100%;display:block}
+a{color:var(--blue)}
+a:hover{color:var(--blue-deep)}
+:focus-visible{outline:3px solid var(--pvc-yellow);outline-offset:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(1.1rem,4vw,2rem)}
+.skip{position:absolute;left:-999px}.skip:focus{left:1rem;top:1rem;background:#fff;padding:.5rem 1rem;z-index:99}
+
+h1,h2,h3{font-family:var(--f-head);font-stretch:112%;line-height:1.08;margin:0 0 .6em;letter-spacing:-.01em}
+h1{font-size:clamp(2.3rem,5.4vw,4.1rem);font-weight:800}
+h2{font-size:clamp(1.7rem,3.2vw,2.5rem);font-weight:800}
+h3{font-size:1.25rem;font-weight:700;font-stretch:105%}
+p{margin:0 0 1em;max-width:66ch}
+.lede{font-size:1.2rem;color:var(--steel);max-width:52ch}
+
+.site-head{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:0;z-index:20}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:72px;position:relative}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none;color:var(--ink)}
+.brand svg{width:40px;height:44px}
+.brand span{font:800 1.05rem/1.05 var(--f-head);font-stretch:115%}
+.brand small{display:block;font:500 .78rem/1.2 var(--f-body);color:var(--steel)}
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:1.6rem;align-items:center}
+nav a{color:var(--ink);text-decoration:none;font-weight:500}
+nav a[aria-current="page"]{box-shadow:inset 0 -3px 0 var(--blue)}
+nav a.btn{color:#fff;padding:.7rem 1.1rem}
+.nav-toggle{display:none;background:none;border:1px solid var(--rule);border-radius:6px;padding:.45rem .7rem;font:600 .95rem var(--f-body);color:var(--ink)}
+@media (max-width:860px){
+  .nav-toggle{display:block}
+  nav ul{display:none;position:absolute;left:0;right:0;top:72px;background:#fff;flex-direction:column;align-items:flex-start;padding:1rem 1.25rem 1.5rem;border-bottom:1px solid var(--rule);gap:1rem}
+  nav.open ul{display:flex}
+}
+
+.btn{display:inline-block;background:var(--blue);color:#fff;text-decoration:none;font:600 1rem/1 var(--f-body);padding:.95rem 1.4rem;border-radius:6px;border:2px solid var(--blue);cursor:pointer}
+.btn:hover{background:var(--blue-deep);border-color:var(--blue-deep);color:#fff}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn.ghost:hover{background:var(--ink);color:#fff}
+.btn-row{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.6rem}
+
+/* Hero: fanned translucent PVC sheets are the one memorable device */
+.hero{padding:clamp(3rem,8vw,6.5rem) 0 clamp(3rem,7vw,5.5rem);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center}
+.hero-sheets{position:relative;aspect-ratio:1/1;max-width:420px;justify-self:end;width:100%}
+.hero-sheets span{position:absolute;left:38%;bottom:6%;width:26%;height:78%;border-radius:8px 8px 4px 4px;opacity:.62;transform-origin:50% 92%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.55),0 1px 2px rgba(18,43,74,.12)}
+.hero-sheets span::after{content:"";position:absolute;left:50%;bottom:6%;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--paper);box-shadow:inset 0 0 0 2px rgba(18,43,74,.35)}
+.hero-sheets span:nth-child(1){background:var(--pvc-clear);transform:rotate(-40deg)}
+.hero-sheets span:nth-child(2){background:var(--pvc-yellow);transform:rotate(-20deg)}
+.hero-sheets span:nth-child(3){background:var(--pvc-red);transform:rotate(0deg)}
+.hero-sheets span:nth-child(4){background:var(--pvc-blue);transform:rotate(20deg)}
+.hero-sheets span:nth-child(5){background:var(--pvc-green);transform:rotate(40deg)}
+@media (prefers-reduced-motion:no-preference){
+  .hero-sheets span{animation:fan 1s cubic-bezier(.2,.7,.2,1) both}
+  .hero-sheets span:nth-child(2){animation-delay:.06s}.hero-sheets span:nth-child(3){animation-delay:.12s}
+  .hero-sheets span:nth-child(4){animation-delay:.18s}.hero-sheets span:nth-child(5){animation-delay:.24s}
+  @keyframes fan{from{transform:rotate(0)}}
+}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.hero-sheets{max-width:240px;justify-self:start;order:-1}}
+.page-hero{padding:clamp(2.5rem,6vw,4.5rem) 0 1rem}
+
+.band{background:var(--ink);color:#fff;padding:2.2rem 0}
+.band .wrap{display:flex;flex-wrap:wrap;gap:1rem 2.5rem;align-items:center;justify-content:space-between}
+.band p{margin:0;max-width:72ch;font-size:1.08rem}
+.band strong{font-family:var(--f-head);font-stretch:110%}
+.band a{color:#fff}
+
+section.block{padding:clamp(3.5rem,7vw,5.5rem) 0}
+section.block.alt{background:var(--white)}
+.section-head{max-width:720px;margin-bottom:2.5rem}
+
+/* Product families as binder index tabs, one stock PVC colour each */
+.tabs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2rem 2.2rem}
+.tabs li{position:relative;padding:1.3rem 0 .2rem 1.3rem;border-left:5px solid var(--tab,var(--pvc-blue))}
+.tabs li::before{content:"";position:absolute;left:-5px;top:0;width:46px;height:10px;background:var(--tab,var(--pvc-blue));border-radius:0 4px 0 0}
+.tabs h3{margin-bottom:.4rem}
+.tabs p{color:var(--steel);margin:0;font-size:1rem}
+.t-red{--tab:var(--pvc-red)}.t-yellow{--tab:var(--pvc-yellow)}.t-green{--tab:var(--pvc-green)}.t-blue{--tab:var(--pvc-blue)}.t-clear{--tab:var(--pvc-clear)}.t-ink{--tab:var(--ink)}
+
+.industries{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 2.5rem;margin:0;padding:0;list-style:none}
+.industries li{padding:1rem 0;border-top:1px solid var(--rule)}
+.industries strong{display:block;font-family:var(--f-head);font-stretch:108%;font-size:1.08rem}
+.industries span{color:var(--steel);font-size:.97rem}
+
+/* Ordering is a genuine sequence, so it is numbered */
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem}
+.steps li{counter-increment:s}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--sheet);color:var(--ink);font:800 1.05rem var(--f-head);margin-bottom:.9rem}
+.steps p{color:var(--steel);font-size:1rem}
+
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2.5rem}
+.person h3{margin-bottom:.1rem}
+.person .role{color:var(--blue);font-weight:600;margin-bottom:.8rem}
+.monogram{width:72px;height:72px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font:800 1.4rem var(--f-head);margin-bottom:1rem}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media (max-width:860px){.split{grid-template-columns:1fr}}
+.facts{margin:0;padding:0;list-style:none}
+.facts li{padding:.8rem 0;border-top:1px solid var(--rule)}
+.facts li:last-child{border-bottom:1px solid var(--rule)}
+
+.cta{background:var(--sheet);padding:3.5rem 0}
+.cta .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1.5rem}
+.cta h2{margin:0}
+
+form.quote{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:clamp(1.25rem,3vw,2.25rem)}
+fieldset{border:0;margin:0 0 1.8rem;padding:0;min-width:0}
+legend{font:800 1.15rem var(--f-head);font-stretch:108%;margin-bottom:1rem;padding:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem 1.2rem}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:.35rem}
+.field.full{grid-column:1/-1}
+label{font-weight:600;font-size:.95rem}
+.hint{font-size:.85rem;color:var(--steel);font-weight:400}
+input,select,textarea{font:inherit;font-size:1rem;padding:.7rem .8rem;border:1px solid #B9C5D4;border-radius:6px;background:#fff;color:var(--ink);width:100%}
+textarea{min-height:120px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(30,95,217,.2)}
+.choice{display:flex;gap:1.2rem;flex-wrap:wrap}
+.choice label{display:flex;gap:.45rem;align-items:center;font-weight:500}
+.choice input{width:auto}
+.hidden{position:absolute;left:-9999px}
+.form-note{font-size:.9rem;color:var(--steel)}
+.error{color:#B42318;font-size:.9rem;min-height:1.2em;margin:0}
+.aside-contact h2{font-size:1.4rem}
+
+.site-foot{background:var(--ink);color:#C9D5E6;padding:3rem 0 2rem;font-size:.95rem}
+.site-foot .wrap{display:grid;grid-template-columns:2fr 1fr 1fr;gap:2rem}
+.site-foot a{color:#fff}
+.site-foot h2{font-size:1rem;color:#fff;margin-bottom:.8rem}
+.site-foot ul{list-style:none;margin:0;padding:0}
+.site-foot li{margin-bottom:.4rem}
+.legal{border-top:1px solid rgba(255,255,255,.15);margin-top:2rem;padding-top:1.2rem;grid-column:1/-1;font-size:.85rem}
+@media (max-width:860px){.site-foot .wrap{grid-template-columns:1fr}}
+</style>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://brisplastics.com.au/#business", "name": "Brisbane Plastics Company", "legalName": "Brisbane Plastics Company Pty Ltd", "url": "https://brisplastics.com.au/", "logo": "https://brisplastics.com.au/assets/img/logo.svg", "image": "https://brisplastics.com.au/assets/img/og-image.png", "telephone": "+61423734048", "email": "bruce@brisplastics.com.au", "description": "Brisbane manufacturer of custom PVC and polypropylene folders, binders, wallets, satchels, hospital products and mining and industrial products. Owner of Plastics Unique and Sov Services.", "address": {"@type": "PostalAddress", "addressLocality": "Tingalpa", "addressRegion": "QLD", "postalCode": "4173", "addressCountry": "AU"}, "areaServed": "Australia", "parentOrganization": {"@type": "Organization", "name": "FormFill Group", "url": "https://www.formfill.com.au/"}, "brand": [{"@type": "Brand", "name": "Plastics Unique"}, {"@type": "Brand", "name": "Sov Services"}], "founder": [{"@type": "Person", "name": "Bruce Bairstow", "jobTitle": "Director"}, {"@type": "Person", "name": "Mathew Bowden", "jobTitle": "Managing Director"}]}</script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
 <div class="wrap">
-<a class="brand" href="/"><img src="/assets/img/logo.svg" alt="" width="40" height="44"><span>Brisbane Plastics<small>Company · Tingalpa, Brisbane</small></span></a>
+<a class="brand" href="/"><svg width="40" height="44" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 44"><path d="M20 1.5 38 11.75v20.5L20 42.5 2 32.25v-20.5z" fill="#122B4A"/><path d="M20 7.5 32.5 14.6v14.8L20 36.5 7.5 29.4V14.6z" fill="#1E5FD9"/><path d="M14.5 15.5h6.6c2.8 0 4.5 1.4 4.5 3.6 0 1.3-.7 2.3-1.9 2.8 1.5.4 2.4 1.6 2.4 3.1 0 2.4-1.8 3.8-4.8 3.8h-6.8zm3.1 2.5v2.8h3.1c1 0 1.6-.5 1.6-1.4s-.6-1.4-1.6-1.4zm0 5.2v3h3.5c1 0 1.7-.6 1.7-1.5s-.7-1.5-1.7-1.5z" fill="#fff"/></svg><span>Brisbane Plastics<small>Company · Tingalpa, Brisbane</small></span></a>
 <nav aria-label="Main">
 <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
 <ul id="menu"><li><a href="/">Home</a></li><li><a href="/products">What we make</a></li><li><a href="/about">About us</a></li><li><a href="tel:+61423734048">0423 734 048</a></li><li><a class="btn" href="/contact" aria-current="page">Request a quote</a></li></ul>
@@ -115,6 +264,41 @@
 <p class="legal">© 2026 Brisbane Plastics Company Pty Ltd · ACN 699 248 658</p>
 </div>
 </footer>
-<script src="/assets/js/site.js" defer></script>
+<script>// Mobile nav
+(function(){
+  var t=document.querySelector('.nav-toggle'),n=document.querySelector('nav');
+  if(t&&n){t.addEventListener('click',function(){var o=n.classList.toggle('open');t.setAttribute('aria-expanded',o)});}
+})();
+
+// Artwork upload: type and size check before Netlify receives it
+(function(){
+  var f=document.getElementById('artwork'),err=document.getElementById('artwork-error');
+  if(!f)return;
+  var MAX=8*1024*1024; // 8 MB: confirm against Netlify's current Forms upload limit
+  f.addEventListener('change',function(){
+    err.textContent='';
+    var file=f.files[0]; if(!file)return;
+    if(!/\.(pdf|jpe?g)$/i.test(file.name)){err.textContent='Upload a PDF or JPG file.';f.value='';return;}
+    if(file.size>MAX){err.textContent='File is over 8 MB. Email larger files to bruce@brisplastics.com.au.';f.value='';}
+  });
+})();
+
+// ?type=repeat pre-selects the enquiry type on the contact page
+(function(){
+  var p=new URLSearchParams(location.search).get('type'); if(!p)return;
+  var r=document.querySelector('input[name="enquiry_type"][value="'+p+'"]'); if(r)r.checked=true;
+})();
+
+// Live chat (Tawk.to). Paste the Property ID from the Tawk dashboard. Blank = no chat loads.
+(function(){
+  var TAWK_PROPERTY_ID='', TAWK_WIDGET_ID='default';
+  if(!TAWK_PROPERTY_ID)return;
+  window.Tawk_API=window.Tawk_API||{};window.Tawk_LoadStart=new Date();
+  var s=document.createElement('script');
+  s.async=true;s.src='https://embed.tawk.to/'+TAWK_PROPERTY_ID+'/'+TAWK_WIDGET_ID;
+  s.charset='UTF-8';s.setAttribute('crossorigin','*');
+  document.body.appendChild(s);
+})();
+</script>
 </body>
 </html>
