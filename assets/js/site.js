@@ -25,11 +25,21 @@
 
 // Live chat (Tawk.to). Paste the Property ID from the Tawk dashboard. Blank = no chat loads.
 (function(){
-  var TAWK_PROPERTY_ID='', TAWK_WIDGET_ID='default';
+  var TAWK_PROPERTY_ID='6adc80751b93b634803314f9', TAWK_WIDGET_ID='1k5mlbjah';
   if(!TAWK_PROPERTY_ID)return;
   window.Tawk_API=window.Tawk_API||{};window.Tawk_LoadStart=new Date();
   var s=document.createElement('script');
   s.async=true;s.src='https://embed.tawk.to/'+TAWK_PROPERTY_ID+'/'+TAWK_WIDGET_ID;
   s.charset='UTF-8';s.setAttribute('crossorigin','*');
   document.body.appendChild(s);
+})();
+
+// Google Analytics 4. Paste the Measurement ID (G-XXXXXXX). Blank = nothing loads.
+// Thank-you pages (/thanks, /hospital/thanks, /uv-printing/thanks) are the conversion events for Google Ads.
+(function(){
+  var GA4_ID='';
+  if(!GA4_ID)return;
+  var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+GA4_ID;document.head.appendChild(s);
+  window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
+  gtag('js',new Date());gtag('config',GA4_ID);
 })();

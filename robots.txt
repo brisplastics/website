@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /thanks
+Disallow: /hospital/thanks
+Disallow: /uv-printing/thanks
 
 Sitemap: https://brisplastics.com.au/sitemap.xml

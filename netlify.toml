@@ -19,3 +19,10 @@
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# Keep the page generator source private
+[[redirects]]
+  from = "/_src/*"
+  to = "/404"
+  status = 404
+  force = true
