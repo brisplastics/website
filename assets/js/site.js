@@ -37,7 +37,7 @@
 // Google Analytics 4. Paste the Measurement ID (G-XXXXXXX). Blank = nothing loads.
 // Thank-you pages (/thanks, /hospital/thanks, /uv-printing/thanks) are the conversion events for Google Ads.
 (function(){
-  var GA4_ID='G-H3FBGJ8GFC';
+  var GA4_ID='G-DDRCCNERYX';
   if(!GA4_ID)return;
   var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id='+GA4_ID;document.head.appendChild(s);
   window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=gtag;
