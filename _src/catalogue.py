@@ -76,12 +76,10 @@ def index_page(materials_html):
             cards += f'<li><a href="/products/{p["slug"]}">{img}<span class="pc-body"><strong>{esc(p["title"])}</strong><span>{esc(p["card"])}</span>{n}</span></a></li>'
         groups += f'<section class="block{" alt" if GROUP_ORDER.index(g) % 2 == 0 else ""}"><div class="wrap"><h2>{esc(g)}</h2><ul class="pcards">{cards}</ul></div></section>'
     # Sov range card group
-    groups += '''<section class="block"><div class="wrap"><h2>Hospital range (Sov Services)</h2><ul class="pcards">
-<li><a href="/hospital/patient-chart-folders"><img src="/assets/img/products/hospital-chart-folder-ward-bed.jpg" alt="Green patient chart folder with ward and bed print" loading="lazy"><span class="pc-body"><strong>Patient chart folders</strong><span>Four spine sizes, ten colours, ward and bed print.</span></span></a></li>
-<li><a href="/hospital/patient-chart-holders"><span class="noimg" aria-hidden="true"></span><span class="pc-body"><strong>Chart holders and clipboards</strong><span>A3 and A4 holders for the bed rail or wall.</span></span></a></li>
-<li><a href="/hospital/chart-dividers"><img src="/assets/img/products/hospital-dividers-5-tab.jpg" alt="Coloured 5-tab chart dividers" loading="lazy"><span class="pc-body"><strong>Chart dividers</strong><span>5-tab blank, printed and custom.</span></span></a></li>
-<li><a href="/hospital/glove-box-holders"><span class="noimg" aria-hidden="true"></span><span class="pc-body"><strong>Glove box holders</strong><span>Wall-mounted single and triple holders.</span></span></a></li>
-</ul></div></section>'''
+    from hospital import sov_link_tiles
+    groups += ('<section class="block"><div class="wrap"><h2>Hospital range (Sov Services)</h2>'
+               '<p class="lede">Patient chart folders, holders, clipboards, dividers and glove box holders. Prices exclude GST. <a href="/hospital/">See the hospital range</a> or <a href="/hospital/order">order online</a>.</p>'
+               + sov_link_tiles() + '</div></section>')
     main += groups + materials_html + cta()
     schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Brisbane Plastics Company",
               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url(f"/products/{p['slug']}"), "name": p["title"]}

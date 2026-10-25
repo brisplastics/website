@@ -137,3 +137,15 @@ dialog.lightbox button:hover{background:rgba(255,255,255,.25)}
 .lb-close{top:16px;right:16px}.lb-prev{left:12px;top:50%}.lb-next{right:12px;top:50%}
 .pcards img{height:auto}
 .gallery img{height:auto}
+/* Sov product tiles (hub, /products and group pages) */
+.pcards.sov img,.sprods img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#fff;display:block}
+.pc-body .code{font-family:ui-monospace,Consolas,monospace;font-size:.82rem;color:var(--steel)}
+.pc-body .price{color:var(--ink);font-weight:700;font-size:.98rem}
+h3.sov-group{margin:2rem 0 .9rem;font-size:1.2rem}
+h3.sov-group:first-of-type{margin-top:.5rem}
+.sprods{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.2rem}
+.sprods li{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--rule);border-radius:10px;overflow:hidden;scroll-margin-top:96px}
+.sprods li:target{border-color:var(--teal);box-shadow:0 0 0 3px rgba(34,181,198,.35)}
+.sprods a.lb{display:block;cursor:zoom-in;border-bottom:1px solid var(--rule)}
+.sprods .pc-body{flex:1}
+.sprods .more{margin-top:auto;padding-top:.4rem;font-weight:600}

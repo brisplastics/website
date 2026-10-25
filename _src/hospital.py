@@ -18,6 +18,71 @@ ORDER_CODES = [
     ("Glove box holders", ["SS-GB-015 Single glove box holder", "SS-GB-008 Triple glove box holder", "SS-GB-029 Accessory basket", "Double glove box holder"]),
 ]
 
+import json as _json, os as _os
+_SIZES = _json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "sov_photo_sizes.json")))
+
+# Every product on sovservices.net.au/products (read 25/10/2026). Prices as published there, ex GST.
+# (anchor id, group page, name, item code(s), price, one-line spec, photo, alt text)
+P_FOLD, P_HOLD, P_DIV, P_GLOVE = "/hospital/patient-chart-folders", "/hospital/patient-chart-holders", "/hospital/chart-dividers", "/hospital/glove-box-holders"
+SOV_GROUPS = [(P_HOLD, "Patient clipboards and chart holders"), (P_FOLD, "Patient chart folders and hanging folders"),
+              (P_DIV, "Chart dividers"), (P_GLOVE, "Glove box holders")]
+ASK = "Price on request"
+SOV_PRODUCTS = [
+    ("a3-chart-holder", P_HOLD, "A3 patient chart holder, horizontal", "SS-PCU-033", "$38 ex GST", "Black or white gloss. 350 W × 300 H × 45 D mm, 50 mm rollover.", "a3-chart-holder-horizontal", "Black gloss A3 patient chart holder with rollover top"),
+    ("a4-chart-holder", P_HOLD, "A4 patient chart holder, vertical", "SS-PCU-034", "$38 ex GST", "Black or white gloss. 280 W × 370 H × 50 D mm, 50 mm rollover.", "a4-chart-holder-vertical", "Black gloss A4 vertical patient chart holder with rollover top"),
+    ("a4-wall-holder", P_HOLD, "A4 patient chart holder, wall mounted", "SS-PCU-038 / SS-PCU-039", "$38 ex GST", "Vertical or horizontal mounting. Black or white gloss. 255 W × 315 H × 110 D mm.", "a4-chart-holder-wall-mounted", "White and black wall-mounted A4 patient chart holders"),
+    ("a4-clipboard", P_HOLD, "A4 patient clipboard, vertical or horizontal", "SS-CCB-010", "$29.50 ex GST", "White impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 230 W × 360 H × 50 D mm.", "a4-patient-clipboard", "White ABS A4 patient clipboard with rollover top and clip"),
+    ("a3-clipboard", P_HOLD, "A3 patient clipboard, horizontal", "SS-CCB-015", "$37.80 ex GST", "White impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 450 W × 360 H × 50 D mm.", "a3-patient-clipboard", "White ABS A3 horizontal patient clipboard with rollover top and clip"),
+    ("folder-colours", P_FOLD, "Patient chart folders, ten colours", "Colour codes 01 to 13", ASK, "Navy, Red, Yellow, Purple, Grey, Orange, Pink, Apple Green, Oxford Blue and Sky Blue. Print in white or black.", "chart-folders-colour-range", "Ten colours of polypropylene patient chart folders, some printed with ward and bed"),
+    ("folder-unprinted", P_FOLD, "Patient chart folder, unprinted", "SS-PCU-13 to SS-PCU-16", ASK, "Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-unprinted", "Open green unprinted patient chart folder with clip and 2-ring fitting"),
+    ("folder-ward-bed", P_FOLD, "Patient chart folder, ward and bed print", "SS-PCU-03 to SS-PCU-06", ASK, "Ward and bed printed on the front and spine. Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-ward-bed", "Green patient chart folder printed with ward and bed on the front and spine"),
+    ("folder-custom", P_FOLD, "Custom printed patient chart folder", "Custom", ASK, "Your ward name and bed number on the front and spine, in any colour. Artwork set-up charge applies.", "custom-printed-chart-folder", "Red and green chart folders custom printed Admissions and Day Stay Unit"),
+    ("folder-hanging", P_FOLD, "Patient chart hanging folder", "SS-PCU-03 H to SS-PCU-05 H", ASK, "Polypropylene. 30, 40 and 55 mm spines.", "hanging-chart-folder", "Open red hanging patient chart folder with clip, rings and hanging strip"),
+    ("folder-hanging-printed", P_FOLD, "Hanging folder, ward and bed or custom print", "SS-PCU-03 H, SS-PCU-04 H", ASK, "Ward and bed or custom print on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
+    ("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "$12 ex GST", "No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
+    ("dividers-printed", P_DIV, "5-tab dividers, printed", "SS-PCU-045", "$13.90 ex GST", "Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
+    ("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $25.75 per set, 50 sets minimum", "Your wording on 1 to 10 tabs. Price shown is for 50 sets of 5 tabs. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
+    ("glove-single", P_GLOVE, "Single glove box holder", "SS-GB-015", "$38 ex GST", "155 H × 255 W × 110 D mm. Powder-coated wire, stainless spring clips, lift-off wall bracket.", "glove-box-holder-single", "White wire single glove box holder"),
+    ("glove-triple", P_GLOVE, "Triple glove box holder", "SS-GB-008", "$72 ex GST", "470 H × 255 W × 110 D mm. Limited stock.", "glove-box-holder-triple", "White wire triple glove box holder"),
+    ("glove-basket", P_GLOVE, "Accessory basket", "SS-GB-029", "$32.50 ex GST", "100 H × 255 W × 100 D mm. Hangs from single, double and triple holders.", "glove-box-accessory-basket", "White wire accessory basket that hooks onto a glove box holder"),
+]
+
+def _img(photo, alt, big=False):
+    w, h, tw, th = _SIZES[photo]
+    return f'<img src="/assets/img/products/sov/{photo}-t.jpg" alt="{esc(alt)}" width="{tw}" height="{th}" loading="lazy" decoding="async">'
+
+def sov_link_tiles(items=None):
+    """Card links (hub and /products): each opens its product on the group page."""
+    items = items if items is not None else SOV_PRODUCTS
+    return '<ul class="pcards sov">' + "".join(
+        f'<li><a href="{pg}#{a}">{_img(ph, alt)}<span class="pc-body"><strong>{esc(n)}</strong>'
+        f'<span class="code">{esc(code)}</span><span class="price">{esc(pr)}</span></span></a></li>'
+        for a, pg, n, code, pr, spec, ph, alt in items) + "</ul>"
+
+def sov_product_tiles(page_path):
+    """Product tiles on a group page: photo opens the lightbox; tile is the anchor target."""
+    out = ""
+    for a, pg, n, code, pr, spec, ph, alt in SOV_PRODUCTS:
+        if pg != page_path: continue
+        w, h, tw, th = _SIZES[ph]
+        out += (f'<li id="{a}"><a class="lb" href="/assets/img/products/sov/{ph}.jpg" data-w="{w}" data-h="{h}">{_img(ph, alt)}</a>'
+                f'<div class="pc-body"><strong>{esc(n)}</strong><span class="code">{esc(code)}</span><span class="price">{esc(pr)}</span>'
+                f'<span>{esc(spec)}</span><a class="more" href="/hospital/order">Order</a></div></li>')
+    return (f'<section class="block"><div class="wrap"><div class="section-head"><h2>Products and prices</h2>'
+            f'<p class="lede">Prices exclude GST. Select a photo to enlarge it.</p></div><ul class="sprods">{out}</ul></div></section>')
+
+def sov_schema():
+    items = []
+    for i, (a, pg, n, code, pr, spec, ph, alt) in enumerate(SOV_PRODUCTS):
+        prod = {"@type": "Product", "name": n, "sku": code, "description": spec, "url": url(f"{pg}#{a}"),
+                "image": url(f"/assets/img/products/sov/{ph}.jpg"), "brand": {"@type": "Brand", "name": "Sov Services"}}
+        if pr.startswith("$") and " ex GST" in pr:
+            prod["offers"] = {"@type": "Offer", "priceCurrency": "AUD", "price": pr[1:].split(" ")[0],
+                              "priceSpecification": {"@type": "UnitPriceSpecification", "price": pr[1:].split(" ")[0], "priceCurrency": "AUD", "valueAddedTaxIncluded": False},
+                              "availability": "https://schema.org/InStock", "seller": {"@id": SITE + "/#business"}}
+        items.append({"@type": "ListItem", "position": i + 1, "item": prod})
+    return {"@context": "https://schema.org", "@type": "ItemList", "name": "Sov Services hospital range", "itemListElement": items}
+
 HUB = "/hospital/"
 C_HUB = [("/", "Home"), (HUB, "Hospital products")]
 
@@ -51,20 +116,17 @@ def build():
                 "The Sov Services hospital range: patient chart folders, hanging folders, chart holders, clipboards, tab dividers and glove box holders. Australian made, infection control approved, and preferred supplier to more than 250 medical establishments across Australia since 1994. Now made and supplied by Brisbane Plastics Company in Tingalpa, Brisbane.",
                 kicker="Sov Services · Australian made",
                 buttons=[("/hospital/order", "Order or reorder online"), ("#range", "See the range")])
+    range_groups = "".join(
+        f'<h3 class="sov-group"><a href="{pg}">{esc(g)}</a></h3>' + sov_link_tiles([x for x in SOV_PRODUCTS if x[1] == pg])
+        for pg, g in SOV_GROUPS)
     main += f'''<div class="band"><div class="wrap">
 <p><strong>Same products, same item codes, new owner.</strong> From 26 October 2026 Sov Services orders are supplied and invoiced by Brisbane Plastics Company Pty Ltd, ABN {ABN}.</p>
 <a class="btn ghost" style="color:#fff;border-color:#fff" href="#faq">What changes for your ward</a>
 </div></div>
 <section class="block alt" id="range"><div class="wrap">
-<div class="section-head"><h2>The range</h2><p class="lede">Built for wards: wipe-clean, colour-coded and made to fit the bed rail, the wall and the 2-ring binder.</p></div>
-<ul class="cards">
-<li style="--tab:var(--pvc-blue)"><h3><a href="/hospital/patient-chart-folders">Patient chart folders</a></h3><p>Polypropylene chart folders in four spine sizes and ten colours, plain or printed with ward and bed. Hanging versions for chart trolleys.</p><a class="more" href="/hospital/patient-chart-folders">Sizes, colours and codes</a></li>
-<li style="--tab:var(--ink)"><h3><a href="/hospital/patient-chart-holders">Chart holders and clipboards</a></h3><p>A3 and A4 chart holders for the bed rail or wall, and ABS clipboards with a rollover top for rail mounting.</p><a class="more" href="/hospital/patient-chart-holders">Holders and clipboards</a></li>
-<li style="--tab:var(--pvc-yellow)"><h3><a href="/hospital/chart-dividers">Chart dividers</a></h3><p>5-tab dividers for A4 2-ring binders, blank or printed Observations, Medications, Fluids, Care Plans and Other. Custom tabs to order.</p><a class="more" href="/hospital/chart-dividers">Divider options</a></li>
-<li style="--tab:var(--pvc-green)"><h3><a href="/hospital/glove-box-holders">Glove box holders</a></h3><p>Wall-mounted single and triple glove box holders with an add-on basket for aprons, wipes and eye protection.</p><a class="more" href="/hospital/glove-box-holders">Holders and baskets</a></li>
-</ul>
+<div class="section-head"><h2>The range</h2><p class="lede">Built for wards: wipe-clean, colour-coded and made to fit the bed rail, the wall and the 2-ring binder. Prices exclude GST.</p></div>
+{range_groups}
 </div></section>
-{gallery([("hospital-chart-folder-ward-bed.jpg","Green polypropylene patient chart folder printed with ward and bed on the front and spine","Chart folder, ward and bed print"),("hospital-chart-folder-open.jpg","Open patient chart folder showing the clip and 2-ring fitting","Clip and 2-ring fitting inside"),("hospital-dividers-5-tab.jpg","Coloured 5-tab patient chart dividers","5-tab chart dividers")])}
 <section class="block"><div class="wrap split">
 <div>
 <h2>Why wards keep reordering</h2>
@@ -93,7 +155,7 @@ def build():
 {order_cta()}'''
     pages[HUB] = page(HUB, "Patient Chart Folders & Holders | Sov Services Hospital Range",
                       "Australian-made Sov Services patient chart folders, chart holders, clipboards, dividers and glove box holders. Supplying 250+ medical establishments since 1994. Order online.",
-                      main, C_HUB, [faq_schema(faqs)])
+                      main, C_HUB, [faq_schema(faqs), sov_schema()])
 
     # ---------- CHART FOLDERS ----------
     p = "/hospital/patient-chart-folders"
@@ -111,6 +173,7 @@ def build():
     trs = "".join(f"<tr><th scope=\"row\">{a}</th><td>{b}</td><td><code>{c}</code></td><td><code>{d}</code></td><td>{'<code>'+e+'</code>' if e.startswith('SS') else e}</td></tr>" for a, b, c, d, e in rows)
     main = hero(cr, "Patient chart folders", "Polypropylene patient chart folders in four spine sizes and ten colours. Plain, printed with ward and bed fields, or custom printed with your ward name and bed number. Hanging versions for chart trolleys and filing.",
                 kicker="Sov Services · Australian made", buttons=[("/hospital/order", "Order chart folders"), ("#sizes", "Sizes and codes")])
+    main += sov_product_tiles(p)
     main += f'''<section class="block alt" id="sizes"><div class="wrap">
 <div class="table-wrap"><table class="spec">
 <caption class="hidden">Patient chart folder sizes and item codes</caption>
@@ -163,6 +226,7 @@ def build():
     ]
     main = hero(cr, "Patient chart holders and clipboards", "A3 and A4 chart holders that hook over the bed rail or mount on the wall, and impact-resistant ABS clipboards with a rollover top for rail mounting.",
                 kicker="Sov Services · Australian made", buttons=[("/hospital/order", "Order holders"), ("#range", "Sizes and codes")])
+    main += sov_product_tiles(p)
     main += f'''<section class="block alt" id="range"><div class="wrap">
 <div class="table-wrap"><table class="spec">
 <caption class="hidden">Chart holder and clipboard item codes</caption>
@@ -189,6 +253,7 @@ def build():
     ]
     main = hero(cr, "Tabbed chart dividers for patient records", "5-tab dividers for A4 2-ring binders, blank or printed with the standard chart sections. Custom tabs from 1 to 10 for your own chart structure.",
                 kicker="Sov Services · Australian made", buttons=[("/hospital/order", "Order dividers")])
+    main += sov_product_tiles(p)
     main += f'''<section class="block alt"><div class="wrap">
 <div class="table-wrap"><table class="spec">
 <caption class="hidden">Chart divider options</caption>
@@ -221,6 +286,7 @@ def build():
     ]
     main = hero(cr, "Wall-mounted glove box holders", "Keep glove and tissue boxes off benches and shelves. Powder-coated wire frames with stainless steel spring-return clips and a lift-off wall bracket for cleaning.",
                 kicker="Sov Services · Australian made", buttons=[("/hospital/order", "Order glove box holders")])
+    main += sov_product_tiles(p)
     main += f'''<section class="block alt"><div class="wrap">
 <div class="table-wrap"><table class="spec">
 <caption class="hidden">Glove box holder item codes</caption>
