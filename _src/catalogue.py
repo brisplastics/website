@@ -1,0 +1,98 @@
+"""Product catalogue pages: /products (index) and /products/<slug>."""
+import os, json
+from shell import *
+from catalogue_data import PRODUCTS, EXTERNAL_RELATED, GROUP_ORDER, COVERS
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+MANIFEST = json.load(open(os.path.join(HERE, "photo_manifest.json")))
+for _s, _src in COVERS.items():  # move the cover photo to the front
+    _l = MANIFEST.get(_s, []); _i = next((i for i, x in enumerate(_l) if x["source"] == _src), None)
+    if _i: _l.insert(0, _l.pop(_i))
+BY_SLUG = {p["slug"]: p for p in PRODUCTS}
+
+def img_url(slug, base, thumb=False):
+    return f"/assets/img/products/{slug}/{base}{'-t' if thumb else ''}.jpg"
+
+def related_links(p):
+    out = []
+    for r in p["related"]:
+        if r in BY_SLUG:
+            out.append((f"/products/{r}", BY_SLUG[r]["title"]))
+        elif r in EXTERNAL_RELATED:
+            out.append(EXTERNAL_RELATED[r])
+    return '<ul class="related">' + "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in out) + "</ul>"
+
+def product_gallery(p):
+    photos = MANIFEST.get(p["slug"], [])
+    if not photos:
+        return ""
+    figs = "".join(
+        f'<figure><a class="lb" href="{img_url(p["slug"], x["file"])}" data-w="{x["w"]}" data-h="{x["h"]}">'
+        f'<img src="{img_url(p["slug"], x["file"], True)}" alt="{esc(x["alt"])}" width="{x["tw"]}" height="{x["th"]}" loading="lazy" decoding="async"></a>'
+        f'<figcaption>{esc(x["alt"])}</figcaption></figure>' for x in photos)
+    return (f'<section class="block alt"><div class="wrap"><div class="section-head"><h2>Examples from our factory</h2>'
+            f'<p class="lede">{len(photos)} photos of {esc(p["title"].lower())} we have made in Tingalpa. Select a photo to enlarge it.</p></div>'
+            f'<div class="gallery">{figs}</div></div></section>')
+
+def product_page(p):
+    path = f"/products/{p['slug']}"
+    cr = [("/", "Home"), ("/products", "Products"), (path, p["title"])]
+    quote = f"/contact?product={p['slug']}"
+    main = hero(cr, esc(p["title"]), p["intro"], kicker=esc(p["group"]),
+                buttons=[(quote, "Request a quote"), ("/contact?type=repeat", "Reorder a past job")])
+    rows = "".join(f'<tr><th scope="row">{esc(a)}</th><td>{b}</td></tr>' for a, b in p["facts"])
+    main += f'''<section class="block" style="padding-top:1rem"><div class="wrap two-col">
+<div><div class="table-wrap"><table class="spec"><caption class="hidden">{esc(p["title"])} options</caption><tbody>{rows}</tbody></table></div></div>
+<div><h2 style="font-size:1.3rem">Made to order in Tingalpa</h2>
+<ul class="ticks"><li>Australian made in our Brisbane factory</li><li>Your size, material, colour and print</li><li>Proof approved before anything is made</li><li>Short runs and repeat orders welcome</li></ul>
+<p style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a></p></div>
+</div></section>'''
+    main += product_gallery(p)
+    main += f'''<section class="block"><div class="wrap"><h2 style="font-size:1.3rem">Related products</h2>{related_links(p)}</div></section>'''
+    main += cta()
+    desc = (p["intro"][:150].rsplit(" ", 1)[0] + ". Made in Brisbane.") if len(p["intro"]) > 155 else p["intro"]
+    photos = MANIFEST.get(p["slug"], [])
+    schema = {"@context": "https://schema.org", "@type": "Product", "name": p["title"], "description": p["intro"],
+              "brand": {"@type": "Brand", "name": "Plastics Unique"}, "manufacturer": {"@id": SITE + "/#business"},
+              "url": url(path)}
+    if photos:
+        schema["image"] = [url(img_url(p["slug"], x["file"])) for x in photos[:5]]
+    return path, page(path, f"{p['title']} | Custom Made in Brisbane | Brisbane Plastics", desc, main, cr, [schema])
+
+def index_page(materials_html):
+    path = "/products"
+    cr = [("/", "Home"), ("/products", "Products")]
+    main = hero(cr, "Products we make",
+                "Every Plastics Unique and Sov Services product, made to order in our Tingalpa factory. Choose a product to see options and photos of work we have made, then send us your size, material, quantity and print.",
+                buttons=[("/contact", "Request a quote"), ("/hospital/", "Hospital range (Sov Services)")])
+    groups = ""
+    for g in GROUP_ORDER:
+        cards = ""
+        for p in [x for x in PRODUCTS if x["group"] == g]:
+            ph = MANIFEST.get(p["slug"], [])
+            img = (f'<img src="{img_url(p["slug"], ph[0]["file"], True)}" alt="{esc(ph[0]["alt"])}" width="{ph[0]["tw"]}" height="{ph[0]["th"]}" loading="lazy" decoding="async">'
+                   if ph else '<span class="noimg" aria-hidden="true"></span>')
+            n = f'<span class="count">{len(ph)} photos</span>' if ph else ""
+            cards += f'<li><a href="/products/{p["slug"]}">{img}<span class="pc-body"><strong>{esc(p["title"])}</strong><span>{esc(p["card"])}</span>{n}</span></a></li>'
+        groups += f'<section class="block{" alt" if GROUP_ORDER.index(g) % 2 == 0 else ""}"><div class="wrap"><h2>{esc(g)}</h2><ul class="pcards">{cards}</ul></div></section>'
+    # Sov range card group
+    groups += '''<section class="block"><div class="wrap"><h2>Hospital range (Sov Services)</h2><ul class="pcards">
+<li><a href="/hospital/patient-chart-folders"><img src="/assets/img/products/hospital-chart-folder-ward-bed.jpg" alt="Green patient chart folder with ward and bed print" loading="lazy"><span class="pc-body"><strong>Patient chart folders</strong><span>Four spine sizes, ten colours, ward and bed print.</span></span></a></li>
+<li><a href="/hospital/patient-chart-holders"><span class="noimg" aria-hidden="true"></span><span class="pc-body"><strong>Chart holders and clipboards</strong><span>A3 and A4 holders for the bed rail or wall.</span></span></a></li>
+<li><a href="/hospital/chart-dividers"><img src="/assets/img/products/hospital-dividers-5-tab.jpg" alt="Coloured 5-tab chart dividers" loading="lazy"><span class="pc-body"><strong>Chart dividers</strong><span>5-tab blank, printed and custom.</span></span></a></li>
+<li><a href="/hospital/glove-box-holders"><span class="noimg" aria-hidden="true"></span><span class="pc-body"><strong>Glove box holders</strong><span>Wall-mounted single and triple holders.</span></span></a></li>
+</ul></div></section>'''
+    main += groups + materials_html + cta()
+    schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Brisbane Plastics Company",
+              "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url(f"/products/{p['slug']}"), "name": p["title"]}
+                                  for i, p in enumerate(PRODUCTS)]}
+    return path, page(path, "Custom PVC & Polypropylene Products | Brisbane Plastics Company",
+                      "Ring binders, notebook covers, glovebox wallets, satchels, tags, compendiums, school and music folders, all custom made in Brisbane. Photos and options for every product.",
+                      main, cr, [schema])
+
+def build(materials_html):
+    pages = {}
+    path, html_ = index_page(materials_html); pages[path] = html_
+    for p in PRODUCTS:
+        path, html_ = product_page(p); pages[path] = html_
+    return pages

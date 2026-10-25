@@ -18,11 +18,16 @@ PHONE_1300 = "1300 744 104"
 TEL_1300 = "1300744104"
 STREET = "45a Millennium Place"
 ADDRESS = "45a Millennium Place, Tingalpa QLD 4173"
-LASTMOD = "2026-10-24"
+LASTMOD = "2026-10-25"
+
+# Solar and recyclable badges in the footer. Claims are being checked with Chris (25/10/2026).
+# Set to False and rebuild to remove them. The Australian Made logo is NOT used until the licence transfers.
+SHOW_ECO_BADGES = True
+BRAND = "/assets/img/brand/"
 
 NAV = [
     ("/", "Home", ""),
-    ("/products", "What we make", "/products"),
+    ("/products", "Products", "/products"),
     ("/hospital/", "Hospital", "/hospital"),
     ("/uv-printing/", "UV printing", "/uv-printing"),
     ("/about", "About us", "/about"),
@@ -36,7 +41,7 @@ LOGO = ('<svg width="40" height="44" aria-hidden="true" xmlns="http://www.w3.org
 BUSINESS = {
     "@context": "https://schema.org", "@type": "LocalBusiness",
     "@id": SITE + "/#business", "name": NAME, "legalName": LEGAL,
-    "url": SITE + "/", "logo": SITE + "/assets/img/logo.svg",
+    "url": SITE + "/", "logo": SITE + "/assets/img/brand/icon-512.png",
     "image": SITE + "/assets/img/og-image.png", "email": SALES,
     "description": "Brisbane manufacturer of custom PVC and polypropylene products, hospital chart folders and holders (Sov Services), and trade UV flatbed printing up to 1250 x 2500 mm.",
     "telephone": "+61733963744",
@@ -93,7 +98,7 @@ def header(path):
 <div class="topbar"><div class="wrap"><span>{ADDRESS}</span><span><a href="tel:{TEL_07}">{PHONE_07}</a> · <a href="tel:{TEL_1300}">{PHONE_1300}</a></span></div></div>
 <header class="site-head">
 <div class="wrap">
-<a class="brand" href="/">{LOGO}<span>Brisbane Plastics<small>Company · Tingalpa, Brisbane</small></span></a>
+<a class="brand" href="/" aria-label="Brisbane Plastics Company home"><img src="{BRAND}BPC_Logo_Fan_Stacked_v1_CAI.svg" alt="Brisbane Plastics Company" width="193" height="52"></a>
 <nav aria-label="Main">
 <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
 <ul id="menu">{"".join(lis)}</ul>
@@ -101,13 +106,24 @@ def header(path):
 </div>
 </header>'''
 
+def eco_badges():
+    if not SHOW_ECO_BADGES:
+        return ""
+    return (f'<div class="eco-badges" data-removable="eco">'
+            f'<img src="{BRAND}Icon_SolarPowered_White_on_Navy_v1_CAI.svg" alt="Solar powered factory" width="52" height="52" loading="lazy">'
+            f'<img src="{BRAND}Icon_Recyclable_White_on_Navy_v1_CAI.svg" alt="Recyclable materials" width="55" height="52" loading="lazy"></div>')
+
 def footer():
     return f'''<footer class="site-foot">
 <div class="wrap">
 <div>
-<h2>{LEGAL}</h2>
-<p>Custom PVC and polypropylene products, hospital products and UV flatbed printing, made in Tingalpa, Brisbane. Owner of Plastics Unique and Sov Services.</p>
+<img class="foot-logo" src="{BRAND}BPC_Logo_Fan_Stacked_White_v1_CAI.svg" alt="Brisbane Plastics Company" width="223" height="60" loading="lazy">
+<p>Custom PVC and polypropylene products, hospital products and UV flatbed printing, made in Tingalpa, Brisbane.</p>
 <p>Part of <a href="https://www.formfill.com.au/" rel="noopener">FormFill Group</a>, a South East Queensland plastics manufacturing group.</p>
+<div class="foot-brands"><span>Our brands</span>
+<a href="/products" aria-label="Plastics Unique products"><img src="{BRAND}PU_Logo_Endorsed_White_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="131" height="60" loading="lazy"></a>
+<a href="/hospital/" aria-label="Sov Services hospital range"><img src="{BRAND}Sov_Logo_Endorsed_White_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="163" height="60" loading="lazy"></a></div>
+{eco_badges()}
 </div>
 <div>
 <h2>Contact</h2>
@@ -115,7 +131,7 @@ def footer():
 </div>
 <div>
 <h2>Site</h2>
-<ul><li><a href="/products">What we make</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">UV flatbed printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li></ul>
+<ul><li><a href="/products">Products</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">UV flatbed printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li></ul>
 </div>
 <p class="legal">© 2026 {LEGAL} · ACN {ACN} · ABN {ABN}</p>
 </div>
@@ -148,6 +164,8 @@ def page(path, title, desc, main, crumbs=None, schema=None, noindex=False, og_ty
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#122B4A">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/img/brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">

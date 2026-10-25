@@ -1,6 +1,15 @@
-# Brisbane Plastics Company website, v11
+# Brisbane Plastics Company website, v14
 
 Static site. GitHub to Netlify to Cloudflare DNS. Netlify publish directory stays `.`, no build command.
+
+## v14 changes (25/10/2026)
+
+- Google Ads conversion event manual_event_REQUEST_QUOTE fires on /uv-printing/thanks (in assets/js/site.js).
+
+## v13 changes (24/10/2026)
+
+- Google Analytics ID set to G-DDRCCNERYX (the BPC website data stream). Replaces G-H3FBGJ8GFC from v12.
+- 19 more unbranded product photos. Home shows 8 products. What we make now has four galleries: binders, folders and pockets, wallets and tags, colours and finishing.
 
 ## v11 changes (24/10/2026)
 

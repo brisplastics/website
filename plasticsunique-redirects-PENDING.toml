@@ -1,0 +1,591 @@
+# plasticsunique.com.au redirects. NOT ACTIVE. Activate when the domain moves (Bruce, parked 24/10/2026).
+# Swap TARGET for the live domain, paste above the existing redirects in netlify.toml, deploy, test.
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/product-range/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/product-range/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/services/"
+  to = "https://TARGET/products/printing-and-finishing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/services/"
+  to = "https://TARGET/products/printing-and-finishing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/photo-gallery/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/photo-gallery/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/contact/"
+  to = "https://TARGET/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/contact/"
+  to = "https://TARGET/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/request-a-quote/"
+  to = "https://TARGET/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/request-a-quote/"
+  to = "https://TARGET/contact"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/about-us/"
+  to = "https://TARGET/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/about-us/"
+  to = "https://TARGET/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/testimonials/"
+  to = "https://TARGET/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/testimonials/"
+  to = "https://TARGET/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/notebook-covers/"
+  to = "https://TARGET/products/notebook-covers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/notebook-covers/"
+  to = "https://TARGET/products/notebook-covers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/notebook-folders/"
+  to = "https://TARGET/products/notebook-covers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/notebook-folders/"
+  to = "https://TARGET/products/notebook-covers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/glovebox-wallets/"
+  to = "https://TARGET/products/glovebox-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/glovebox-wallets/"
+  to = "https://TARGET/products/glovebox-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/dealership-wallets/"
+  to = "https://TARGET/products/glovebox-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/dealership-wallets/"
+  to = "https://TARGET/products/glovebox-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/key-tags/"
+  to = "https://TARGET/products/glovebox-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/key-tags/"
+  to = "https://TARGET/products/glovebox-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/clipboards/"
+  to = "https://TARGET/products/clipboard-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/clipboards/"
+  to = "https://TARGET/products/clipboard-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/school-clipboards/"
+  to = "https://TARGET/products/clipboard-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/school-clipboards/"
+  to = "https://TARGET/products/clipboard-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/custom-ring-binders/"
+  to = "https://TARGET/products/tab-dividers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/custom-ring-binders/"
+  to = "https://TARGET/products/tab-dividers"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/id-tags/"
+  to = "https://TARGET/products/id-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/id-tags/"
+  to = "https://TARGET/products/id-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/student-card-wallets/"
+  to = "https://TARGET/products/id-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/student-card-wallets/"
+  to = "https://TARGET/products/id-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/x-ray-pockets/"
+  to = "https://TARGET/products/x-ray-sleeves"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/x-ray-pockets/"
+  to = "https://TARGET/products/x-ray-sleeves"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/pvc-satchels/"
+  to = "https://TARGET/products/pvc-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/pvc-satchels/"
+  to = "https://TARGET/products/pvc-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/vinyl/"
+  to = "https://TARGET/products/pvc-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/vinyl/"
+  to = "https://TARGET/products/pvc-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/luggage-tags/"
+  to = "https://TARGET/products/luggage-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/luggage-tags/"
+  to = "https://TARGET/products/luggage-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/hospital-room-compendiums/"
+  to = "https://TARGET/products/room-compendiums"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/hospital-room-compendiums/"
+  to = "https://TARGET/products/room-compendiums"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/toyota-noren-tag-holders/"
+  to = "https://TARGET/products/noren-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/toyota-noren-tag-holders/"
+  to = "https://TARGET/products/noren-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/room-compendiums/"
+  to = "https://TARGET/products/room-compendiums"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/room-compendiums/"
+  to = "https://TARGET/products/room-compendiums"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/polypropylene-satchels/"
+  to = "https://TARGET/products/polypropylene-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/polypropylene-satchels/"
+  to = "https://TARGET/products/polypropylene-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/satchels/polypropylene-satchels/"
+  to = "https://TARGET/products/polypropylene-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/satchels/polypropylene-satchels/"
+  to = "https://TARGET/products/polypropylene-satchels"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/signs/"
+  to = "https://TARGET/products/signs-and-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/signs/"
+  to = "https://TARGET/products/signs-and-tags"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/student-portfolio-folders/"
+  to = "https://TARGET/products/student-portfolios"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/student-portfolio-folders/"
+  to = "https://TARGET/products/student-portfolios"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/ring-binders/"
+  to = "https://TARGET/products/ring-binders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/ring-binders/"
+  to = "https://TARGET/products/ring-binders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/ring-binders-school/"
+  to = "https://TARGET/products/school-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/ring-binders-school/"
+  to = "https://TARGET/products/school-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/travel-wallets/"
+  to = "https://TARGET/products/travel-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/travel-wallets/"
+  to = "https://TARGET/products/travel-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/buffet_foodservice_signage/"
+  to = "https://TARGET/products/food-service-signage"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/buffet_foodservice_signage/"
+  to = "https://TARGET/products/food-service-signage"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/tabwallet/"
+  to = "https://TARGET/products/tab-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/tabwallet/"
+  to = "https://TARGET/products/tab-wallets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/funeral-folder/"
+  to = "https://TARGET/products/funeral-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/funeral-folder/"
+  to = "https://TARGET/products/funeral-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/certificate-display-pockets/"
+  to = "https://TARGET/products/certificate-pockets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/certificate-display-pockets/"
+  to = "https://TARGET/products/certificate-pockets"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/sample_display_folder/"
+  to = "https://TARGET/products/display-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/sample_display_folder/"
+  to = "https://TARGET/products/display-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/tally-books/"
+  to = "https://TARGET/products/tally-books"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/tally-books/"
+  to = "https://TARGET/products/tally-books"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/music-folders/"
+  to = "https://TARGET/products/music-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/music-folders/"
+  to = "https://TARGET/products/music-folders"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/32-8-bean-lids/"
+  to = "https://TARGET/products/bean-lids"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/32-8-bean-lids/"
+  to = "https://TARGET/products/bean-lids"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/take-5-safety-book/"
+  to = "https://TARGET/products/take-5-safety-books"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/take-5-safety-book/"
+  to = "https://TARGET/products/take-5-safety-books"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/corporate-and-promo/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/corporate-and-promo/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/construction/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/construction/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/automotive/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/automotive/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/healthcare/"
+  to = "https://TARGET/hospital/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/healthcare/"
+  to = "https://TARGET/hospital/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/travel-hospitality/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/travel-hospitality/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/education/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/education/"
+  to = "https://TARGET/products"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/private-policy/"
+  to = "https://TARGET/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/private-policy/"
+  to = "https://TARGET/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/terms-and-conditions/"
+  to = "https://TARGET/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/terms-and-conditions/"
+  to = "https://TARGET/privacy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://plasticsunique.com.au/*"
+  to = "https://TARGET/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.plasticsunique.com.au/*"
+  to = "https://TARGET/"
+  status = 301
+  force = true
+

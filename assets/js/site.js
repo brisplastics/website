@@ -45,3 +45,27 @@
   // Google Ads conversion 'Request quote': print quote form thank-you page only
   if(/^\/uv-printing\/thanks(\.html)?\/?$/.test(location.pathname)){gtag('event','manual_event_REQUEST_QUOTE',{form:'print-quote'});}
 })();
+
+// Contact page: ?product=<slug> from a product page fills in the product
+(function(){
+  var NAMES={"ring-binders": "Ring binders and lever arch folders", "tab-dividers": "Custom tab dividers and medical ring binders", "slip-boxes": "Slip boxes for ring binders", "presentation-folders": "Presentation folders and covers", "display-folders": "Display books and sample display folders", "clipboard-folders": "Clipboard folders", "notebook-covers": "Pocket notebook covers", "take-5-safety-books": "Take 5 safety books and covers", "tally-books": "Drill pipe tally books and covers", "glovebox-wallets": "Glovebox, service book and dealership wallets", "fuel-card-holders": "Fuel card holders", "pvc-satchels": "PVC satchels and document wallets", "polypropylene-satchels": "Polypropylene satchels and document boxes", "travel-wallets": "Travel wallets", "tab-wallets": "TAB and gaming wallets", "id-tags": "ID tag pockets and card wallets", "luggage-tags": "Branded luggage tags", "noren-tags": "Noren tags and parts bin tags", "signs-and-tags": "Plastic signs, danger tags and isolation tags", "room-compendiums": "Room compendiums and menu books", "food-service-signage": "Food service and point-of-sale signage", "counter-mats": "Counter mats", "x-ray-sleeves": "X-ray protective sleeves", "funeral-folders": "In remembrance folders", "student-portfolios": "Student portfolio folders", "certificate-pockets": "Certificate pockets and folders", "school-folders": "School folders and binders", "music-folders": "Music folders", "promotional-products": "Rulers, plate frames and promotional items", "bean-lids": "32-8 bean lids for polystyrene boxes", "printing-and-finishing": "Printing, colours and finishing"};
+  var s=new URLSearchParams(location.search).get('product'); if(!s||!NAMES[s])return;
+  var d=document.getElementById('details'); if(d&&!d.value)d.value='Product: '+NAMES[s]+'\n';
+  var p=document.getElementById('product'); if(p){var o=document.createElement('option');o.text=NAMES[s];o.selected=true;p.add(o,1);}
+})();
+
+// Photo lightbox for product galleries
+(function(){
+  var links=[].slice.call(document.querySelectorAll('a.lb')); if(!links.length)return;
+  var d=document.createElement('dialog'); d.className='lightbox';
+  d.innerHTML='<button class="lb-close" aria-label="Close">×</button><button class="lb-prev" aria-label="Previous photo">‹</button><figure><img alt=""><figcaption></figcaption></figure><button class="lb-next" aria-label="Next photo">›</button>';
+  document.body.appendChild(d);
+  var img=d.querySelector('img'),cap=d.querySelector('figcaption'),i=0;
+  function show(n){i=(n+links.length)%links.length;var a=links[i],t=a.querySelector('img');img.src=a.href;img.alt=t.alt;cap.textContent=t.alt+'  ('+(i+1)+' of '+links.length+')';}
+  links.forEach(function(a,n){a.addEventListener('click',function(e){if(!d.showModal)return;e.preventDefault();show(n);d.showModal();});});
+  d.querySelector('.lb-close').onclick=function(){d.close();};
+  d.querySelector('.lb-prev').onclick=function(){show(i-1);};
+  d.querySelector('.lb-next').onclick=function(){show(i+1);};
+  d.addEventListener('click',function(e){if(e.target===d)d.close();});
+  document.addEventListener('keydown',function(e){if(!d.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1);});
+})();
