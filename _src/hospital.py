@@ -14,9 +14,9 @@ ORDER_CODES = [
     ("Chart folders: ward and bed print", ["SS-PCU-03 (30 mm spine)", "SS-PCU-04 (40 mm spine)", "SS-PCU-05 (55 mm spine)", "SS-PCU-06 (68 mm spine)"]),
     ("Hanging chart folders", ["SS-PCU-03 H (30 mm spine)", "SS-PCU-04 H (40 mm spine)", "SS-PCU-05 H (55 mm spine)"]),
     ("Custom printed folders", ["Custom printed chart folder", "Custom printed hanging folder"]),
-    ("Chart holders and clipboards", ["SS-PCU-033 A3 chart holder, horizontal", "SS-PCU-034 A4 chart holder, vertical", "SS-PCU-038 A4 wall-mounted holder, vertical", "SS-PCU-039 A4 wall-mounted holder, horizontal", "SS-CCB-010 A4 patient clipboard", "SS-CCB-015 A3 patient clipboard, horizontal"]),
+    ("Chart holders and clipboards", ["SS-PCU-033 A3 chart holder, horizontal", "SS-PCU-034 A4 chart holder, vertical", "SS-PCU-038 A4 wall-mounted holder, horizontal", "SS-PCU-039 A4 wall-mounted holder, vertical", "SS-CCB-010 A4 patient clipboard", "SS-CCB-015 A3 patient clipboard, horizontal"]),
     ("Dividers", ["SS-PCU-043 5-tab divider, blank", "SS-PCU-045 5-tab divider, printed", "Custom tab dividers (1 to 10 tabs)"]),
-    ("Glove box holders", ["SS-GB-015 Single glove box holder", "SS-GB-008 Triple glove box holder", "SS-GB-029 Accessory basket", "Double glove box holder"]),
+    ("Glove box holders", ["SS-GB-015 Single glove box holder", "SS-GB-008 Triple glove box holder", "SS-GB-029 Accessory basket"]),
 ]
 
 import json as _json, os as _os
@@ -31,7 +31,7 @@ ASK = "Price on request"
 SOV_PRODUCTS = [
     ("a3-chart-holder", P_HOLD, "A3 patient chart holder, horizontal", "SS-PCU-033", "$38 ex GST", "Black or white gloss. 350 W × 300 H × 45 D mm, 50 mm rollover.", "a3-chart-holder-horizontal", "Black gloss A3 patient chart holder with rollover top"),
     ("a4-chart-holder", P_HOLD, "A4 patient chart holder, vertical", "SS-PCU-034", "$38 ex GST", "Black or white gloss. 280 W × 370 H × 50 D mm, 50 mm rollover.", "a4-chart-holder-vertical", "Black gloss A4 vertical patient chart holder with rollover top"),
-    ("a4-wall-holder", P_HOLD, "A4 patient chart holder, wall mounted", "SS-PCU-038 / SS-PCU-039", "$38 ex GST", "Vertical or horizontal mounting. Black or white gloss. 255 W × 315 H × 110 D mm.", "a4-chart-holder-wall-mounted", "White and black wall-mounted A4 patient chart holders"),
+    ("a4-wall-holder", P_HOLD, "A4 patient chart holder, wall mounted", "SS-PCU-038 / SS-PCU-039", "$38 ex GST", "SS-PCU-038 horizontal, SS-PCU-039 vertical. Black or white gloss. 255 W × 315 H × 110 D mm.", "a4-chart-holder-wall-mounted", "White and black wall-mounted A4 patient chart holders"),
     ("a4-clipboard", P_HOLD, "A4 patient clipboard, vertical or horizontal", "SS-CCB-010", "$29.50 ex GST", "White impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 230 W × 360 H × 50 D mm.", "a4-patient-clipboard", "White ABS A4 patient clipboard with rollover top and clip"),
     ("a3-clipboard", P_HOLD, "A3 patient clipboard, horizontal", "SS-CCB-015", "$37.80 ex GST", "White impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 450 W × 360 H × 50 D mm.", "a3-patient-clipboard", "White ABS A3 horizontal patient clipboard with rollover top and clip"),
     ("folder-colours", P_FOLD, "Patient chart folders, ten colours", "Colour codes 01 to 13", ASK, "Navy, Red, Yellow, Purple, Grey, Orange, Pink, Apple Green, Oxford Blue and Sky Blue. Print in white or black.", "chart-folders-colour-range", "Ten colours of polypropylene patient chart folders, some printed with ward and bed"),
@@ -40,12 +40,12 @@ SOV_PRODUCTS = [
     ("folder-custom", P_FOLD, "Custom printed patient chart folder", "Custom", ASK, "Your ward name and bed number on the front and spine, in any colour. Artwork set-up charge applies.", "custom-printed-chart-folder", "Red and green chart folders custom printed Admissions and Day Stay Unit"),
     ("folder-hanging", P_FOLD, "Patient chart hanging folder", "SS-PCU-03 H to SS-PCU-05 H", ASK, "Polypropylene. 30, 40 and 55 mm spines.", "hanging-chart-folder", "Open red hanging patient chart folder with clip, rings and hanging strip"),
     ("folder-hanging-printed", P_FOLD, "Hanging folder, ward and bed or custom print", "SS-PCU-03 H, SS-PCU-04 H", ASK, "Ward and bed or custom print on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
-    ("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "$12 ex GST", "No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
-    ("dividers-printed", P_DIV, "5-tab dividers, printed", "SS-PCU-045", "$13.90 ex GST", "Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
+    ("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "$12 ex GST per set", "Five blank tabs. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
+    ("dividers-printed", P_DIV, "5-tab dividers, printed", "SS-PCU-045", "$13.90 ex GST per set", "Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
     ("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $25.75 per set, 50 sets minimum", "Your wording on 1 to 10 tabs. Price shown is for 50 sets of 5 tabs. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
     ("glove-single", P_GLOVE, "Single glove box holder", "SS-GB-015", "$38 ex GST", "155 H × 255 W × 110 D mm. Powder-coated wire, stainless spring clips, lift-off wall bracket.", "glove-box-holder-single", "White wire single glove box holder"),
     ("glove-triple", P_GLOVE, "Triple glove box holder", "SS-GB-008", "$72 ex GST", "470 H × 255 W × 110 D mm. Limited stock.", "glove-box-holder-triple", "White wire triple glove box holder"),
-    ("glove-basket", P_GLOVE, "Accessory basket", "SS-GB-029", "$32.50 ex GST", "100 H × 255 W × 100 D mm. Hangs from single, double and triple holders.", "glove-box-accessory-basket", "White wire accessory basket that hooks onto a glove box holder"),
+    ("glove-basket", P_GLOVE, "Accessory basket", "SS-GB-029", "$32.50 ex GST", "100 H × 255 W × 100 D mm. Hangs from the single and triple holders.", "glove-box-accessory-basket", "White wire accessory basket that hooks onto a glove box holder"),
 ]
 
 def _img(photo, alt, big=False):
@@ -111,6 +111,7 @@ def build():
         ("Do your item codes stay the same?", "Yes. Every SS- item code carries over, so you can reorder from your last order sheet or purchase order without changes."),
         ("Can we still email our orders?", f"Yes. <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> stays open, and so does our phone number, 1300 744 104. The online order form is quicker because it asks for the ward, colour and print details we need, so we do not have to come back to you."),
         ("Has your ABN changed?", f"Yes. Orders from 26 October 2026 are supplied and invoiced by Brisbane Plastics Company Pty Ltd, ABN {ABN}. If your purchasing system still lists the old supplier, please ask your supply team to update the vendor record. We will verify bank details by phone on request."),
+        ("How long does an order take?", "Standard orders take 10 to 15 days. Express turnaround is available. Put your date in the Needed by box on the order form."),
         ("Can you print our ward name and bed numbers?", "Yes. Folders can be printed with the ward name and bed number on the front and spine in black or white. Tell us the ward name and the bed numbers you need on the order form."),
     ]
     main = hero(C_HUB, "Patient chart folders, chart holders and ward products",
@@ -147,7 +148,7 @@ def build():
 <ol class="steps" style="grid-template-columns:1fr">
 <li><h3>Send the order</h3><p>Use the <a href="/hospital/order">online order form</a>, email your purchase order to {SOV_EMAIL} or call 1300 744 104.</p></li>
 <li><h3>We confirm</h3><p>We confirm price, print details and delivery by return email, and send a proof for any new printing.</p></li>
-<li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia.</p></li>
+<li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia. Standard orders take 10 to 15 days. Express turnaround is available.</p></li>
 </ol>
 </div>
 </div></section>
@@ -163,7 +164,7 @@ def build():
     p = "/hospital/patient-chart-folders"
     cr = C_HUB + [(p, "Patient chart folders")]
     faqs = [
-        ("Which spine size do I need?", "Choose by how thick the chart gets during an admission. 30 mm suits short stays, 40 mm and 55 mm suit most wards, and 68 mm is for long-stay and complex charts. If you are unsure, tell us the ward type and we will suggest one."),
+        ("Which spine size do I need?", "Choose by how thick your charts get. If you are unsure, tell us the ward type and what your current folders look like, and we will suggest a size."),
         ("What is the difference between generic and custom print?", "Generic print has ward and bed fields on the front and spine for staff to fill in. Custom print has your ward name and the bed number printed for you. Custom print has a one-off digital artwork set-up charge."),
         ("Which colours work best with black print?", "Yellow and grey give the strongest contrast with black print. White print works best on the darker colours such as Navy, Oxford Blue and Purple."),
         ("Can we order a single colour per ward?", "Yes. Many hospitals colour-code by ward or unit. Tell us the colour code and quantity for each ward on one order."),
@@ -224,7 +225,7 @@ def build():
     faqs = [
         ("What is the rollover?", "The rollover is the curved top lip that hooks over the bed-end rail, so the chart sits at the foot of the bed without fixings."),
         ("Do the clipboards take a ring binder?", "Each clipboard is fitted with either a standard clipboard clip or two D-ring clips. Tell us which on your order."),
-        ("Can the A4 holder go on the wall?", "Yes. The wall-mounted A4 holder comes in vertical (SS-PCU-038) and horizontal (SS-PCU-039) versions."),
+        ("Can the A4 holder go on the wall?", "Yes. The wall-mounted A4 holder comes in horizontal (SS-PCU-038) and vertical (SS-PCU-039) versions."),
     ]
     main = hero(cr, "Patient chart holders and clipboards", "A3 and A4 chart holders that hook over the bed rail or mount on the wall, and impact-resistant ABS clipboards with a rollover top for rail mounting.",
                 kicker="Sov Services · Australian made", buttons=[("/hospital/order", "Order holders"), ("#range", "Sizes and codes")])
@@ -284,7 +285,6 @@ def build():
     faqs = [
         ("Can the holders be cleaned?", "Yes. The wall bracket lets the holder lift off, so the holder and the wall behind it can be cleaned."),
         ("Do they fit all glove boxes?", "The stainless steel spring-return clips grip standard glove and tissue boxes and adjust to the box size."),
-        ("Is there a double holder?", "Yes. Ask for the double holder on the order form and we will confirm availability and price."),
     ]
     main = hero(cr, "Wall-mounted glove box holders", "Keep glove and tissue boxes off benches and shelves. Powder-coated wire frames with stainless steel spring-return clips and a lift-off wall bracket for cleaning.",
                 kicker="Sov Services · Australian made", buttons=[("/hospital/order", "Order glove box holders")])
@@ -295,9 +295,8 @@ def build():
 <thead><tr><th>Item code</th><th>Product</th><th>Size (H × W × D)</th><th>Notes</th></tr></thead>
 <tbody>
 <tr><td><code>SS-GB-015</code></td><th scope="row">Single glove box holder</th><td>155 × 255 × 110 mm</td><td>Takes the accessory basket</td></tr>
-<tr><td>Ask us</td><th scope="row">Double glove box holder</th><td>Ask us</td><td>Takes the accessory basket</td></tr>
 <tr><td><code>SS-GB-008</code></td><th scope="row">Triple glove box holder</th><td>470 × 255 × 110 mm</td><td>Limited stock</td></tr>
-<tr><td><code>SS-GB-029</code></td><th scope="row">Accessory basket</th><td>100 × 255 × 100 mm</td><td>Hooks onto single, double and triple holders. Holds aprons, gowns, wipes, kidney dishes and eye protection</td></tr>
+<tr><td><code>SS-GB-029</code></td><th scope="row">Accessory basket</th><td>100 × 255 × 100 mm</td><td>Hooks onto the single and triple holders. Holds aprons, gowns, wipes, kidney dishes and eye protection</td></tr>
 </tbody></table></div>
 </div></section>
 <section class="block"><div class="wrap" style="max-width:860px">

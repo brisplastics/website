@@ -82,7 +82,7 @@ def contact_form():
 <div class="field"><span class="label">Where is the print? <span class="hint">tick all that apply</span></span>
 <div class="choice inline"><label><input type="checkbox" name="print_position[]" value="Front"> Front</label><label><input type="checkbox" name="print_position[]" value="Back"> Back</label><label><input type="checkbox" name="print_position[]" value="Spine"> Spine</label><label><input type="checkbox" name="print_position[]" value="Inside"> Inside</label></div></div>
 <div class="field"><label for="ink">Ink or foil colour <span class="hint">e.g. white, gold foil, PMS 286</span></label><input id="ink" name="ink_colour"></div>
-<div class="field"><label for="needed_by">Needed by</label><input id="needed_by" name="needed_by" type="date"></div>
+<div class="field"><label for="needed_by">Needed by <span class="hint">standard 10 to 15 days, express available</span></label><input id="needed_by" name="needed_by" type="date"></div>
 <div class="field"><label for="postcode">Delivery suburb and postcode <span class="hint">for freight</span></label><input id="postcode" name="delivery_postcode" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
 <div class="field"><label for="reference">Previous job number or your PO <span class="hint">if you have one</span></label><input id="reference" name="reference"></div>
 {artwork_fields()}

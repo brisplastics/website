@@ -29,6 +29,8 @@ pages = {}
 
 # ---- Home: v6 content plus links into the two new sections ----
 t, d, m = v6("index.html")
+m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 days, and express turnaround is available.</p>")
+assert "10 to 15 days" in m
 m = fix(m)
 m = m.replace('<li class="t-green"><h3>Hospital products</h3><p>Patient chart holders, bed chart folders and ward stationery, supplied through our Sov Services division.</p></li>',
               '<li class="t-green"><h3><a href="/hospital/" style="color:inherit">Hospital products</a></h3><p>Patient chart folders, chart holders, dividers and glove box holders from our Sov Services range. <a href="/hospital/order">Order online</a>.</p></li>')
@@ -234,7 +236,7 @@ L=["# Brisbane Plastics Company", "",
    "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, dividers and glove box holders for hospitals since 1994), "
    "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
    "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744 or 1300 744 104",
-   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", ""]
+   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 days for standard jobs; express turnaround available.", ""]
 for name, test in SECTIONS:
     L.append("## " + name); L.append("")
     for p in locs:
