@@ -124,7 +124,7 @@ def build():
         ("Do your item codes stay the same?", "Yes. Every SS- item code carries over, so you can reorder from your last order sheet or purchase order without changes."),
         ("Can we still email our orders?", f"Yes. <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> stays open, and so does our phone number, 1300 744 104. The online order form is quicker because it asks for the ward, colour and print details we need, so we do not have to come back to you."),
         ("Has your ABN changed?", f"Yes. Orders from 26 October 2026 are supplied and invoiced by Brisbane Plastics Company Pty Ltd, ABN {ABN}. If your purchasing system still lists the old supplier, please ask your supply team to update the vendor record. We will verify bank details by phone on request."),
-        ("How long does an order take?", "Standard orders take 10 to 15 days. Express turnaround is available. Put your date in the Needed by box on the order form."),
+        ("How long does an order take?", "Standard orders take 10 to 15 working days. Express turnaround is available. Put your date in the Needed by box on the order form."),
         ("Can you print our ward name and bed numbers?", "Yes. Folders can be printed with the ward name and bed number on the front and spine in black or white. Tell us the ward name and the bed numbers you need on the order form."),
     ]
     main = hero(C_HUB, "Patient chart folders, chart holders and hospital ward products",
@@ -160,7 +160,7 @@ def build():
 <ol class="steps" style="grid-template-columns:1fr">
 <li><h3>Send the order</h3><p>Use the <a href="/hospital/order">online order form</a>, email your purchase order to {SOV_EMAIL} or call 1300 744 104.</p></li>
 <li><h3>We confirm</h3><p>We confirm price, print details and delivery by return email, and send a proof for any new printing.</p></li>
-<li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia. Standard orders take 10 to 15 days. Express turnaround is available.</p></li>
+<li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia. Standard orders take 10 to 15 working days. Express turnaround is available.</p></li>
 </ol>
 </div>
 </div></section>

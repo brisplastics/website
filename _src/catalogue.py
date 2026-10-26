@@ -44,7 +44,7 @@ def product_page(p):
     main += f'''<section class="block" style="padding-top:1rem"><div class="wrap two-col">
 <div><div class="table-wrap"><table class="spec"><caption class="hidden">{esc(p["title"])} options</caption><tbody>{rows}</tbody></table></div></div>
 <div><h2 style="font-size:1.3rem">Made to order in Tingalpa</h2>
-<ul class="ticks"><li>Australian made in our Brisbane factory</li><li>Your size, material, colour and print</li><li>Proof approved before anything is made</li><li>Short runs and repeat orders welcome</li><li>10 to 15 day turnaround, express available</li></ul>
+<ul class="ticks"><li>Australian made in our Brisbane factory</li><li>Your size, material, colour and print</li><li>Proof approved before anything is made</li><li>Short runs and repeat orders welcome</li><li>10 to 15 working day turnaround, express available</li></ul>
 <p class="btn-row" style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a><button type="button" class="btn ghost add-quote" data-key="pu:{p['slug']}" data-name="{esc(p['title'])}">Add to quote request</button></p></div>
 </div></section>'''
     main += product_gallery(p)
@@ -74,7 +74,7 @@ def index_page(materials_html):
     path = "/products"
     cr = [("/", "Home"), ("/products", "Products")]
     main = hero(cr, "Products we make",
-                "Every Plastics Unique and Sov Services product, made to order in our Tingalpa factory, with a 10 to 15 day standard turnaround and express available. Choose a product to see options and photos of work we have made, then send us your size, material, quantity and print.",
+                "Every Plastics Unique and Sov Services product, made to order in our Tingalpa factory, with a 10 to 15 working day standard turnaround and express available. Choose a product to see options and photos of work we have made, then send us your size, material, quantity and print.",
                 buttons=[("/contact", "Request a quote"), ("/hospital/", "Hospital range (Sov Services)")])
     groups = ""
     for g in GROUP_ORDER:

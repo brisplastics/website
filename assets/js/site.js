@@ -46,18 +46,6 @@
   if(/^\/uv-printing\/thanks(\.html)?\/?$/.test(location.pathname)){gtag('event','manual_event_REQUEST_QUOTE',{form:'print-quote'});}
 })();
 
-// Contact page: ?product=<slug> selects the product; the notes hint changes to what we need to quote it
-(function(){
-  var p=document.getElementById('product'); if(!p)return;
-  var HINTS={"Binders and folders": "Ring type and size (e.g. 2 D-ring, 25 mm), spine width, pockets, pen loop, business card slot, printing inside or outside", "Covers and books": "The book or pad it must fit (size or brand), top or side opening, pockets, whether you need refill books", "Wallets and satchels": "Closure (press stud, zip, Velcro or flap), pockets and card slots, gusset or flat, what goes inside", "Tags and cards": "Hole or slot, numbering or variable text, how it attaches (tie, cable tie, lanyard), indoor or outdoor", "Hospitality and healthcare": "Number of rooms or sites, inserts or pages, how and where it is used", "Schools and education": "School logo and colours, year levels, pockets, name card or certificate size", "Other products": "What it is for, where it will be used, and a photo or sample of anything similar"}, GEN="Pockets, fittings, ring size, what it holds, where it will be used, delivery address, deadlines";
-  var d=document.getElementById('details'), rs=document.getElementById('route-sov'), rp=document.getElementById('route-print');
-  function upd(){var o=p.options[p.selectedIndex],g=o?o.getAttribute('data-group'):'';
-    if(d)d.placeholder=HINTS[g]||GEN; if(rs)rs.hidden=g!=='sov'; if(rp)rp.hidden=g!=='print';}
-  var s=new URLSearchParams(location.search).get('product');
-  if(s){for(var i=0;i<p.options.length;i++){if(p.options[i].getAttribute('data-slug')===s){p.selectedIndex=i;break;}}}
-  p.addEventListener('change',upd); upd();
-})();
-
 // Lead source: remember the first page, referrer, UTM tags and Google Ads click ID for this visit and add them to every form
 (function(){
   var K='bpc_src', src=null;
@@ -81,34 +69,6 @@
   b.querySelector('button').onclick=function(){b.remove();try{sessionStorage.setItem('bpc_welcome_closed','1');}catch(e){}};
 })();
 
-// Quote request list: 'Add to quote request' buttons collect products; the list rides along with the next form sent
-(function(){
-  var K='bpc_quote', list=[];
-  function load(){try{list=JSON.parse(localStorage.getItem(K)||'[]')||[];}catch(e){list=[];}}
-  function save(){try{localStorage.setItem(K,JSON.stringify(list));}catch(e){}}
-  load();
-  if(/\/thanks(\.html)?\/?$/.test(location.pathname)){list=[];save();return;}
-  function has(k){return list.some(function(x){return x.key===k;});}
-  var pill=document.createElement('a'); pill.className='quote-pill'; pill.href='/contact';
-  document.body.appendChild(pill);
-  function render(){
-    pill.textContent='Quote request ('+list.length+')'; pill.hidden=!list.length||/\/contact/.test(location.pathname);
-    [].forEach.call(document.querySelectorAll('.add-quote'),function(b){var on=has(b.getAttribute('data-key'));b.textContent=on?'Added to quote request':'Add to quote request';b.classList.toggle('on',on);});
-    [].forEach.call(document.querySelectorAll('input[name=quote_list]'),function(i){
-      i.value=list.map(function(x){return x.name;}).join('\n');
-      var box=i.form.querySelector('.quote-list');
-      if(!list.length){if(box)box.remove();return;}
-      if(!box){box=document.createElement('div');box.className='quote-list notice';var fs=i.form.querySelector('fieldset');i.form.insertBefore(box,fs);}
-      box.innerHTML='<p><strong>Products in this request</strong></p><ul>'+list.map(function(x,n){return '<li>'+x.name.replace(/</g,'&lt;')+' <button type="button" data-n="'+n+'" aria-label="Remove">Remove</button></li>';}).join('')+'</ul><p class="form-note">Add quantities and details for each product in the notes below.</p>';
-      [].forEach.call(box.querySelectorAll('button'),function(r){r.onclick=function(){list.splice(+r.getAttribute('data-n'),1);save();render();};});
-    });
-  }
-  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.add-quote');if(!b)return;
-    var k=b.getAttribute('data-key');if(has(k)){list=list.filter(function(x){return x.key!==k;});}else{list.push({key:k,name:b.getAttribute('data-name')});}
-    save();render();});
-  render();
-})();
-
 // Photo lightbox for product galleries
 (function(){
   var links=[].slice.call(document.querySelectorAll('a.lb')); if(!links.length)return;
@@ -123,4 +83,107 @@
   d.querySelector('.lb-next').onclick=function(){show(i+1);};
   d.addEventListener('click',function(e){if(e.target===d)d.close();});
   document.addEventListener('keydown',function(e){if(!d.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1);});
+})();
+
+// Quote request: "Add to quote request" buttons collect products (kept in this browser only).
+// On /contact each chosen product becomes an item block with its standard inclusions and extras.
+// On /hospital/order chosen Sov products fill the order lines.
+(function(){
+  var STANDARD={"ring-binders": ["Standard coloured PVC with a 2 D-ring from 15 to 65 mm, or a half or full lever arch. A4 or A5.", ["3 D-ring", "4 D-ring", "Half clear pocket inside front", "Half clear pockets inside front and back", "Welded business card pocket", "Welded CD pocket", "Clear overlay on front, back and spine", "Encapsulated print on front, back and spine", "Pen loop", "Print on the back"]], "glovebox-wallets": ["250 × 350 mm open, standard PVC. Clear pocket inside front and back, and 4 business card pockets inside.", ["Larger size 270 × 370 mm", "Larger size 270 × 405 mm", "Full colour print", "Full colour plus white"]], "travel-wallets": ["250 × 250 mm or 240 × 240 mm open, standard PVC. Clear pocket inside front and back.", ["Full colour print on white PVC"]], "tab-wallets": ["160 × 190 mm open, standard PVC. Clear pocket inside front and back.", []], "id-tags": ["Conference ID tags in 0.2 mm clear PVC with a clear pocket on one side and 3 lanyard holes, small 115 × 106 mm or large 115 × 170 mm. Card wallets are 100 × 130 mm open with a clear pocket inside front and back.", ["Large ID tag (115 × 170 mm)", "Card wallet", "Custom size"]], "music-folders": ["555 × 355 mm open. Clear diagonal pocket inside front and back, and a business card pocket on the outside front, top right.", ["A4 size", "Foil print", "Full colour print", "Full colour plus white"]], "notebook-covers": ["Standard PVC. Top opening 257 × 85 mm open, or side opening 125 × 200 mm open.", ["Hard cover (with board)", "Clear overlay front and back", "Encapsulated prints", "Clear pages", "Spine weld", "Double thickness PVC", "Larger side opening 140 × 190 mm", "Notebooks supplied", "Notebooks supplied and inserted"]], "tally-books": ["Hard cover with 1200 micron board and a clear pocket inside front and back. Large 198 × 208 mm or small 150 × 200 mm open. Notebook not included.", ["Foam padding", "Swing pockets", "Leather-look PVC", "Exercise book cut down and inserted", "Wiro ruled notebook supplied and inserted", "Full colour print"]], "clipboard-folders": ["Clipboard clip riveted on the front at the top. A4 clipboards are 320 × 224 mm in standard PVC with 2400 micron board, or 1.4 mm polypropylene with rounded corners.", ["A5 size (170 × 230 mm)", "Polypropylene instead of PVC", "Clipboard folder that closes"]], "certificate-pockets": ["A4. Opaque PVC back with a clear PVC front.", ["Cord supplied and assembled", "Gold cord", "Foil print"]], "pvc-satchels": ["Standard PVC with a business card pocket. V-flap 305 × 390 mm, tear drop 250 × 383 mm or zip 285 × 405 mm, plus flap. Job bags are 430 × 325 mm with a 100 mm flap and Velcro dot.", ["V-flap", "Tear drop flap", "Zip", "Velcro dot (22 mm)", "Job bag, A4 pocket one side", "Job bag, A4 pockets both sides"]], "polypropylene-satchels": ["A4 box satchels 220 × 320 mm in 10, 20, 30 or 40 mm capacity, and A4 envelopes, both with slot closure and supplied flat. 0.38 mm polypropylene as standard.", ["Box satchel", "Envelope", "0.6 mm polypropylene", "0.8 mm polypropylene"]], "luggage-tags": ["Standard PVC luggage tag.", ["Name card supplied", "Name card supplied and inserted"]], "noren-tags": ["Clear pocket with an 18 mm self-adhesive strip. Standard 75 × 100 mm, large 130 × 140 mm or small 70 × 70 mm.", ["Standard 75 × 100 mm", "Large 130 × 140 mm", "Small 70 × 70 mm"]], "presentation-folders": ["Diary and compendium covers in 0.6 or 0.8 mm polypropylene, clear frosted or coloured. Clear pockets available.", ["0.8 mm polypropylene", "Clear pockets"]], "promotional-products": ["Polypropylene business cards 55 × 90 mm, 0.6 mm white with rounded corners. Mouse mats 208 × 234 mm with a non-slip backing and a clear pocket for your print.", ["0.8 mm business cards", "Mouse mat with encapsulated print"]]}, HINTS={"Binders and folders": "Ring type and size (e.g. 2 D-ring, 25 mm), spine width, pockets, pen loop, business card slot, printing inside or outside", "Covers and books": "The book or pad it must fit (size or brand), top or side opening, pockets, whether you need refill books", "Wallets and satchels": "Closure (press stud, zip, Velcro or flap), pockets and card slots, gusset or flat, what goes inside", "Tags and cards": "Hole or slot, numbering or variable text, how it attaches (tie, cable tie, lanyard), indoor or outdoor", "Hospitality and healthcare": "Number of rooms or sites, inserts or pages, how and where it is used", "Schools and education": "School logo and colours, year levels, pockets, name card or certificate size", "Other products": "What it is for, where it will be used, and a photo or sample of anything similar"}, GENERIC="Pockets, fittings, ring size, what it holds, where it will be used, delivery address, deadlines";
+  var K='bpc_quote', list=[];
+  function load(){try{list=JSON.parse(localStorage.getItem(K)||'[]')||[];}catch(e){list=[];}}
+  function save(){try{localStorage.setItem(K,JSON.stringify(list));}catch(e){}}
+  function has(k){return list.some(function(x){return x.key===k;});}
+  function drop(k){list=list.filter(function(x){return x.key!==k;});save();}
+  load();
+  var path=location.pathname;
+  if(/\/thanks(\.html)?\/?$/.test(path)){list=[];save();return;}
+  var onContact=/^\/contact/.test(path), onOrder=/^\/hospital\/order/.test(path);
+
+  // Floating link to the chosen items
+  var pill=document.createElement('a'); pill.className='quote-pill';
+  document.body.appendChild(pill);
+  function renderButtons(){
+    var sovOnly=list.length&&list.every(function(x){return x.key.indexOf('sov:')===0;});
+    pill.href=sovOnly?'/hospital/order':'/contact';
+    pill.textContent='Your chosen items ('+list.length+')';
+    pill.hidden=!list.length||onContact||onOrder;
+    [].forEach.call(document.querySelectorAll('.add-quote'),function(b){
+      var on=has(b.getAttribute('data-key'));
+      b.textContent=on?'Added to quote request':'Add to quote request'; b.classList.toggle('on',on);});
+    [].forEach.call(document.querySelectorAll('input[name=quote_list]'),function(i){i.value=list.map(function(x){return x.name;}).join('\n');});
+  }
+  document.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('.add-quote'); if(!b)return;
+    var k=b.getAttribute('data-key');
+    if(has(k))drop(k); else {list.push({key:k,name:b.getAttribute('data-name')});save();}
+    renderButtons();
+  });
+  renderButtons();
+
+  // ---- /contact: item blocks ----
+  var form=document.querySelector('form[name=quote-request]');
+  if(form){
+    var items=[].slice.call(form.querySelectorAll('.item')), addBtn=document.getElementById('add-item');
+    function opt(sel){return sel.options[sel.selectedIndex];}
+    function syncHidden(div){
+      div.querySelector('.item-extras-value').value=[].map.call(div.querySelectorAll('.item-extras input:checked'),function(c){return c.value;}).join(', ');
+      div.querySelector('.item-pos-value').value=[].map.call(div.querySelectorAll('.item-pos input:checked'),function(c){return c.value;}).join(', ');
+    }
+    function routes(){
+      var groups=items.filter(function(d){return !d.hidden;}).map(function(d){var o=opt(d.querySelector('.item-product'));return o?o.getAttribute('data-group'):'';});
+      document.getElementById('route-sov').hidden=groups.indexOf('sov')<0;
+      document.getElementById('route-print').hidden=groups.indexOf('print')<0;
+    }
+    function onProduct(div){
+      var o=opt(div.querySelector('.item-product')), slug=o?o.getAttribute('data-slug'):'', g=o?o.getAttribute('data-group'):'';
+      var std=STANDARD[slug], p=div.querySelector('.item-std'), wrap=div.querySelector('.item-extras-wrap'), box=div.querySelector('.item-extras');
+      if(std){p.textContent='Comes with: '+std[0]; p.hidden=false;} else {p.textContent=''; p.hidden=true;}
+      box.innerHTML='';
+      if(std&&std[1].length){
+        std[1].forEach(function(x){var l=document.createElement('label');var c=document.createElement('input');c.type='checkbox';c.value=x;l.appendChild(c);l.appendChild(document.createTextNode(' '+x));box.appendChild(l);});
+        wrap.hidden=false;
+      } else wrap.hidden=true;
+      div.querySelector('.item-notes').placeholder=HINTS[g]||GENERIC;
+      syncHidden(div); routes();
+    }
+    function show(div){div.hidden=false; addBtn.hidden=items.every(function(d){return !d.hidden;});}
+    function nextFree(){for(var i=0;i<items.length;i++){if(items[i].hidden||!items[i].querySelector('.item-product').value){if(i===0||items[i].hidden||!items[i].querySelector('.item-product').value)return items[i];}}return null;}
+    function selectSlug(div,slug){var s=div.querySelector('.item-product');for(var i=0;i<s.options.length;i++){if(s.options[i].getAttribute('data-slug')===slug){s.selectedIndex=i;break;}}onProduct(div);}
+    function selectGroup(div,g){var s=div.querySelector('.item-product');for(var i=0;i<s.options.length;i++){if(s.options[i].getAttribute('data-group')===g){s.selectedIndex=i;break;}}onProduct(div);}
+    items.forEach(function(div){
+      div.querySelector('.item-product').addEventListener('change',function(){onProduct(div);});
+      div.addEventListener('change',function(e){if(e.target.type==='checkbox')syncHidden(div);});
+      var r=div.querySelector('.item-remove');
+      if(r)r.addEventListener('click',function(){
+        var k=div.getAttribute('data-key'); if(k){drop(k);div.removeAttribute('data-key');renderButtons();}
+        [].forEach.call(div.querySelectorAll('input,select,textarea'),function(f){if(f.type==='checkbox')f.checked=false;else if(f.tagName==='SELECT')f.selectedIndex=0;else f.value='';});
+        onProduct(div); div.hidden=true; addBtn.hidden=false; routes();
+      });
+    });
+    addBtn.addEventListener('click',function(){var d=items.filter(function(x){return x.hidden;})[0]; if(d){show(d); d.querySelector('.item-product').focus();}});
+    // Fill from ?product= and from the chosen items
+    var q=new URLSearchParams(location.search).get('product'), queue=list.slice();
+    if(q&&!queue.some(function(x){return x.key==='pu:'+q;}))queue.unshift({key:'pu:'+q,name:'',fromLink:true});
+    queue.slice(0,items.length).forEach(function(x,i){
+      var div=items[i]; show(div);
+      if(!x.fromLink)div.setAttribute('data-key',x.key);
+      if(x.key.indexOf('pu:')===0)selectSlug(div,x.key.slice(3));
+      else {selectGroup(div,'sov'); div.querySelector('.item-notes').value=x.name;}
+    });
+    items.forEach(function(d){if(!d.hidden)onProduct(d);});
+  }
+
+  // ---- /hospital/order: fill order lines from chosen Sov products ----
+  var ord=document.querySelector('form[name=hospital-order]');
+  if(ord){
+    var sov=list.filter(function(x){return x.key.indexOf('sov:')===0;}), left=[];
+    sov.forEach(function(x,i){
+      var sel=ord.querySelector('select[name=item_'+(i+1)+']'); if(!sel){left.push(x.name);return;}
+      var code=x.name.split(' ')[0], hit=false;
+      for(var j=0;j<sel.options.length;j++){if(sel.options[j].text.indexOf(code)===0){sel.selectedIndex=j;hit=true;break;}}
+      if(!hit)left.push(x.name);
+    });
+    if(left.length){var n=ord.querySelector('textarea[name=notes]'); if(n&&!n.value)n.value='Also: '+left.join('; ');}
+  }
 })();

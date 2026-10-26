@@ -29,15 +29,15 @@ pages = {}
 
 # ---- Home: v6 content plus links into the two new sections ----
 t, d, m = v6("index.html")
-m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 days, and express turnaround is available.</p>")
-assert "10 to 15 days" in m
+m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 working days, and express turnaround is available.</p>")
+assert "10 to 15 working days" in m
 m = fix(m)
 m = m.replace("<h1>Custom PVC and polypropylene products, made in Brisbane.</h1>", "<h1>Custom PVC and polypropylene products, and UV printing, in Brisbane.</h1>")
 assert "and UV printing, in Brisbane." in m
 m = m.replace('<div class="hero-sheets" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>',
     '<div class="hero-photos">' + "".join(f'<img src="/assets/img/products/{f}" alt="{a}" loading="eager" decoding="async">' for f, a in [
-        ("purple-pvc-ring-binder.jpg", "Purple PVC ring binder"), ("hospital-chart-folder-ward-bed.jpg", "Green patient chart folder with ward and bed print"),
-        ("music-folder-inside.jpg", "Blue music folder"), ("printed-polypropylene-sign.jpg", "UV printed polypropylene sign")]) + '</div>')
+        ("ring-binders/ring-binders-29.jpg", "Full-colour printed ring binder"), ("notebook-covers/notebook-covers-22.jpg", "Printed pocket notebook covers"),
+        ("glovebox-wallets/glovebox-wallets-11.jpg", "Printed dealership glove box wallet"), ("sov/chart-folders-colour-range.jpg", "Patient chart folders in ten colours")]) + '</div>')
 assert "hero-photos" in m
 m = m.replace('<li class="t-green"><h3>Hospital products</h3><p>Patient chart holders, bed chart folders and ward stationery, supplied through our Sov Services division.</p></li>',
               '<li class="t-green"><h3><a href="/hospital/" style="color:inherit">Hospital products</a></h3><p>Patient chart folders, chart holders, clipboards and dividers from our Sov Services range. <a href="/hospital/order">Order online</a>.</p></li>')
@@ -183,18 +183,6 @@ js += '''
 '''
 import forms
 js += '''
-// Contact page: ?product=<slug> selects the product; the notes hint changes to what we need to quote it
-(function(){
-  var p=document.getElementById('product'); if(!p)return;
-  var HINTS=''' + json.dumps(forms.GROUP_HINTS) + ''', GEN=''' + json.dumps(forms.GENERIC_HINT) + ''';
-  var d=document.getElementById('details'), rs=document.getElementById('route-sov'), rp=document.getElementById('route-print');
-  function upd(){var o=p.options[p.selectedIndex],g=o?o.getAttribute('data-group'):'';
-    if(d)d.placeholder=HINTS[g]||GEN; if(rs)rs.hidden=g!=='sov'; if(rp)rp.hidden=g!=='print';}
-  var s=new URLSearchParams(location.search).get('product');
-  if(s){for(var i=0;i<p.options.length;i++){if(p.options[i].getAttribute('data-slug')===s){p.selectedIndex=i;break;}}}
-  p.addEventListener('change',upd); upd();
-})();
-
 // Lead source: remember the first page, referrer, UTM tags and Google Ads click ID for this visit and add them to every form
 (function(){
   var K='bpc_src', src=null;
@@ -218,34 +206,6 @@ js += '''
   b.querySelector('button').onclick=function(){b.remove();try{sessionStorage.setItem('bpc_welcome_closed','1');}catch(e){}};
 })();
 
-// Quote request list: 'Add to quote request' buttons collect products; the list rides along with the next form sent
-(function(){
-  var K='bpc_quote', list=[];
-  function load(){try{list=JSON.parse(localStorage.getItem(K)||'[]')||[];}catch(e){list=[];}}
-  function save(){try{localStorage.setItem(K,JSON.stringify(list));}catch(e){}}
-  load();
-  if(/\/thanks(\.html)?\/?$/.test(location.pathname)){list=[];save();return;}
-  function has(k){return list.some(function(x){return x.key===k;});}
-  var pill=document.createElement('a'); pill.className='quote-pill'; pill.href='/contact';
-  document.body.appendChild(pill);
-  function render(){
-    pill.textContent='Quote request ('+list.length+')'; pill.hidden=!list.length||/\/contact/.test(location.pathname);
-    [].forEach.call(document.querySelectorAll('.add-quote'),function(b){var on=has(b.getAttribute('data-key'));b.textContent=on?'Added to quote request':'Add to quote request';b.classList.toggle('on',on);});
-    [].forEach.call(document.querySelectorAll('input[name=quote_list]'),function(i){
-      i.value=list.map(function(x){return x.name;}).join('\\n');
-      var box=i.form.querySelector('.quote-list');
-      if(!list.length){if(box)box.remove();return;}
-      if(!box){box=document.createElement('div');box.className='quote-list notice';var fs=i.form.querySelector('fieldset');i.form.insertBefore(box,fs);}
-      box.innerHTML='<p><strong>Products in this request</strong></p><ul>'+list.map(function(x,n){return '<li>'+x.name.replace(/</g,'&lt;')+' <button type="button" data-n="'+n+'" aria-label="Remove">Remove</button></li>';}).join('')+'</ul><p class="form-note">Add quantities and details for each product in the notes below.</p>';
-      [].forEach.call(box.querySelectorAll('button'),function(r){r.onclick=function(){list.splice(+r.getAttribute('data-n'),1);save();render();};});
-    });
-  }
-  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.add-quote');if(!b)return;
-    var k=b.getAttribute('data-key');if(has(k)){list=list.filter(function(x){return x.key!==k;});}else{list.push({key:k,name:b.getAttribute('data-name')});}
-    save();render();});
-  render();
-})();
-
 // Photo lightbox for product galleries
 (function(){
   var links=[].slice.call(document.querySelectorAll('a.lb')); if(!links.length)return;
@@ -262,6 +222,7 @@ js += '''
   document.addEventListener('keydown',function(e){if(!d.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1);});
 })();
 '''
+js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT))
 open(os.path.join(OUT, "assets/js/site.js"), "w", encoding="utf-8").write(js)
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "favicon.svg"))
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "assets/img/logo.svg"))
@@ -289,7 +250,7 @@ L=["# Brisbane Plastics Company", "",
    "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, clipboards and dividers for hospitals since 1994), "
    "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
    "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744 or 1300 744 104",
-   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 days for standard jobs; express turnaround available.", ""]
+   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 working days for standard jobs; express turnaround available.", ""]
 for name, test in SECTIONS:
     L.append("## " + name); L.append("")
     for p in locs:
