@@ -19,10 +19,12 @@ PHONE_1300 = "1300 744 104"
 TEL_1300 = "1300744104"
 STREET = "45a Millennium Place"
 ADDRESS = "45a Millennium Place, Tingalpa QLD 4173"
-LASTMOD = "2026-10-25"
+LASTMOD = "2026-10-26"
+import time as _t
+BUILD = _t.strftime("%Y%m%d%H%M")  # cache-buster: CSS and JS are cached for 7 days, so each build gets a new URL
 
 # Solar and recyclable badges in the footer. Claims are being checked with Chris (25/10/2026).
-# Set to False and rebuild to remove them. The Australian Made logo is NOT used until the licence transfers.
+# Set to False and rebuild to remove them. Australian Made icon added 26/10/2026 (Bruce).
 SHOW_ECO_BADGES = True
 BRAND = "/assets/img/brand/"
 
@@ -30,7 +32,7 @@ NAV = [
     ("/", "Home", ""),
     ("/products", "Products", "/products"),
     ("/hospital/", "Hospital", "/hospital"),
-    ("/uv-printing/", "UV printing", "/uv-printing"),
+    ("/uv-printing/", "UV Printing", "/uv-printing"),
     ("/about", "About us", "/about"),
 ]
 
@@ -48,7 +50,6 @@ BUSINESS = {
     "telephone": "+61733963744",
     "address": {"@type": "PostalAddress", "streetAddress": "45a Millennium Place", "addressLocality": "Tingalpa", "addressRegion": "QLD", "postalCode": "4173", "addressCountry": "AU"},
     "areaServed": "Australia",
-    "parentOrganization": {"@type": "Organization", "name": "FormFill Group", "url": "https://www.formfill.com.au/"},
     "brand": [{"@type": "Brand", "name": "Plastics Unique"}, {"@type": "Brand", "name": "Sov Services"}],
     "alternateName": ["Plastics Unique", "Sov Services", "BPC"],
     "sameAs": ["https://plasticsunique.com.au/", "https://sovservices.net.au/"],
@@ -110,21 +111,27 @@ def header(path):
 </div>
 </header>'''
 
-def eco_badges():
+STRAPLINE = "Australian made in Tingalpa · Fully recyclable products"
+
+def eco_badges(dark=True):
+    """Australian Made, solar and recyclable icons in one row. Set SHOW_ECO_BADGES = False to remove."""
     if not SHOW_ECO_BADGES:
         return ""
+    v = "White_on_Navy" if dark else "Colour"
     return (f'<div class="eco-badges" data-removable="eco">'
-            f'<img src="{BRAND}Icon_SolarPowered_White_on_Navy_v1_CAI.svg" alt="Solar powered factory" width="52" height="52" loading="lazy">'
-            f'<img src="{BRAND}Icon_Recyclable_White_on_Navy_v1_CAI.svg" alt="Recyclable materials" width="55" height="52" loading="lazy"></div>')
+            f'<img src="{BRAND}Icon_AustralianMade_{v}_v1_CAI.svg" alt="Australian made" width="56" height="52" loading="lazy">'
+            f'<img src="{BRAND}Icon_SolarPowered_{v}_v1_CAI.svg" alt="Solar powered factory" width="52" height="52" loading="lazy">'
+            f'<img src="{BRAND}Icon_Recyclable_{v}_v1_CAI.svg" alt="Recyclable products" width="55" height="52" loading="lazy"></div>')
 
 def footer():
     return f'''<footer class="site-foot">
 <div class="wrap">
 <div>
 <img class="foot-logo" src="{BRAND}BPC_Logo_Fan_Stacked_White_v1_CAI.svg" alt="Brisbane Plastics Company" width="223" height="60" loading="lazy">
-<p>Custom PVC and polypropylene products, hospital products and UV flatbed printing, made in Tingalpa, Brisbane.</p>
-<p>Part of <a href="https://www.formfill.com.au/" rel="noopener">FormFill Group</a>, a South East Queensland plastics manufacturing group.</p>
-<div class="foot-brands"><span>Our brands</span>
+<p>Custom PVC and polypropylene products, hospital products and UV printing, made in Tingalpa, Brisbane.</p>
+<p class="strap">{STRAPLINE}</p>
+<span class="foot-label">Our brands</span>
+<div class="foot-brands">
 <a href="/products" aria-label="Plastics Unique products"><img src="{BRAND}PU_Logo_Endorsed_White_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="131" height="60" loading="lazy"></a>
 <a href="/hospital/" aria-label="Sov Services hospital range"><img src="{BRAND}Sov_Logo_Endorsed_White_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="163" height="60" loading="lazy"></a></div>
 {eco_badges()}
@@ -135,12 +142,12 @@ def footer():
 </div>
 <div>
 <h2>Site</h2>
-<ul><li><a href="/products">Products</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">UV flatbed printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li></ul>
+<ul><li><a href="/products">Products</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">UV Printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li></ul>
 </div>
 <p class="legal">© 2026 {LEGAL} · ACN {ACN} · ABN {ABN}</p>
 </div>
 </footer>
-<script src="/assets/js/site.js" defer></script>'''
+<script src="/assets/js/site.js?v={BUILD}" defer></script>'''
 
 def page(path, title, desc, main, crumbs=None, schema=None, noindex=False, og_type="website"):
     schemas = [BUSINESS]
@@ -172,8 +179,8 @@ def page(path, title, desc, main, crumbs=None, schema=None, noindex=False, og_ty
 <link rel="apple-touch-icon" href="/assets/img/brand/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..125,500..800&family=IBM+Plex+Mono:wght@500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/css/site.css?v={BUILD}">
 {ld}
 </head>
 <body>

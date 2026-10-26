@@ -78,9 +78,7 @@ section.block.alt .cards li{background:var(--paper)}
 
 /* v10 brand: logo colours Blue 16 82 125, Light Blue 34 81 198 */
 :root{--ink:#10527D;--blue:#2251C6;--blue-deep:#10527D;--pvc-blue:#2251C6;--sheet:#DCE6F8}
-/* Fan logo from /assets/img/logo.svg replaces the inline header mark, so page HTML is unchanged */
 .brand svg{display:none}
-.brand::before{content:"";width:40px;height:44px;flex:none;background:url(/assets/img/logo.svg) no-repeat center/contain}
 
 /* v11 product photo galleries */
 .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:1.2rem}
@@ -159,3 +157,91 @@ fieldset .notice{margin:0 0 1rem}
 .welcome-bar p{margin:0;font-size:.95rem}
 .welcome-bar a{color:var(--deep);font-weight:700}
 .welcome-bar button{background:none;border:0;font-size:1.5rem;line-height:1;cursor:pointer;color:var(--deep);padding:.2rem .5rem}
+
+/* ===== v19 theme (26/10/2026): industrial look. Barlow type, navy page headers, square corners, no eyebrow labels ===== */
+:root{--f-head:"Barlow Semi Condensed","Barlow",system-ui,sans-serif;--f-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --paper:#F2F4F6;--rule:#D9DEE3;--steel:#4F5D6B;--r:3px}
+body{font:400 1.0625rem/1.6 var(--f-body);background:#fff}
+h1,h2,h3{font-family:var(--f-head);font-stretch:normal;letter-spacing:0;font-weight:700}
+h1{font-size:clamp(2.1rem,4.6vw,3.4rem);line-height:1.05}
+h2{font-size:clamp(1.6rem,2.8vw,2.2rem)}
+h3{font-size:1.2rem;font-weight:700}
+.kicker{display:none}
+.lede{color:var(--steel)}
+.page-hero{background:var(--deep);color:#fff;padding:clamp(2.2rem,5vw,3.6rem) 0 clamp(2rem,4vw,3rem)}
+.page-hero h1{color:#fff}
+.page-hero .lede{color:#D3DEE9;max-width:none}
+.page-hero .crumbs,.page-hero .crumbs a{color:#A9BED3}
+.page-hero .crumbs li+li::before{color:#5E7A96}
+.page-hero .btn.ghost{color:#fff;border-color:#fff}
+.page-hero .btn.ghost:hover{background:#fff;color:var(--deep)}
+.page-hero a:not(.btn){color:#fff}
+.hero{background:var(--deep);color:#fff}
+.hero h1{color:#fff}.hero .lede{color:#D3DEE9}
+.hero .btn.ghost{color:#fff;border-color:#fff}
+.hero-photos{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.hero-photos img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:var(--r);background:#fff}
+@media (max-width:860px){.hero-photos{grid-template-columns:repeat(4,1fr);order:2}}
+.btn{border-radius:var(--r);font:600 .95rem/1 var(--f-body);text-transform:uppercase;letter-spacing:.04em;padding:.95rem 1.3rem}
+nav a{font-weight:600;font-size:.98rem}
+section.block.alt{background:var(--paper)}
+section.block.alt .cards li,section.block.alt .pcards a{background:#fff}
+.cards li{border-radius:var(--r);border-top:3px solid var(--teal)}
+.tabs li{border-left:3px solid var(--teal)}.tabs li::before{display:none}
+.steps li::before{border-radius:var(--r);background:var(--teal);color:var(--deep)}
+.cta{background:var(--deep);color:#fff}.cta h2{color:#fff}
+.cta .btn{background:var(--teal);border-color:var(--teal);color:var(--deep)}
+.cta .btn.ghost{background:transparent;color:#fff;border-color:#fff}
+.band{background:var(--blue)}
+.gallery figure,.table-wrap,form.quote,.bed,.pcards a{border-radius:var(--r)}
+input,select,textarea{border-radius:var(--r)}
+.related a{border-radius:var(--r)}
+.notice{border-left-color:var(--teal);border-radius:0 var(--r) var(--r) 0;background:#fff}
+section.block.alt .notice{background:#fff}
+.spec code,.code{background:transparent;padding:0;font-family:var(--f-body);font-weight:600}
+
+/* Product grid: hospital range, home routes. 3 columns desktop, 2 on phones; every image in the same box */
+.pgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.2rem}
+@media (max-width:640px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem}}
+.pgrid.routes{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.pgrid>li{display:flex;flex-direction:column;background:#fff;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;scroll-margin-top:96px}
+.pgrid>li>a{display:flex;flex-direction:column;height:100%;color:var(--ink);text-decoration:none}
+.pgrid>li:hover{border-color:var(--teal)}
+.pgrid li:target{border-color:var(--teal);box-shadow:0 0 0 3px rgba(34,181,198,.35)}
+.pimg{display:block;aspect-ratio:4/3;background:#fff;border-bottom:1px solid var(--rule);padding:.6rem}
+.pimg img{width:100%;height:100%;object-fit:contain}
+.pgrid.routes .pimg{padding:0}.pgrid.routes .pimg img{object-fit:cover}
+.pgrid .pc-body{display:flex;flex-direction:column;gap:.25rem;padding:.8rem .9rem 1rem;flex:1}
+.pgrid .sku{font-size:.8rem;font-weight:600;letter-spacing:.04em;color:var(--steel);text-transform:uppercase}
+.pgrid strong{font-family:var(--f-head);font-size:1.08rem;line-height:1.2}
+.pgrid .price{font-weight:700;color:var(--blue)}
+.pgrid .colours{font-size:.88rem;color:var(--steel)}
+.pgrid .pc-body>span:not(.sku):not(.price):not(.colours){font-size:.9rem;color:var(--steel)}
+.pgrid .more{margin-top:auto;padding-top:.4rem;font-weight:600;color:var(--blue)}
+.tile-actions{margin-top:auto;padding-top:.6rem;display:flex;flex-wrap:wrap;gap:.5rem 1rem;align-items:center}
+.tile-actions .more{margin:0;padding:0}
+@media (max-width:640px){.pgrid .pc-body{padding:.6rem .65rem .8rem}.pgrid strong{font-size:1rem}}
+
+/* Add to quote request */
+.add-quote{font:600 .9rem/1.2 var(--f-body);background:#fff;color:var(--blue);border:1px solid var(--blue);border-radius:var(--r);padding:.5rem .7rem;cursor:pointer}
+.add-quote.btn{padding:.95rem 1.3rem;font-size:.95rem;text-transform:uppercase;letter-spacing:.04em}
+.add-quote.on{background:var(--teal);border-color:var(--teal);color:var(--deep)}
+.quote-pill{position:fixed;left:16px;bottom:16px;z-index:30;background:var(--deep);color:#fff;text-decoration:none;font-weight:700;padding:.75rem 1rem;border-radius:var(--r);box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.quote-pill:hover{color:#fff;background:var(--blue)}
+.quote-list ul{margin:.4rem 0;padding-left:1.1rem}
+.quote-list button{font:inherit;font-size:.85rem;background:none;border:0;color:var(--blue);text-decoration:underline;cursor:pointer}
+
+/* Printer section: bed diagram then a full-width specification table */
+.printer .printer-bed{max-width:760px;margin:0 0 1.5rem}
+.printer .bed{margin:0}
+
+/* Footer: brands and icons in rows */
+.site-foot .strap{font-weight:600;color:#fff}
+.foot-label{display:block;font-size:.8rem;text-transform:uppercase;letter-spacing:.08em;color:#9fb3c8;margin:1.2rem 0 .5rem}
+.foot-brands{flex-wrap:nowrap;margin:0 0 .4rem}
+.foot-brands img{height:40px;width:auto;max-width:100%}
+.eco-badges{flex-wrap:nowrap;align-items:center}
+.eco-badges img{height:44px;width:auto}
+.brand-strip .wrap,.brand-row{flex-wrap:nowrap}
+.brand-strip img,.brand-row img{max-width:100%;height:auto;max-height:62px}
+@media (max-width:560px){.brand-strip .wrap{flex-wrap:wrap}.brand-strip span{width:100%}.brand-strip a{flex:1 1 40%}.brand-strip img{max-height:48px}}

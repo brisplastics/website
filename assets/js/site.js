@@ -81,6 +81,34 @@
   b.querySelector('button').onclick=function(){b.remove();try{sessionStorage.setItem('bpc_welcome_closed','1');}catch(e){}};
 })();
 
+// Quote request list: 'Add to quote request' buttons collect products; the list rides along with the next form sent
+(function(){
+  var K='bpc_quote', list=[];
+  function load(){try{list=JSON.parse(localStorage.getItem(K)||'[]')||[];}catch(e){list=[];}}
+  function save(){try{localStorage.setItem(K,JSON.stringify(list));}catch(e){}}
+  load();
+  if(/\/thanks(\.html)?\/?$/.test(location.pathname)){list=[];save();return;}
+  function has(k){return list.some(function(x){return x.key===k;});}
+  var pill=document.createElement('a'); pill.className='quote-pill'; pill.href='/contact';
+  document.body.appendChild(pill);
+  function render(){
+    pill.textContent='Quote request ('+list.length+')'; pill.hidden=!list.length||/\/contact/.test(location.pathname);
+    [].forEach.call(document.querySelectorAll('.add-quote'),function(b){var on=has(b.getAttribute('data-key'));b.textContent=on?'Added to quote request':'Add to quote request';b.classList.toggle('on',on);});
+    [].forEach.call(document.querySelectorAll('input[name=quote_list]'),function(i){
+      i.value=list.map(function(x){return x.name;}).join('\n');
+      var box=i.form.querySelector('.quote-list');
+      if(!list.length){if(box)box.remove();return;}
+      if(!box){box=document.createElement('div');box.className='quote-list notice';var fs=i.form.querySelector('fieldset');i.form.insertBefore(box,fs);}
+      box.innerHTML='<p><strong>Products in this request</strong></p><ul>'+list.map(function(x,n){return '<li>'+x.name.replace(/</g,'&lt;')+' <button type="button" data-n="'+n+'" aria-label="Remove">Remove</button></li>';}).join('')+'</ul><p class="form-note">Add quantities and details for each product in the notes below.</p>';
+      [].forEach.call(box.querySelectorAll('button'),function(r){r.onclick=function(){list.splice(+r.getAttribute('data-n'),1);save();render();};});
+    });
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.add-quote');if(!b)return;
+    var k=b.getAttribute('data-key');if(has(k)){list=list.filter(function(x){return x.key!==k;});}else{list.push({key:k,name:b.getAttribute('data-name')});}
+    save();render();});
+  render();
+})();
+
 // Photo lightbox for product galleries
 (function(){
   var links=[].slice.call(document.querySelectorAll('a.lb')); if(!links.length)return;

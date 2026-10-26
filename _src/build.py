@@ -32,21 +32,37 @@ t, d, m = v6("index.html")
 m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 days, and express turnaround is available.</p>")
 assert "10 to 15 days" in m
 m = fix(m)
+m = m.replace("<h1>Custom PVC and polypropylene products, made in Brisbane.</h1>", "<h1>Custom PVC and polypropylene products, and UV printing, in Brisbane.</h1>")
+assert "and UV printing, in Brisbane." in m
+m = m.replace('<div class="hero-sheets" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>',
+    '<div class="hero-photos">' + "".join(f'<img src="/assets/img/products/{f}" alt="{a}" loading="eager" decoding="async">' for f, a in [
+        ("purple-pvc-ring-binder.jpg", "Purple PVC ring binder"), ("hospital-chart-folder-ward-bed.jpg", "Green patient chart folder with ward and bed print"),
+        ("music-folder-inside.jpg", "Blue music folder"), ("printed-polypropylene-sign.jpg", "UV printed polypropylene sign")]) + '</div>')
+assert "hero-photos" in m
 m = m.replace('<li class="t-green"><h3>Hospital products</h3><p>Patient chart holders, bed chart folders and ward stationery, supplied through our Sov Services division.</p></li>',
-              '<li class="t-green"><h3><a href="/hospital/" style="color:inherit">Hospital products</a></h3><p>Patient chart folders, chart holders, dividers and glove box holders from our Sov Services range. <a href="/hospital/order">Order online</a>.</p></li>')
+              '<li class="t-green"><h3><a href="/hospital/" style="color:inherit">Hospital products</a></h3><p>Patient chart folders, chart holders, clipboards and dividers from our Sov Services range. <a href="/hospital/order">Order online</a>.</p></li>')
 m = m.replace('<li class="t-ink"><h3>Printing and branding</h3><p>Screen printing, flatbed UV printing and foil blocking, applied in-house so your job stays under one roof.</p></li>',
               '<li class="t-ink"><h3><a href="/uv-printing/" style="color:inherit">Printing and branding</a></h3><p>Screen printing, foil blocking and full-colour UV flatbed printing up to 1250 × 2500 mm. <a href="/uv-printing/trade">Trade printing</a> for sign shops and printers.</p></li>')
 m = m.replace('<li><strong>Medical and hospital</strong><span>Chart holders and ward products through Sov Services.</span></li>',
               '<li><strong><a href="/hospital/">Medical and hospital</a></strong><span>Chart folders, holders and ward products through Sov Services.</span></li>')
-feature = '''<section class="block"><div class="wrap">
-<div class="section-head"><h2>Two ways in</h2><p class="lede">Ordering for a hospital ward, or need something printed? Go straight there.</p></div>
-<ul class="cards">
-<li style="--tab:var(--pvc-green)"><h3><a href="/hospital/">Sov Services hospital range</a></h3><p>Patient chart folders, chart holders, dividers and glove box holders. Same item codes, now ordered online.</p><a class="more" href="/hospital/order">Order or reorder</a></li>
-<li style="--tab:var(--ink)"><h3><a href="/uv-printing/">UV flatbed printing</a></h3><p>Full colour and white on acrylic, PVC, ACM, wood and glass up to 1250 × 2500 mm. Trade and direct.</p><a class="more" href="/uv-printing/">Printing services</a></li>
-</ul>
-</div></section>
-'''
-m = m.replace('<section class="block"><div class="wrap">\n<div class="section-head"><h2>Who we make it for</h2>', feature + '<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>Who we make it for</h2>', 1)
+def _route(href, img, alt, title, text, link):
+    return (f'<li><a href="{href}"><span class="pimg"><img src="{img}" alt="{esc(alt)}" loading="lazy" decoding="async"></span>'
+            f'<span class="pc-body"><strong>{title}</strong><span>{text}</span><span class="more">{link}</span></span></a></li>')
+feature = ('<section class="block"><div class="wrap">\n<div class="section-head"><h2>What can we help with?</h2>'
+    '<p class="lede">Five ways we work. Choose the one closest to your job.</p></div>\n<ul class="pgrid routes">'
+    + _route("/products", "/assets/img/products/safety-data-sheet-binder.jpg", "Printed safety data sheet ring binder", "Custom printed products",
+             "Your logo and artwork on folders, binders, wallets, satchels, tags and covers, by screen print, foil blocking or full-colour UV.", "See printed products")
+    + _route("/products", "/assets/img/products/pvc-satchel-flap.jpg", "Blue welded PVC satchel with flap", "Made to your size",
+             "Custom-size PVC and polypropylene products, RF welded, die cut and creased in our factory to fit exactly what you need.", "See what we make")
+    + _route("/products/noren-tags", "/assets/img/products/noren-tags-sizes.jpg", "Clear PVC noren tags in three sizes", "Standard products",
+             "Ready-made lines in standard sizes: noren tags, chart folders, tally book refills, TAB wallets and X-ray sleeves.", "See standard products")
+    + _route("/hospital/", "/assets/img/products/sov/chart-folders-colour-range-t.jpg", "Patient chart folders in ten colours", "Hospital range",
+             "Sov Services patient chart folders, chart holders, clipboards and dividers, with the same item codes.", "Order or reorder")
+    + _route("/uv-printing/", "/assets/img/products/printed-polypropylene-sign.jpg", "Printed polypropylene venue sign", "UV Printing",
+             "Full colour and white ink direct onto rigid material from heavy card up to 50.8 mm thick and 1250 × 2500 mm: acrylic, foamed PVC, polycarbonate, ACM, aluminium, wood, MDF, glass, tile and corflute.", "Printing services")
+    + '</ul>\n</div></section>\n')
+m = m.replace('<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>What we make</h2>', feature + '<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>What we make</h2>', 1)
+assert 'What can we help with?' in m
 m = m.replace('<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>How ordering works</h2>', gallery([
     ("hospital-chart-folder-ward-bed.jpg", "Green hospital patient chart folder with ward and bed print", "Sov Services chart folders"),
     ("purple-pvc-ring-binder.jpg", "Purple PVC 2-ring binder", "PVC ring binders"),
@@ -76,6 +92,9 @@ pages.update(catalogue.build(mat))
 
 # ---- About ----
 t, d, m = v6("about.html")
+m = m.replace('<h2>Part of FormFill Group</h2>\n<p>Brisbane Plastics Company is part of <a href="https://www.formfill.com.au/" rel="noopener">FormFill Group</a>, an engineer-led group that buys and improves South East Queensland plastics manufacturers.</p>', '<h2>Owner-operated</h2>\n<p>Brisbane Plastics Company is run by its directors from the Tingalpa factory, bringing engineering, controls and commercial experience to a business that has made plastic products in Brisbane for 27 years.</p>')
+d = d.replace("Brisbane Plastics Company, part of FormFill Group, owns", "Brisbane Plastics Company owns")
+assert "FormFill" not in m and "FormFill" not in d
 brands = f'''<section class="block"><div class="wrap"><div class="section-head"><h2>Our brands</h2><p class="lede">Plastics Unique and Sov Services keep their names, products and customers. Both are made and supplied by Brisbane Plastics Company.</p></div>
 <div class="brand-row"><a href="/products"><img src="{BRAND}PU_Logo_Endorsed_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="262" height="120" loading="lazy"></a>
 <a href="/hospital/"><img src="{BRAND}Sov_Logo_Endorsed_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="325" height="120" loading="lazy"></a></div></div></section>'''
@@ -193,6 +212,34 @@ js += '''
   b.querySelector('button').onclick=function(){b.remove();try{sessionStorage.setItem('bpc_welcome_closed','1');}catch(e){}};
 })();
 
+// Quote request list: 'Add to quote request' buttons collect products; the list rides along with the next form sent
+(function(){
+  var K='bpc_quote', list=[];
+  function load(){try{list=JSON.parse(localStorage.getItem(K)||'[]')||[];}catch(e){list=[];}}
+  function save(){try{localStorage.setItem(K,JSON.stringify(list));}catch(e){}}
+  load();
+  if(/\/thanks(\.html)?\/?$/.test(location.pathname)){list=[];save();return;}
+  function has(k){return list.some(function(x){return x.key===k;});}
+  var pill=document.createElement('a'); pill.className='quote-pill'; pill.href='/contact';
+  document.body.appendChild(pill);
+  function render(){
+    pill.textContent='Quote request ('+list.length+')'; pill.hidden=!list.length||/\/contact/.test(location.pathname);
+    [].forEach.call(document.querySelectorAll('.add-quote'),function(b){var on=has(b.getAttribute('data-key'));b.textContent=on?'Added to quote request':'Add to quote request';b.classList.toggle('on',on);});
+    [].forEach.call(document.querySelectorAll('input[name=quote_list]'),function(i){
+      i.value=list.map(function(x){return x.name;}).join('\\n');
+      var box=i.form.querySelector('.quote-list');
+      if(!list.length){if(box)box.remove();return;}
+      if(!box){box=document.createElement('div');box.className='quote-list notice';var fs=i.form.querySelector('fieldset');i.form.insertBefore(box,fs);}
+      box.innerHTML='<p><strong>Products in this request</strong></p><ul>'+list.map(function(x,n){return '<li>'+x.name.replace(/</g,'&lt;')+' <button type="button" data-n="'+n+'" aria-label="Remove">Remove</button></li>';}).join('')+'</ul><p class="form-note">Add quantities and details for each product in the notes below.</p>';
+      [].forEach.call(box.querySelectorAll('button'),function(r){r.onclick=function(){list.splice(+r.getAttribute('data-n'),1);save();render();};});
+    });
+  }
+  document.addEventListener('click',function(e){var b=e.target.closest&&e.target.closest('.add-quote');if(!b)return;
+    var k=b.getAttribute('data-key');if(has(k)){list=list.filter(function(x){return x.key!==k;});}else{list.push({key:k,name:b.getAttribute('data-name')});}
+    save();render();});
+  render();
+})();
+
 // Photo lightbox for product galleries
 (function(){
   var links=[].slice.call(document.querySelectorAll('a.lb')); if(!links.length)return;
@@ -233,7 +280,7 @@ SECTIONS=[("Products (Plastics Unique)", lambda p: p=="/products" or p.startswit
           ("Company and ordering", lambda p: p in ("/", "/about", "/contact", "/hospital/order"))]
 L=["# Brisbane Plastics Company", "",
    "> Brisbane Plastics Company Pty Ltd (ABN " + ABN + ") makes custom PVC and polypropylene products in Tingalpa, Brisbane, Queensland, Australia. "
-   "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, dividers and glove box holders for hospitals since 1994), "
+   "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, clipboards and dividers for hospitals since 1994), "
    "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
    "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744 or 1300 744 104",
    "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 days for standard jobs; express turnaround available.", ""]
@@ -245,6 +292,7 @@ for name, test in SECTIONS:
     L.append("")
 open(os.path.join(OUT, "llms.txt"), "w", encoding="utf-8").write("\n".join(L))
 nt=open(os.path.join(V6, "netlify.toml")).read()
+nt+="\n# Glove box holders discontinued 26/10/2026 (Elbe)\n[[redirects]]\n  from = \"/hospital/glove-box-holders\"\n  to = \"/hospital/\"\n  status = 301\n"
 nt+="\n# Keep the page generator source private\n[[redirects]]\n  from = \"/_src/*\"\n  to = \"/404\"\n  status = 404\n  force = true\n"
 open(os.path.join(OUT, "netlify.toml"),"w").write(nt)
 pu = "# plasticsunique.com.au redirects. NOT ACTIVE. Activate when the domain moves (Bruce, parked 24/10/2026).\n# Swap TARGET for the live domain, paste above the existing redirects in netlify.toml, deploy, test.\n\n"

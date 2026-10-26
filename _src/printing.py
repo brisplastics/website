@@ -5,7 +5,7 @@ from shell import *
 from forms import TRACKING, optin, artwork_fields
 
 HUB = "/uv-printing/"
-C_HUB = [("/", "Home"), (HUB, "UV flatbed printing")]
+C_HUB = [("/", "Home"), (HUB, "UV Printing")]
 
 MATERIALS = ["Acrylic (clear, frosted, coloured)", "Foamed PVC sheet", "Rigid PVC", "Polycarbonate", "Styrene",
              "Polypropylene sheet", "Corflute (fluted polypropylene)", "Aluminium composite panel (ACM)", "Aluminium sheet",
@@ -72,7 +72,7 @@ def index_cards(exclude=None):
     return f'<ul class="cards">{lis}</ul>'
 
 def related(current):
-    return '<ul class="related">' + "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _, _ in PAGES_INDEX if h != current) + '<li><a href="/uv-printing/">UV printing overview</a></li></ul>'
+    return '<ul class="related">' + "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _, _ in PAGES_INDEX if h != current) + '<li><a href="/uv-printing/">UV Printing overview</a></li></ul>'
 
 MAT_OPTS = ["Not sure yet", "Acrylic", "Foamed PVC", "Rigid PVC", "Polycarbonate", "Corflute", "ACM / aluminium composite", "Aluminium sheet",
             "Wood, plywood or MDF", "Glass or tile", "Card or board", "Polypropylene", "Our own items or objects", "Other"]
@@ -174,9 +174,10 @@ def build():
                 "Full-colour printing direct onto rigid sheet and objects up to 1250 × 2500 mm and 50.8 mm thick, with white ink. Printed on a Canon Arizona 135 GT in Tingalpa for trade and business customers across Brisbane and Australia.",
                 kicker="Trade and direct · Tingalpa, Brisbane",
                 buttons=[("#quote", "Get a print quote"), ("/uv-printing/trade", "Trade printing")])
-    main += f'''<section class="block alt"><div class="wrap two-col">
-<div>{BED_SVG}</div>
-<div><h2>The printer</h2>{spec_table()}</div>
+    main += f'''<section class="block alt"><div class="wrap printer">
+<h2>The printer: Canon Arizona 135 GT</h2>
+<div class="printer-bed">{BED_SVG}</div>
+{spec_table()}
 </div></section>
 <section class="block"><div class="wrap">
 <div class="section-head"><h2>What we print</h2><p class="lede">Direct to the material, no mounting or laminating. Choose the job closest to yours.</p></div>
@@ -219,7 +220,7 @@ def build():
 <li><h3>Quote and proof</h3><p>We quote within one business day and check every file before it prints.</p></li>
 <li><h3>Printed, packed, gone</h3><p>Collect from Tingalpa or we freight it to you or your customer in plain packaging.</p></li>
 </ol>''')
-    body += f'''<section class="block"><div class="wrap two-col"><div>{BED_SVG}</div><div><h2>Specification</h2>{spec_table()}</div></div></section>'''
+    body += f'''<section class="block"><div class="wrap printer"><h2>Specification</h2><div class="printer-bed">{BED_SVG}</div>{spec_table()}</div></section>'''
     faqs = [
         ("Do you offer trade pricing?", "Yes. Regular trade customers can apply for a trade account and trade pricing. Ask on the quote form."),
         ("Will you contact my customer?", "No. Trade work is yours. We deal only with you and can deliver in plain packaging with no Brisbane Plastics branding."),
@@ -514,7 +515,7 @@ def build():
     main = f'''<section class="page-hero"><div class="wrap">
 <h1>Thanks. Your print enquiry is in.</h1>
 <p class="lede">We check your files and reply with a quote within one business day. If your files are large, reply to our email with a download link.</p>
-<div class="btn-row"><a class="btn" href="/uv-printing/">Back to UV printing</a><a class="btn ghost" href="/">Home</a></div>
+<div class="btn-row"><a class="btn" href="/uv-printing/">Back to UV Printing</a><a class="btn ghost" href="/">Home</a></div>
 </div></section>'''
     pages[p] = page(p, "Enquiry received | Brisbane Plastics Company", "Thank you for your print enquiry.", main, noindex=True)
     return pages

@@ -45,7 +45,7 @@ def product_page(p):
 <div><div class="table-wrap"><table class="spec"><caption class="hidden">{esc(p["title"])} options</caption><tbody>{rows}</tbody></table></div></div>
 <div><h2 style="font-size:1.3rem">Made to order in Tingalpa</h2>
 <ul class="ticks"><li>Australian made in our Brisbane factory</li><li>Your size, material, colour and print</li><li>Proof approved before anything is made</li><li>Short runs and repeat orders welcome</li><li>10 to 15 day turnaround, express available</li></ul>
-<p style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a></p></div>
+<p class="btn-row" style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a><button type="button" class="btn ghost add-quote" data-key="pu:{p['slug']}" data-name="{esc(p['title'])}">Add to quote request</button></p></div>
 </div></section>'''
     main += product_gallery(p)
     SIGN_CALLOUT = {"Schools and education": ("/uv-printing/school-signs", "Need school signs or honour boards too? We print them in the same factory."),
@@ -89,7 +89,7 @@ def index_page(materials_html):
     # Sov range card group
     from hospital import sov_link_tiles
     groups += ('<section class="block"><div class="wrap"><h2>Hospital range (Sov Services)</h2>'
-               '<p class="lede">Patient chart folders, holders, clipboards, dividers and glove box holders. Prices exclude GST. <a href="/hospital/">See the hospital range</a> or <a href="/hospital/order">order online</a>.</p>'
+               '<p class="lede">Patient chart folders, holders, clipboards and dividers. Prices exclude GST. <a href="/hospital/">See the hospital range</a> or <a href="/hospital/order">order online</a>.</p>'
                + sov_link_tiles() + '</div></section>')
     main += groups + materials_html + cta()
     schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Brisbane Plastics Company",

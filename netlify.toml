@@ -20,6 +20,12 @@
   [headers.values]
     Cache-Control = "public, max-age=604800"
 
+# Glove box holders discontinued 26/10/2026 (Elbe)
+[[redirects]]
+  from = "/hospital/glove-box-holders"
+  to = "/hospital/"
+  status = 301
+
 # Keep the page generator source private
 [[redirects]]
   from = "/_src/*"
