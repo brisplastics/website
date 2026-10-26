@@ -29,7 +29,7 @@ pages = {}
 
 # ---- Home: v6 content plus links into the two new sections ----
 t, d, m = v6("index.html")
-m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 working days, and express turnaround is available.</p>")
+m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 working days from order and artwork approval. Ask about express turnaround.</p>")
 assert "10 to 15 working days" in m
 m = fix(m)
 m = m.replace("<h1>Custom PVC and polypropylene products, made in Brisbane.</h1>", "<h1>Custom PVC and polypropylene products, and UV printing, in Brisbane.</h1>")
@@ -105,6 +105,9 @@ m = m.replace("""<p>Bruce spent 20 years building a project management consultan
 <p>At Brisbane Plastics Company he leads strategy, systems and investment, and finds the commercial opportunity inside the operational challenge.</p>""",
   """<p>Brisbane Plastics Company is Bruce's third business venture. As Director he leads strategy, systems and investment: pricing and quoting, finance, and the systems that connect customers, the office and the factory.</p>""")
 assert "third business venture" in m and "stationery manufacturer" in m
+m = m.replace("<li><strong>Owner-operated.</strong> The founders run the businesses themselves, alongside their investors.</li>", "<li><strong>Owner-operated.</strong> Our directors run the business from the Tingalpa factory.</li>")
+m = m.replace("<li><strong>Engineering depth.</strong> Controls, automation and IoT experience applied inside our own factories.</li>", "<li><strong>Engineering depth.</strong> Controls, automation and systems experience applied on our factory floor.</li>")
+assert "inside our own factories" not in m
 m = m.replace('<section class="block"><div class="wrap">\n<div class="section-head"><h2>Our directors</h2>', brands.replace('<section class="block">','<section class="block alt">',1) + '\n<section class="block"><div class="wrap">\n<div class="section-head"><h2>Our directors</h2>', 1)
 pages["/about"] = page("/about", t, fix(d), m, [("/", "Home"), ("/about", "About us")])
 
@@ -120,7 +123,7 @@ pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Requ
 
 # ---- Privacy, thanks, 404 ----
 t, d, m = v6("privacy.html")
-m = fix(m).replace("Live chat is provided by Tawk.to.", "Live chat is provided by Tawk.to. We measure website visits with Google Analytics, which uses cookies to count visits and see which pages are used. It does not tell us who you are.").replace("Last updated 30/09/2026", "Last updated 26/10/2026").replace("We do not sell your information", "Our forms record how you reached the site (for example a Google Ads click or an email campaign) so we can see which advertising works. Google Ads uses cookies to count enquiries that come from an ad. If you tick the news box on a form, we add your email to our mailing list and send occasional product news and offers; every email has an unsubscribe link. We do not sell your information")
+m = fix(m).replace("Live chat is provided by Tawk.to.", "Live chat is provided by Tawk.to. We measure website visits with Google Analytics, which uses cookies to count visits and see which pages are used. We use these reports in aggregate and do not use them to identify individual visitors.").replace("Last updated 30/09/2026", "Last updated 26/10/2026").replace("We do not sell your information", "Our forms record how you reached the site (for example a Google Ads click or an email campaign) so we can see which advertising works. Google Ads uses cookies to count enquiries that come from an ad. If you tick the news box on a form, we add your email to our mailing list and send occasional product news and offers; every email has an unsubscribe link. We do not sell your information")
 pages["/privacy"] = page("/privacy", t, d, m)
 t, d, m = v6("thanks.html"); pages["/thanks"] = page("/thanks", t, d, fix(m), noindex=True)
 t, d, m = v6("404.html"); pages["/404"] = page("/404", t, d, fix(m), noindex=True)
@@ -250,7 +253,7 @@ L=["# Brisbane Plastics Company", "",
    "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, clipboards and dividers for hospitals since 1994), "
    "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
    "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744 or 1300 744 104",
-   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 working days for standard jobs; express turnaround available.", ""]
+   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 working days from order and artwork approval for standard jobs; ask about express turnaround.", ""]
 for name, test in SECTIONS:
     L.append("## " + name); L.append("")
     for p in locs:

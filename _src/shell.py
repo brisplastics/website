@@ -12,7 +12,7 @@ ACN = "699 248 658"
 ABN = "14 699 248 658"
 SALES = "sales@brisplastics.com.au"
 SOV_EMAIL = "support@sovservices.net.au"
-LEAD = "10 to 15 working days for standard jobs. Express turnaround available."
+LEAD = "10 to 15 working days from order and artwork approval for standard jobs. Ask about express turnaround."
 PHONE_07 = "(07) 3396 3744"
 TEL_07 = "+61733963744"
 PHONE_1300 = "1300 744 104"
@@ -144,7 +144,7 @@ def footer():
 <h2>Site</h2>
 <ul><li><a href="/products">Products</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">UV Printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li></ul>
 </div>
-<p class="legal">© 2026 {LEGAL} · ACN {ACN} · ABN {ABN}</p>
+<p class="legal">© 2026 {LEGAL} · ACN {ACN} · <a href="https://abr.business.gov.au/ABN/View?id={ABN.replace(' ', '')}" rel="noopener">ABN {ABN}</a></p>
 </div>
 </footer>
 <script src="/assets/js/site.js?v={BUILD}" defer></script>'''

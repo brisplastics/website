@@ -85,9 +85,9 @@ PRODUCTS = [
          photos=["Tally Book/", "Tally Book Cover/", "Sewing/", "Digital Print/tally book.jpg"],
          related=["notebook-covers", "take-5-safety-books"]),
 
-    dict(slug="glovebox-wallets", group="Wallets and satchels", title="Glovebox, service book and dealership wallets",
+    dict(slug="glovebox-wallets", group="Wallets and satchels", title="Glove box, service book and dealership wallets",
          card="Service book wallets for car, truck, motorbike and marine dealers.",
-         intro="Glovebox and service book wallets that keep the owner's manual and service book together and put your dealership's name in front of the customer every time they open the glovebox.",
+         intro="Glove box and service book wallets that keep the owner's manual and service book together and put your dealership's name in front of the customer every time they open the glovebox.",
          facts=[("Sizes", "Standard sizes, a large size that fits the LandCruiser service book and many trucks, and custom sizes"),
                 ("Standard features", "Clear pocket inside front and back, four business card pockets"),
                 ("Colours", "Standard, leather-look and metallic-look ranges"),

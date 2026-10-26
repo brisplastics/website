@@ -40,7 +40,7 @@ SOV_PRODUCTS = [
     P("a4-wall-holder", P_HOLD, "A4 patient chart holder, wall mounted", "SS-PCU-038 / 039", "From $38 ex GST", GLOSS, "SS-PCU-038 horizontal, SS-PCU-039 vertical. 255 W × 315 H × 110 D mm.", "a4-chart-holder-wall-mounted", "White and black wall-mounted A4 patient chart holders"),
     P("a4-clipboard", P_HOLD, "A4 patient clipboard, vertical or horizontal", "SS-CCB-010 / 011 / 012", "From $29.50 ex GST", "White", "SS-CCB-010 vertical, SS-CCB-011 horizontal, SS-CCB-012 horizontal with 2 D-ring clips. Impact-resistant ABS, rollover top for the rail. 230 W × 360 H × 50 D mm.", "a4-patient-clipboard", "White ABS A4 patient clipboard with rollover top and clip"),
     P("a3-clipboard", P_HOLD, "A3 patient clipboard, horizontal", "SS-CCB-015", "From $37.80 ex GST", "White", "Impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 450 W × 360 H × 50 D mm.", "a3-patient-clipboard", "White ABS A3 horizontal patient clipboard with rollover top and clip"),
-    P("folder-colours", P_FOLD, "Patient chart folders, ten colours", "Colour codes 01 to 13", ASK, FOLDER_COLOURS_TEXT, "Print in white or black.", "chart-folders-colour-range", "Ten colours of polypropylene patient chart folders, some printed with ward and bed"),
+    P("folder-colours", P_FOLD, "Patient chart folders, ten colours", "Colour codes 01 to 13", ASK, "10 stock colours. " + BLACK_NOTE, "Print in white or black. See the full colour list below.", "chart-folders-colour-range", "Ten colours of polypropylene patient chart folders, some printed with ward and bed"),
     P("folder-unprinted", P_FOLD, "Patient chart folder, unprinted", "SS-PCU-13 to 16", ASK, "10 colours. " + BLACK_NOTE, "Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-unprinted", "Open green unprinted patient chart folder with clip and 2-ring fitting"),
     P("folder-ward-bed", P_FOLD, "Patient chart folder, ward and bed print", "SS-PCU-03 to 06", ASK, "10 colours. " + BLACK_NOTE, "Ward and bed printed on the front and spine. Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-ward-bed", "Green patient chart folder printed with ward and bed on the front and spine"),
     P("folder-custom", P_FOLD, "Custom printed patient chart folder", "Custom", ASK, "10 colours, print in any colour. " + BLACK_NOTE, "Your ward name and bed number on the front and spine. Artwork set-up charge applies.", "custom-printed-chart-folder", "Red and green chart folders custom printed Admissions and Day Stay Unit"),
@@ -50,6 +50,16 @@ SOV_PRODUCTS = [
     P("dividers-printed", P_DIV, "5-tab dividers, printed", "SS-PCU-045", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
     P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $28 ex GST per set", "", "Your wording on 1 to 10 tabs. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
 ]
+
+# Product tile id -> the order-form line it preselects (/hospital/order?item=<id>). Colour-chart card has no line.
+ORDER_OPT = {
+    "a3-chart-holder": "SS-PCU-033 A3 chart holder, horizontal", "a4-chart-holder": "SS-PCU-034 A4 chart holder, vertical",
+    "a4-wall-holder": "SS-PCU-038 A4 wall-mounted holder, horizontal", "a4-clipboard": "SS-CCB-010 A4 patient clipboard, vertical",
+    "a3-clipboard": "SS-CCB-015 A3 patient clipboard, horizontal", "folder-unprinted": "SS-PCU-13 (30 mm spine)",
+    "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder", "folder-hanging": "SS-PCU-13 H (30 mm spine)",
+    "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SS-PCU-043 5-tab divider, blank",
+    "dividers-printed": "SS-PCU-045 5-tab divider, printed", "dividers-custom": "Custom tab dividers (1 to 10 tabs)",
+}
 
 def _img(photo, alt):
     w, h, tw, th = _SIZES[photo]
@@ -80,7 +90,7 @@ def sov_product_tiles(page_path):
         if p["page"] != page_path: continue
         w, h, tw, th = _SIZES[p["photo"]]
         out += (f'<li id="{p["id"]}"><a class="lb pimg" href="/assets/img/products/sov/{p["photo"]}.jpg" data-w="{w}" data-h="{h}">{_img(p["photo"], p["alt"])}</a>'
-                f'<div class="pc-body">{_body(p, spec=True)}<div class="tile-actions">{quote_btn("sov:" + p["id"], p["code"] + " " + p["name"])}<a class="more" href="/hospital/order">Order</a></div></div></li>')
+                f'<div class="pc-body">{_body(p, spec=True)}<div class="tile-actions">{quote_btn("sov:" + p["id"], p["code"] + " " + p["name"])}{('<a class="more" href="/hospital/order?item=' + p["id"] + '">Order</a>') if p["id"] in ORDER_OPT else ''}</div></div></li>')
     return (f'<section class="block"><div class="wrap"><div class="section-head"><h2>Products and prices</h2>'
             f'<p class="lede">Prices exclude GST. Select a photo to enlarge it.</p></div><ul class="pgrid detail">{out}</ul></div></section>')
 
@@ -121,10 +131,10 @@ def build():
     # ---------- HUB ----------
     faqs = [
         ("Is Sov Services still trading?", "Yes. Sov Services has supplied patient chart folders and holders to Australian hospitals since 1994. From 26 October 2026 it is owned and run by Brisbane Plastics Company from the same Tingalpa factory, with the same products and item codes."),
-        ("Do your item codes stay the same?", "Yes. Every SS- item code carries over, so you can reorder from your last order sheet or purchase order without changes."),
+        ("Do your item codes stay the same?", "Yes, for every product we still make, so you can reorder from your last order sheet or purchase order. Glove box holders (SS-GB-015, SS-GB-008) and the accessory basket (SS-GB-029) are no longer made, and hanging folders now come in 30 and 40 mm spines only."),
         ("Can we still email our orders?", f"Yes. <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> stays open, and so does our phone number, 1300 744 104. The online order form is quicker because it asks for the ward, colour and print details we need, so we do not have to come back to you."),
         ("Has your ABN changed?", f"Yes. Orders from 26 October 2026 are supplied and invoiced by Brisbane Plastics Company Pty Ltd, ABN {ABN}. If your purchasing system still lists the old supplier, please ask your supply team to update the vendor record. We will verify bank details by phone on request."),
-        ("How long does an order take?", "Standard orders take 10 to 15 working days. Express turnaround is available. Put your date in the Needed by box on the order form."),
+        ("How long does an order take?", "Standard orders take 10 to 15 working days from order and artwork approval. Ask about express turnaround. Put your date in the Needed by box on the order form."),
         ("Can you print our ward name and bed numbers?", "Yes. Folders can be printed with the ward name and bed number on the front and spine in black or white. Tell us the ward name and the bed numbers you need on the order form."),
     ]
     main = hero(C_HUB, "Patient chart folders, chart holders and hospital ward products",
@@ -152,7 +162,7 @@ def build():
 <li>Colour-coded folders make the right chart easy to find at the bedside.</li>
 <li>Wipe-clean polypropylene and gloss finishes for ward cleaning routines.</li>
 <li>Ward and bed printing on the front and spine, so charts go back to the right bed.</li>
-<li>Item codes that never change, so reorders are quick for your supply team.</li>
+<li>The same SS- item codes, so reorders are quick for your supply team.</li>
 </ul>
 </div>
 <div>
@@ -160,7 +170,7 @@ def build():
 <ol class="steps" style="grid-template-columns:1fr">
 <li><h3>Send the order</h3><p>Use the <a href="/hospital/order">online order form</a>, email your purchase order to {SOV_EMAIL} or call 1300 744 104.</p></li>
 <li><h3>We confirm</h3><p>We confirm price, print details and delivery by return email, and send a proof for any new printing.</p></li>
-<li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia. Standard orders take 10 to 15 working days. Express turnaround is available.</p></li>
+<li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia. Standard orders take 10 to 15 working days from order and artwork approval. Ask about express turnaround.</p></li>
 </ol>
 </div>
 </div></section>
@@ -298,13 +308,14 @@ def build():
         f'<optgroup label="{esc(g)}">' + "".join(f"<option>{esc(o)}</option>" for o in items) + "</optgroup>" for g, items in ORDER_CODES)
     colours = '<option value="">Colour</option>' + "".join(f"<option>{n} {c}</option>" for n, c, _ in FOLDER_COLOURS) + "<option>Black gloss</option><option>White gloss</option><option>Not applicable</option>"
     lines = ""
-    for i in range(1, 7):
+    for i in range(1, 9):
         req = " required" if i == 1 else ""
-        lines += f'''<tr>
+        hid = "" if i == 1 else " hidden"
+        lines += f'''<tr class="order-line"{hid}>
 <td data-label="Item"><select name="item_{i}" aria-label="Item {i}"{req}>{opts}</select></td>
 <td data-label="Colour"><select name="colour_{i}" aria-label="Colour {i}">{colours}</select></td>
 <td data-label="Print (ward, beds)"><input name="print_{i}" aria-label="Print text {i}" placeholder="e.g. Ward 4B, beds 1 to 24"></td>
-<td data-label="Quantity"><input name="qty_{i}" aria-label="Quantity {i}" inputmode="numeric" placeholder="Qty"{req}></td>
+<td data-label="Quantity"><input name="qty_{i}" aria-label="Quantity {i}" inputmode="numeric" pattern="[0-9]*[1-9][0-9]*" title="Enter a whole number" placeholder="Qty"{req}></td>
 </tr>'''
     main = hero(cr, "Hospital order and reorder form", f"Order Sov Services products for your ward. We confirm price, print and delivery by return email before anything is made. Prefer email or phone? Send your purchase order to <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> or call <a href=\"tel:1300744104\">1300 744 104</a>.",
                 kicker="Sov Services · Australian made")
@@ -339,13 +350,15 @@ def build():
 <thead><tr><th style="width:42%">Item</th><th style="width:18%">Colour</th><th>Print (ward, beds)</th><th style="width:11%">Qty</th></tr></thead>
 <tbody>{lines}</tbody>
 </table>
-<p class="form-note">Need more than six lines? Attach your order sheet below or add it to the notes.</p>
+<button type="button" class="btn ghost" id="add-line">Add another item</button>
+<p class="form-note">Need more than eight lines? Attach your order sheet below or add it to the notes.</p>
+<script type="application/json" id="order-map">{_json.dumps(ORDER_OPT)}</script>
 </fieldset>
 <fieldset>
 <legend>Anything else</legend>
 <div class="grid2">
 <div class="field"><label for="needed_by">Needed by</label><input id="needed_by" name="needed_by" type="date"></div>
-<div class="field"><label for="artwork">Order sheet or artwork <span class="hint">PDF, PNG or JPG, up to 8 MB</span></label><input id="artwork" name="attachment" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>
+<div class="field"><label for="artwork">Order sheet or artwork <span class="hint">PDF, PNG or JPG, up to 8 MB. Please do not include patient information.</span></label><input id="artwork" name="attachment" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>
 <div class="field full"><label for="notes">Notes</label><textarea id="notes" name="notes" placeholder="Bed numbers, print wording, delivery instructions, previous order reference"></textarea></div>
 <div class="field full"><label class="check"><input type="checkbox" name="new_supplier_details" value="yes"> Send our supply team Brisbane Plastics Company's vendor details (ABN and bank details, verified by phone)</label></div>
 </div>

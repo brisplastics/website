@@ -177,13 +177,43 @@
   // ---- /hospital/order: fill order lines from chosen Sov products ----
   var ord=document.querySelector('form[name=hospital-order]');
   if(ord){
-    var sov=list.filter(function(x){return x.key.indexOf('sov:')===0;}), left=[];
-    sov.forEach(function(x,i){
-      var sel=ord.querySelector('select[name=item_'+(i+1)+']'); if(!sel){left.push(x.name);return;}
-      var code=x.name.split(' ')[0], hit=false;
-      for(var j=0;j<sel.options.length;j++){if(sel.options[j].text.indexOf(code)===0){sel.selectedIndex=j;hit=true;break;}}
-      if(!hit)left.push(x.name);
+    var lines=[].slice.call(ord.querySelectorAll('tr.order-line')), addLine=document.getElementById('add-line');
+    var MAP={}; try{MAP=JSON.parse(document.getElementById('order-map').textContent);}catch(e){}
+    function refreshAdd(){if(addLine)addLine.hidden=lines.every(function(r){return !r.hidden;});}
+    function freeLine(){for(var i=0;i<lines.length;i++){var s=lines[i].querySelector('select');if(!s.value){lines[i].hidden=false;refreshAdd();return s;}}return null;}
+    function pick(sel,text){for(var j=0;j<sel.options.length;j++){if(sel.options[j].text===text||sel.options[j].text.indexOf(text)===0){sel.selectedIndex=j;return true;}}return false;}
+    if(addLine)addLine.addEventListener('click',function(){var r=lines.filter(function(x){return x.hidden;})[0];if(r){r.hidden=false;r.querySelector('select').focus();}refreshAdd();});
+    var left=[], wanted=[];
+    var it=new URLSearchParams(location.search).get('item'); if(it&&MAP[it])wanted.push({text:MAP[it]});
+    list.filter(function(x){return x.key.indexOf('sov:')===0;}).forEach(function(x){
+      var id=x.key.slice(4); if(id===it)return;
+      wanted.push(MAP[id]?{text:MAP[id]}:{name:x.name});
+    });
+    wanted.forEach(function(w){
+      if(!w.text){left.push(w.name);return;}
+      var s=freeLine(); if(!s||!pick(s,w.text))left.push(w.text);
     });
     if(left.length){var n=ord.querySelector('textarea[name=notes]'); if(n&&!n.value)n.value='Also: '+left.join('; ');}
+    refreshAdd();
   }
+})();
+
+// Products page finder: filter cards by name, description or item code
+(function(){
+  var q=document.getElementById('prod-search'); if(!q)return;
+  var cards=[].slice.call(document.querySelectorAll('.pgroup li')), count=document.getElementById('prod-count');
+  q.addEventListener('input',function(){
+    var t=q.value.trim().toLowerCase(), n=0;
+    cards.forEach(function(li){var hit=!t||li.textContent.toLowerCase().indexOf(t)>=0;li.hidden=!hit;if(hit)n++;});
+    [].forEach.call(document.querySelectorAll('.pgroup'),function(s){s.hidden=t&&!s.querySelector('li:not([hidden])');});
+    count.textContent=t?(n+' matching product'+(n===1?'':'s')):'';
+  });
+})();
+
+// Long galleries: show the first 12 photos, then all on request
+(function(){
+  [].forEach.call(document.querySelectorAll('.show-photos'),function(b){
+    b.addEventListener('click',function(){var g=b.closest('.wrap').querySelector('.gallery');
+      [].forEach.call(g.querySelectorAll('.more-photo'),function(f){f.hidden=false;}); b.parentNode.remove();});
+  });
 })();

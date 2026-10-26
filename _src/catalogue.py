@@ -26,13 +26,15 @@ def product_gallery(p):
     photos = MANIFEST.get(p["slug"], [])
     if not photos:
         return ""
+    SHOW = 12
     figs = "".join(
-        f'<figure><a class="lb" href="{img_url(p["slug"], x["file"])}" data-w="{x["w"]}" data-h="{x["h"]}">'
+        f'<figure{" class=\"more-photo\" hidden" if i >= SHOW else ""}><a class="lb" href="{img_url(p["slug"], x["file"])}" data-w="{x["w"]}" data-h="{x["h"]}">'
         f'<img src="{img_url(p["slug"], x["file"], True)}" alt="{esc(x["alt"])}" width="{x["tw"]}" height="{x["th"]}" loading="lazy" decoding="async"></a>'
-        f'<figcaption>{esc(x["alt"])}</figcaption></figure>' for x in photos)
+        f'<figcaption>{esc(x["alt"])}</figcaption></figure>' for i, x in enumerate(photos))
+    more = (f'<p style="margin-top:1.2rem"><button type="button" class="btn ghost show-photos">Show all {len(photos)} photos</button></p>' if len(photos) > SHOW else "")
     return (f'<section class="block alt"><div class="wrap"><div class="section-head"><h2>Examples from our factory</h2>'
-            f'<p class="lede">{len(photos)} photos of {esc(p["title"].lower())} we have made in Tingalpa. Select a photo to enlarge it.</p></div>'
-            f'<div class="gallery">{figs}</div></div></section>')
+            f'<p class="lede">Work made in our Tingalpa factory, including jobs for customers. Select a photo to enlarge it.</p></div>'
+            f'<div class="gallery">{figs}</div>{more}</div></section>')
 
 def product_page(p):
     path = f"/products/{p['slug']}"
@@ -76,7 +78,14 @@ def index_page(materials_html):
     main = hero(cr, "Products we make",
                 "Every Plastics Unique and Sov Services product, made to order in our Tingalpa factory, with a 10 to 15 working day standard turnaround and express available. Choose a product to see options and photos of work we have made, then send us your size, material, quantity and print.",
                 buttons=[("/contact", "Request a quote"), ("/hospital/", "Hospital range (Sov Services)")])
-    groups = ""
+    def gid(g): return "g-" + "".join(ch if ch.isalnum() else "-" for ch in g.lower()).strip("-")
+    jump = ('<section class="block finder"><div class="wrap"><div class="finder-row">'
+            '<label for="prod-search" class="label">Find a product or item code</label>'
+            '<input id="prod-search" type="search" placeholder="e.g. music folder, noren, SS-PCU-034" autocomplete="off">'
+            '<p class="form-note" id="prod-count" aria-live="polite"></p></div>'
+            '<nav class="jump" aria-label="Product groups">' + "".join(f'<a href="#{gid(g)}">{esc(g)}</a>' for g in GROUP_ORDER)
+            + '<a href="#g-hospital">Hospital range</a></nav></div></section>')
+    groups = jump
     for g in GROUP_ORDER:
         cards = ""
         for p in [x for x in PRODUCTS if x["group"] == g]:
@@ -85,10 +94,10 @@ def index_page(materials_html):
                    if ph else '<span class="noimg" aria-hidden="true"></span>')
             n = f'<span class="count">{len(ph)} photos</span>' if ph else ""
             cards += f'<li><a href="/products/{p["slug"]}">{img}<span class="pc-body"><strong>{esc(p["title"])}</strong><span>{esc(p["card"])}</span>{n}</span></a></li>'
-        groups += f'<section class="block{" alt" if GROUP_ORDER.index(g) % 2 == 0 else ""}"><div class="wrap"><h2>{esc(g)}</h2><ul class="pcards">{cards}</ul></div></section>'
+        groups += f'<section class="block{" alt" if GROUP_ORDER.index(g) % 2 == 0 else ""} pgroup" id="{gid(g)}"><div class="wrap"><h2>{esc(g)}</h2><ul class="pcards">{cards}</ul></div></section>'
     # Sov range card group
     from hospital import sov_link_tiles
-    groups += ('<section class="block"><div class="wrap"><h2>Hospital range (Sov Services)</h2>'
+    groups += ('<section class="block pgroup" id="g-hospital"><div class="wrap"><h2>Hospital range (Sov Services)</h2>'
                '<p class="lede">Patient chart folders, holders, clipboards and dividers. Prices exclude GST. <a href="/hospital/">See the hospital range</a> or <a href="/hospital/order">order online</a>.</p>'
                + sov_link_tiles() + '</div></section>')
     main += groups + materials_html + cta()
@@ -96,7 +105,7 @@ def index_page(materials_html):
               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url(f"/products/{p['slug']}"), "name": p["title"]}
                                   for i, p in enumerate(PRODUCTS)]}
     return path, page(path, "Custom PVC & Polypropylene Products | Brisbane Plastics Company",
-                      "Ring binders, notebook covers, glovebox wallets, satchels, tags, compendiums, school and music folders, all custom made in Brisbane. Photos and options for every product.",
+                      "Ring binders, notebook covers, glove box wallets, satchels, tags, compendiums, school and music folders, all custom made in Brisbane. Photos and options for every product.",
                       main, cr, [schema])
 
 def build(materials_html):

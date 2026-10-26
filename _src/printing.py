@@ -31,7 +31,7 @@ BED_SVG = '''<figure class="bed">
 <text x="280" y="150" font-family="Archivo,sans-serif" font-size="22" font-weight="800" fill="#122B4A" text-anchor="middle">Print bed</text>
 <text x="280" y="174" font-family="Inter,sans-serif" font-size="13" fill="#55667C" text-anchor="middle">Edge to edge · up to 50.8 mm thick</text>
 </svg>
-<figcaption>Full sheets up to 1250 × 2500 mm print in one pass. Smaller items are ganged across the bed, which keeps short runs economical.</figcaption>
+<figcaption>Full sheets up to 1250 × 2500 mm print in one setup. Smaller items are ganged across the bed, which keeps short runs economical.</figcaption>
 </figure>'''
 
 SPEC_ROWS = [
@@ -41,14 +41,15 @@ SPEC_ROWS = [
     ("Inks", "CMYK plus white"),
     ("White ink uses", "Under-print on clear and dark materials, reverse (second-surface) printing on clear acrylic, diffuser layers for backlit panels"),
     ("Run lengths", "One-off prototypes to production runs"),
-    ("Turnaround", "10 to 15 working days for standard jobs. Express turnaround available"),
+    ("Turnaround", "10 to 15 working days from order and artwork approval. Ask about express turnaround"),
     ("Finishing in house", "Guillotining, die cutting, creasing, RF welding, foil blocking, eyelets and rivets"),
     ("Collection and freight", "Pick-up from Tingalpa, Brisbane, or freight Australia-wide"),
 ]
 
 def spec_table():
     rows = "".join(f'<tr><th scope="row">{a}</th><td>{b}</td></tr>' for a, b in SPEC_ROWS)
-    return f'<div class="table-wrap"><table class="spec"><caption class="hidden">UV flatbed printing specification</caption><tbody>{rows}</tbody></table></div>'
+    return (f'<div class="table-wrap"><table class="spec"><caption class="hidden">UV flatbed printing specification</caption><tbody>{rows}</tbody></table></div>'
+            '<p class="form-note" style="margin-top:.6rem">Printer limits from the <a href="https://www.canon.co.uk/business/products/large-format-printers/arizona-135-gt/specifications/" rel="noopener">Canon Arizona 135 GT specification</a>. New materials and supplied items get a test print first, because ink adhesion and finishing vary by material and coating.</p>')
 
 def materials_list():
     return '<ul class="ticks" style="columns:2;column-gap:2rem">' + "".join(f"<li>{m}</li>" for m in MATERIALS) + "</ul>"
@@ -122,7 +123,7 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
 </div>
 </fieldset>
 <button class="btn" type="submit">Send for a quote</button>
-<p class="form-note" style="margin-top:1rem">We reply within one business day. Your details are used only to respond to this request. See our <a href="/privacy">privacy statement</a>.</p>
+<p class="form-note" style="margin-top:1rem">We reply within one business day. Your details are used to respond to this request and, if you tick the box, to send you news. See our <a href="/privacy">privacy statement</a>.</p>
 </form>
 <aside>
 <h2 style="font-size:1.3rem">File checklist</h2>
@@ -167,7 +168,7 @@ def build():
         ("Do you print white ink?", "Yes. White is printed under colour on clear and dark materials, as a solid colour, or behind reverse-printed clear acrylic so the image reads through the face."),
         ("Is there a minimum order?", "No set minimum. We print single prototypes and production runs. Small items are ganged across the bed, so short runs stay economical."),
         ("Can I supply my own material or products?", "Yes. Trade customers often supply cut blanks or finished items. Tell us the material so we can confirm ink adhesion, and we will run a test piece if it is new to us."),
-        ("How long does a print job take?", "Standard jobs take 10 to 15 working days. Express turnaround is available. Tell us your date on the quote form."),
+        ("How long does a print job take?", "Standard jobs take 10 to 15 working days from order and artwork approval. Ask about express turnaround. Tell us your date on the quote form."),
         ("Do you print banners or fabric?", "Not at the moment. Our printer is set up for rigid sheet and objects. We do not print roll media such as banners, vinyl or fabric."),
     ]
     main = hero(C_HUB, "UV flatbed printing in Brisbane",

@@ -404,3 +404,14 @@ section.block.alt .notice{background:#fff}
 .item-std{margin:.5rem 0 0;padding:.6rem .8rem;background:var(--paper);border-left:3px solid var(--teal);font-size:.93rem;max-width:none}
 .item-extras label{font-weight:500;font-size:.95rem}
 #add-item{margin-top:.6rem}
+/* Review fixes 26/10: product grid breakpoints, finder, order lines */
+.pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (min-width:900px){.pgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.finder{padding:1.6rem 0 0}
+.finder-row{display:grid;gap:.4rem;max-width:560px}
+.jump{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+.jump a{border:1px solid var(--rule);border-radius:var(--r);padding:.4rem .75rem;text-decoration:none;color:var(--ink);font-weight:600;font-size:.92rem;background:#fff}
+.jump a:hover{border-color:var(--teal)}
+.pgroup{scroll-margin-top:90px}
+#add-line{margin-top:.4rem}
+.site-foot .legal a{color:#C9D5E6}
