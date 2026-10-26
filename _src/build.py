@@ -118,6 +118,8 @@ m = m.replace('<div class="wrap split" style="grid-template-columns:1.6fr 1fr">'
 import re as _re, forms
 m = _re.sub(r'<form class="quote" name="quote-request".*?</form>', lambda _m: forms.contact_form(), m, count=1, flags=_re.S)
 assert 'past_customer' in m
+m = m.replace('<li><strong>Factory</strong><br>45a Millennium Place, Tingalpa QLD 4173</li>', f'<li><strong>Factory and collection</strong><br><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a><br>{HOURS_TEXT}</li>\n<li><strong>Google reviews</strong><br><a href="{GBP_REVIEWS}" rel="noopener">Read our reviews</a> or <a href="{GBP_WRITE}" rel="noopener">leave one</a></li>')
+assert 'Factory and collection' in m
 m = m.replace('<li><strong>Live chat</strong>', f'<li><strong>Hospital orders</strong><br>Use the <a href="/hospital/order">hospital order form</a> or email <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li>\n<li><strong>Printing</strong><br>Use the <a href="/uv-printing/#quote">print quote form</a> for UV printing jobs.</li>\n<li><strong>Live chat</strong>')
 pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Request a quote")])
 

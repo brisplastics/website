@@ -12,6 +12,12 @@ ACN = "699 248 658"
 ABN = "14 699 248 658"
 SALES = "sales@brisplastics.com.au"
 SOV_EMAIL = "support@sovservices.net.au"
+# Google Business Profile: Plastics Unique (place ID from Google Places, 26/10/2026). Hours as listed there.
+GBP_ID = "ChIJq8TfafNekWsREC4BYQTPcIg"
+GBP_MAP = "https://www.google.com/maps/search/?api=1&query=Plastics%20Unique%20Tingalpa&query_place_id=" + GBP_ID
+GBP_REVIEWS = "https://search.google.com/local/reviews?placeid=" + GBP_ID
+GBP_WRITE = "https://search.google.com/local/writereview?placeid=" + GBP_ID
+HOURS_TEXT = "Monday to Thursday 8:30 am to 5:00 pm, Friday 8:30 am to 3:00 pm"
 LEAD = "10 to 15 working days from order and artwork approval for standard jobs. Ask about express turnaround."
 PHONE_07 = "(07) 3396 3744"
 TEL_07 = "+61733963744"
@@ -53,6 +59,10 @@ BUSINESS = {
     "brand": [{"@type": "Brand", "name": "Plastics Unique"}, {"@type": "Brand", "name": "Sov Services"}],
     "alternateName": ["Plastics Unique", "Sov Services", "BPC"],
     "sameAs": ["https://plasticsunique.com.au/", "https://sovservices.net.au/"],
+    "hasMap": "https://www.google.com/maps/search/?api=1&query=Plastics%20Unique%20Tingalpa&query_place_id=ChIJq8TfafNekWsREC4BYQTPcIg",
+    "openingHoursSpecification": [
+        {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:30", "closes": "17:00"},
+        {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:30", "closes": "15:00"}],
     "knowsAbout": ["PVC fabrication", "Polypropylene products", "RF welding", "Ring binders", "Patient chart folders", "UV flatbed printing", "Acrylic printing", "Screen printing", "Foil blocking"],
     "founder": [{"@type": "Person", "name": "Bruce Bairstow", "jobTitle": "Director"},
                 {"@type": "Person", "name": "Mathew Bowden", "jobTitle": "Managing Director"}],
@@ -138,7 +148,7 @@ def footer():
 </div>
 <div>
 <h2>Contact</h2>
-<ul><li>Phone: <a href="tel:{TEL_07}">{PHONE_07}</a></li><li>Phone: <a href="tel:{TEL_1300}">{PHONE_1300}</a></li><li>Sales: <a href="mailto:{SALES}">{SALES}</a></li><li>Hospital orders: <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li><li>{ADDRESS}</li></ul>
+<ul><li>Phone: <a href="tel:{TEL_07}">{PHONE_07}</a></li><li>Phone: <a href="tel:{TEL_1300}">{PHONE_1300}</a></li><li>Sales: <a href="mailto:{SALES}">{SALES}</a></li><li>Hospital orders: <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li><li><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a></li><li>{HOURS_TEXT}</li><li><a href="{GBP_REVIEWS}" rel="noopener">Read our Google reviews</a> · <a href="{GBP_WRITE}" rel="noopener">Leave a review</a></li></ul>
 </div>
 <div>
 <h2>Site</h2>
