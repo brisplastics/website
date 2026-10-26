@@ -24,7 +24,7 @@ import time as _t
 BUILD = _t.strftime("%Y%m%d%H%M")  # cache-buster: CSS and JS are cached for 7 days, so each build gets a new URL
 
 # Solar and recyclable badges in the footer. Claims are being checked with Chris (25/10/2026).
-# Set to False and rebuild to remove them. Australian Made icon added 26/10/2026 (Bruce).
+# Set to False and rebuild to remove them. Australian Made icon added 26/10/2026; PU holds the Australian Made licence and it transfers to BPC (Bruce 26/10/2026).
 SHOW_ECO_BADGES = True
 BRAND = "/assets/img/brand/"
 

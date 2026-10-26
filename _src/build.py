@@ -99,6 +99,12 @@ brands = f'''<section class="block"><div class="wrap"><div class="section-head">
 <div class="brand-row"><a href="/products"><img src="{BRAND}PU_Logo_Endorsed_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="262" height="120" loading="lazy"></a>
 <a href="/hospital/"><img src="{BRAND}Sov_Logo_Endorsed_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="325" height="120" loading="lazy"></a></div></div></section>'''
 m = fix(m)
+m = m.replace('<p class="lede">Brisbane Plastics Company is a Queensland-owned manufacturer. From 26 October 2026 we own and run Plastics Unique and Sov Services, a Brisbane plastics fabricator trusted by local businesses for 27 years.</p>',
+  '<p class="lede">Brisbane Plastics Company is a Queensland-owned plastics printing and stationery manufacturer. From 26 October 2026 the business incorporates Plastics Unique and Sov Services, two service lines trusted by local businesses for 27 years.</p>')
+m = m.replace("""<p>Bruce spent 20 years building a project management consultancy, LogiKal Projects, growing it to more than 100 consultants across Australia, Asia and the UK before selling it in 2022. His work spans major infrastructure and resources projects and managing complex programmes.</p>
+<p>At Brisbane Plastics Company he leads strategy, systems and investment, and finds the commercial opportunity inside the operational challenge.</p>""",
+  """<p>Brisbane Plastics Company is Bruce's third business venture. As Director he leads strategy, systems and investment: pricing and quoting, finance, and the systems that connect customers, the office and the factory.</p>""")
+assert "third business venture" in m and "stationery manufacturer" in m
 m = m.replace('<section class="block"><div class="wrap">\n<div class="section-head"><h2>Our directors</h2>', brands.replace('<section class="block">','<section class="block alt">',1) + '\n<section class="block"><div class="wrap">\n<div class="section-head"><h2>Our directors</h2>', 1)
 pages["/about"] = page("/about", t, fix(d), m, [("/", "Home"), ("/about", "About us")])
 
