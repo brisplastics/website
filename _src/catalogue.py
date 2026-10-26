@@ -48,9 +48,20 @@ def product_page(p):
 <p style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a></p></div>
 </div></section>'''
     main += product_gallery(p)
+    SIGN_CALLOUT = {"Schools and education": ("/uv-printing/school-signs", "Need school signs or honour boards too? We print them in the same factory."),
+                    "Hospitality and healthcare": ("/uv-printing/hospital-signs", "Need ward, room or wayfinding signs too? We print them in the same factory."),
+                    "Tags and cards": ("/uv-printing/safety-industrial-signs", "Need safety signs or machine labels too? We print them in the same factory.")}
+    if p["group"] in SIGN_CALLOUT:
+        h_, t_ = SIGN_CALLOUT[p["group"]]
+        main += f'<section class="block" style="padding-bottom:0"><div class="wrap"><div class="notice"><p>{esc(t_)} <a href="{h_}">See printed signs</a></p></div></div></section>'
     main += f'''<section class="block"><div class="wrap"><h2 style="font-size:1.3rem">Related products</h2>{related_links(p)}</div></section>'''
     main += cta()
-    desc = (p["intro"][:150].rsplit(" ", 1)[0] + ". Made in Brisbane.") if len(p["intro"]) > 155 else p["intro"]
+    if len(p["intro"]) <= 155:
+        desc = p["intro"]
+    else:
+        cut = p["intro"][:150]
+        end = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
+        desc = (cut[:end + 1] if end > 60 else cut.rsplit(" ", 1)[0].rstrip(",;:-") + ".") + " Made in Brisbane."
     photos = MANIFEST.get(p["slug"], [])
     schema = {"@context": "https://schema.org", "@type": "Product", "name": p["title"], "description": p["intro"],
               "brand": {"@type": "Brand", "name": "Plastics Unique"}, "manufacturer": {"@id": SITE + "/#business"},

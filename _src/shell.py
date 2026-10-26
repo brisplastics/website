@@ -49,6 +49,9 @@ BUSINESS = {
     "areaServed": "Australia",
     "parentOrganization": {"@type": "Organization", "name": "FormFill Group", "url": "https://www.formfill.com.au/"},
     "brand": [{"@type": "Brand", "name": "Plastics Unique"}, {"@type": "Brand", "name": "Sov Services"}],
+    "alternateName": ["Plastics Unique", "Sov Services", "BPC"],
+    "sameAs": ["https://plasticsunique.com.au/", "https://sovservices.net.au/"],
+    "knowsAbout": ["PVC fabrication", "Polypropylene products", "RF welding", "Ring binders", "Patient chart folders", "UV flatbed printing", "Acrylic printing", "Screen printing", "Foil blocking"],
     "founder": [{"@type": "Person", "name": "Bruce Bairstow", "jobTitle": "Director"},
                 {"@type": "Person", "name": "Mathew Bowden", "jobTitle": "Managing Director"}],
 }

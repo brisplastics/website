@@ -60,8 +60,8 @@ strip = f'''<section class="brand-strip"><div class="wrap"><span>Our brands</spa
 <a href="/hospital/"><img src="{BRAND}Sov_Logo_Endorsed_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="217" height="80"></a></div></section>'''
 m = m.replace('<a class="btn ghost" style="color:#fff;border-color:#fff" href="/about#ownership">What this means for you</a>\n</div></div>', '<a class="btn ghost" style="color:#fff;border-color:#fff" href="/about#ownership">What this means for you</a>\n</div></div>\n' + strip, 1)
 m = m.replace('<p style="margin-top:2rem"><a href="/products">See materials and processes</a></p>', '<p style="margin-top:2rem"><a class="btn" href="/products">See all products and photos</a></p>')
-pages["/"] = page("/", "Custom PVC & Polypropylene Products, Brisbane | Brisbane Plastics Company",
-                  "Brisbane manufacturer of custom PVC and polypropylene products, Sov Services hospital chart folders and holders, and trade UV flatbed printing. Tingalpa.", m)
+pages["/"] = page("/", "Custom PVC & Polypropylene Products Brisbane | Plastics Unique & Sov Services",
+                  "Brisbane Plastics Company, home of Plastics Unique and Sov Services: custom PVC and polypropylene products, hospital chart folders and holders, and UV flatbed printing. Tingalpa.", m)
 
 # ---- Products: catalogue index plus one page per product ----
 t, d, m = v6("products.html")
@@ -85,13 +85,15 @@ pages["/about"] = page("/about", t, fix(d), m, [("/", "Home"), ("/about", "About
 t, d, m = v6("contact.html")
 m = fix(m)
 m = m.replace('<div class="wrap split" style="grid-template-columns:1.6fr 1fr">','<div class="wrap split contact-split">')
-m = m.replace('<option>Hospital product (Sov Services)</option>', '<option>Hospital product (Sov Services)</option><option>UV flatbed printing</option>')
+import re as _re, forms
+m = _re.sub(r'<form class="quote" name="quote-request".*?</form>', lambda _m: forms.contact_form(), m, count=1, flags=_re.S)
+assert 'past_customer' in m
 m = m.replace('<li><strong>Live chat</strong>', f'<li><strong>Hospital orders</strong><br>Use the <a href="/hospital/order">hospital order form</a> or email <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li>\n<li><strong>Printing</strong><br>Use the <a href="/uv-printing/#quote">print quote form</a> for UV printing jobs.</li>\n<li><strong>Live chat</strong>')
 pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Request a quote")])
 
 # ---- Privacy, thanks, 404 ----
 t, d, m = v6("privacy.html")
-m = fix(m).replace("Live chat is provided by Tawk.to.", "Live chat is provided by Tawk.to. We measure website visits with Google Analytics, which uses cookies to count visits and see which pages are used. It does not tell us who you are.").replace("Last updated 30/09/2026", "Last updated 24/10/2026")
+m = fix(m).replace("Live chat is provided by Tawk.to.", "Live chat is provided by Tawk.to. We measure website visits with Google Analytics, which uses cookies to count visits and see which pages are used. It does not tell us who you are.").replace("Last updated 30/09/2026", "Last updated 26/10/2026").replace("We do not sell your information", "Our forms record how you reached the site (for example a Google Ads click or an email campaign) so we can see which advertising works. Google Ads uses cookies to count enquiries that come from an ad. If you tick the news box on a form, we add your email to our mailing list and send occasional product news and offers; every email has an unsubscribe link. We do not sell your information")
 pages["/privacy"] = page("/privacy", t, d, m)
 t, d, m = v6("thanks.html"); pages["/thanks"] = page("/thanks", t, d, fix(m), noindex=True)
 t, d, m = v6("404.html"); pages["/404"] = page("/404", t, d, fix(m), noindex=True)
@@ -136,6 +138,8 @@ shutil.copytree(os.path.join(HERE, "email"), os.path.join(OUT, "email"))
 css = open(os.path.join(V6, "assets/css/site.css"), encoding="utf-8").read() + open(os.path.join(HERE, "extra.css"), encoding="utf-8").read()
 open(os.path.join(OUT, "assets/css/site.css"), "w", encoding="utf-8").write(css)
 js = open(os.path.join(V6, "assets/js/site.js"), encoding="utf-8").read()
+js = js.replace("if(!/\\.(pdf|jpe?g)$/i.test(file.name)){err.textContent='Upload a PDF or JPG file.'", "if(!/\\.(pdf|jpe?g|png|ai|eps|svg)$/i.test(file.name)){err.textContent='Upload a PDF, AI, EPS, SVG, PNG or JPG file.'")
+assert 'png|ai|eps' in js
 js = js.replace("var TAWK_PROPERTY_ID='', TAWK_WIDGET_ID='default';", "var TAWK_PROPERTY_ID='6adc80751b93b634803314f9', TAWK_WIDGET_ID='1k5mlbjah';")
 js += '''
 // Google Analytics 4. Paste the Measurement ID (G-XXXXXXX). Blank = nothing loads.
@@ -150,14 +154,41 @@ js += '''
   if(/^\/uv-printing\/thanks(\.html)?\/?$/.test(location.pathname)){gtag('event','manual_event_REQUEST_QUOTE',{form:'print-quote'});}
 })();
 '''
-prod_names = json.dumps({p["slug"]: p["title"] for p in CAT})
+import forms
 js += '''
-// Contact page: ?product=<slug> from a product page fills in the product
+// Contact page: ?product=<slug> selects the product; the notes hint changes to what we need to quote it
 (function(){
-  var NAMES=''' + prod_names + ''';
-  var s=new URLSearchParams(location.search).get('product'); if(!s||!NAMES[s])return;
-  var d=document.getElementById('details'); if(d&&!d.value)d.value='Product: '+NAMES[s]+'\\n';
-  var p=document.getElementById('product'); if(p){var o=document.createElement('option');o.text=NAMES[s];o.selected=true;p.add(o,1);}
+  var p=document.getElementById('product'); if(!p)return;
+  var HINTS=''' + json.dumps(forms.GROUP_HINTS) + ''', GEN=''' + json.dumps(forms.GENERIC_HINT) + ''';
+  var d=document.getElementById('details'), rs=document.getElementById('route-sov'), rp=document.getElementById('route-print');
+  function upd(){var o=p.options[p.selectedIndex],g=o?o.getAttribute('data-group'):'';
+    if(d)d.placeholder=HINTS[g]||GEN; if(rs)rs.hidden=g!=='sov'; if(rp)rp.hidden=g!=='print';}
+  var s=new URLSearchParams(location.search).get('product');
+  if(s){for(var i=0;i<p.options.length;i++){if(p.options[i].getAttribute('data-slug')===s){p.selectedIndex=i;break;}}}
+  p.addEventListener('change',upd); upd();
+})();
+
+// Lead source: remember the first page, referrer, UTM tags and Google Ads click ID for this visit and add them to every form
+(function(){
+  var K='bpc_src', src=null;
+  try{src=JSON.parse(sessionStorage.getItem(K)||'null');}catch(e){}
+  if(!src){var q=new URLSearchParams(location.search);
+    src={landing_page:location.pathname+location.search,referrer:document.referrer||'',utm_source:q.get('utm_source')||'',utm_medium:q.get('utm_medium')||'',
+         utm_campaign:q.get('utm_campaign')||'',gclid:q.get('gclid')||'',came_from:q.get('from')||''};
+    try{sessionStorage.setItem(K,JSON.stringify(src));}catch(e){}}
+  [].forEach.call(document.querySelectorAll('form[data-netlify] input[type=hidden]'),function(i){if(src[i.name]!==undefined&&!i.value)i.value=src[i.name];});
+  window.BPC_SRC=src;
+})();
+
+// Visitors redirected from plasticsunique.com.au or sovservices.net.au see a one-line welcome
+(function(){
+  var f=(window.BPC_SRC||{}).came_from; if(f!=='pu'&&f!=='sov')return;
+  try{if(sessionStorage.getItem('bpc_welcome_closed'))return;}catch(e){}
+  var name=f==='pu'?'Plastics Unique':'Sov Services', link=f==='pu'?'/products':'/hospital/';
+  var b=document.createElement('div'); b.className='welcome-bar'; b.setAttribute('role','status');
+  b.innerHTML='<div class="wrap"><p><strong>'+name+' has a new website.</strong> Same team, same Tingalpa factory, same products, item codes and phone numbers. <a href="'+link+'">Find your product</a></p><button type="button" aria-label="Close">×</button></div>';
+  var m=document.getElementById('main'); (m||document.body).insertBefore(b,(m||document.body).firstChild);
+  b.querySelector('button').onclick=function(){b.remove();try{sessionStorage.setItem('bpc_welcome_closed','1');}catch(e){}};
 })();
 
 // Photo lightbox for product galleries
@@ -188,15 +219,38 @@ sm += "".join(f"  <url><loc>{url(p)}</loc><lastmod>{LASTMOD}</lastmod></url>\n" 
 sm += "</urlset>\n"
 open(os.path.join(OUT, "sitemap.xml"), "w").write(sm)
 open(os.path.join(OUT, "robots.txt"), "w").write(f"User-agent: *\nAllow: /\nDisallow: /thanks\nDisallow: /hospital/thanks\nDisallow: /uv-printing/thanks\n\nSitemap: {SITE}/sitemap.xml\n")
+
+# ---- llms.txt: plain-language map of the site for AI assistants and answer engines ----
+import re as _re2, html as _h
+def _meta(h):
+    t=_re2.search(r"<title>(.*?)</title>",h,_re2.S); d=_re2.search(r'name="description" content="(.*?)"',h)
+    return _h.unescape(t.group(1)) if t else "", _h.unescape(d.group(1)) if d else ""
+SECTIONS=[("Products (Plastics Unique)", lambda p: p=="/products" or p.startswith("/products/")),
+          ("Hospital range (Sov Services)", lambda p: p.startswith("/hospital/") and p!="/hospital/order"),
+          ("UV flatbed printing", lambda p: p.startswith("/uv-printing/")),
+          ("Company and ordering", lambda p: p in ("/", "/about", "/contact", "/hospital/order"))]
+L=["# Brisbane Plastics Company", "",
+   "> Brisbane Plastics Company Pty Ltd (ABN " + ABN + ") makes custom PVC and polypropylene products in Tingalpa, Brisbane, Queensland, Australia. "
+   "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, dividers and glove box holders for hospitals since 1994), "
+   "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
+   "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744 or 1300 744 104",
+   "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", ""]
+for name, test in SECTIONS:
+    L.append("## " + name); L.append("")
+    for p in locs:
+        if test(p):
+            t, d = _meta(pages[p]); L.append(f"- [{t.split(' | ')[0]}]({url(p)}): {d}")
+    L.append("")
+open(os.path.join(OUT, "llms.txt"), "w", encoding="utf-8").write("\n".join(L))
 nt=open(os.path.join(V6, "netlify.toml")).read()
 nt+="\n# Keep the page generator source private\n[[redirects]]\n  from = \"/_src/*\"\n  to = \"/404\"\n  status = 404\n  force = true\n"
 open(os.path.join(OUT, "netlify.toml"),"w").write(nt)
 pu = "# plasticsunique.com.au redirects. NOT ACTIVE. Activate when the domain moves (Bruce, parked 24/10/2026).\n# Swap TARGET for the live domain, paste above the existing redirects in netlify.toml, deploy, test.\n\n"
 for old, new in PU_REDIRECTS.items():
     for host in ("https://plasticsunique.com.au", "https://www.plasticsunique.com.au"):
-        pu += f'[[redirects]]\n  from = "{host}{old}"\n  to = "https://TARGET{new}"\n  status = 301\n  force = true\n\n'
+        pu += f'[[redirects]]\n  from = "{host}{old}"\n  to = "https://TARGET{new.split('#')[0]}?from=pu{('#'+new.split('#')[1]) if '#' in new else ''}"\n  status = 301\n  force = true\n\n'
 for host in ("https://plasticsunique.com.au", "https://www.plasticsunique.com.au"):
-    pu += f'[[redirects]]\n  from = "{host}/*"\n  to = "https://TARGET/"\n  status = 301\n  force = true\n\n'
+    pu += f'[[redirects]]\n  from = "{host}/*"\n  to = "https://TARGET/?from=pu"\n  status = 301\n  force = true\n\n'
 open(os.path.join(OUT, "plasticsunique-redirects-PENDING.toml"), "w").write(pu)
 open(os.path.join(OUT, ".gitignore"), "w").write("desktop.ini\n__pycache__/\n")
 for extra in ("README.md", "sovservices-redirects-PENDING.toml"):

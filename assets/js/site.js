@@ -12,7 +12,7 @@
   f.addEventListener('change',function(){
     err.textContent='';
     var file=f.files[0]; if(!file)return;
-    if(!/\.(pdf|jpe?g)$/i.test(file.name)){err.textContent='Upload a PDF or JPG file.';f.value='';return;}
+    if(!/\.(pdf|jpe?g|png|ai|eps|svg)$/i.test(file.name)){err.textContent='Upload a PDF, AI, EPS, SVG, PNG or JPG file.';f.value='';return;}
     if(file.size>MAX){err.textContent='File is over 8 MB. Email larger files to sales@brisplastics.com.au.';f.value='';}
   });
 })();
@@ -46,12 +46,39 @@
   if(/^\/uv-printing\/thanks(\.html)?\/?$/.test(location.pathname)){gtag('event','manual_event_REQUEST_QUOTE',{form:'print-quote'});}
 })();
 
-// Contact page: ?product=<slug> from a product page fills in the product
+// Contact page: ?product=<slug> selects the product; the notes hint changes to what we need to quote it
 (function(){
-  var NAMES={"ring-binders": "Ring binders and lever arch folders", "tab-dividers": "Custom tab dividers and medical ring binders", "slip-boxes": "Slip boxes for ring binders", "presentation-folders": "Presentation folders and covers", "display-folders": "Display books and sample display folders", "clipboard-folders": "Clipboard folders", "notebook-covers": "Pocket notebook covers", "take-5-safety-books": "Take 5 safety books and covers", "tally-books": "Drill pipe tally books and covers", "glovebox-wallets": "Glovebox, service book and dealership wallets", "fuel-card-holders": "Fuel card holders", "pvc-satchels": "PVC satchels and document wallets", "polypropylene-satchels": "Polypropylene satchels and document boxes", "travel-wallets": "Travel wallets", "tab-wallets": "TAB and gaming wallets", "id-tags": "ID tag pockets and card wallets", "luggage-tags": "Branded luggage tags", "noren-tags": "Noren tags and parts bin tags", "signs-and-tags": "Plastic signs, danger tags and isolation tags", "room-compendiums": "Room compendiums and menu books", "food-service-signage": "Food service and point-of-sale signage", "counter-mats": "Counter mats", "x-ray-sleeves": "X-ray protective sleeves", "funeral-folders": "In remembrance folders", "student-portfolios": "Student portfolio folders", "certificate-pockets": "Certificate pockets and folders", "school-folders": "School folders and binders", "music-folders": "Music folders", "promotional-products": "Rulers, plate frames and promotional items", "bean-lids": "32-8 bean lids for polystyrene boxes", "printing-and-finishing": "Printing, colours and finishing"};
-  var s=new URLSearchParams(location.search).get('product'); if(!s||!NAMES[s])return;
-  var d=document.getElementById('details'); if(d&&!d.value)d.value='Product: '+NAMES[s]+'\n';
-  var p=document.getElementById('product'); if(p){var o=document.createElement('option');o.text=NAMES[s];o.selected=true;p.add(o,1);}
+  var p=document.getElementById('product'); if(!p)return;
+  var HINTS={"Binders and folders": "Ring type and size (e.g. 2 D-ring, 25 mm), spine width, pockets, pen loop, business card slot, printing inside or outside", "Covers and books": "The book or pad it must fit (size or brand), top or side opening, pockets, whether you need refill books", "Wallets and satchels": "Closure (press stud, zip, Velcro or flap), pockets and card slots, gusset or flat, what goes inside", "Tags and cards": "Hole or slot, numbering or variable text, how it attaches (tie, cable tie, lanyard), indoor or outdoor", "Hospitality and healthcare": "Number of rooms or sites, inserts or pages, how and where it is used", "Schools and education": "School logo and colours, year levels, pockets, name card or certificate size", "Other products": "What it is for, where it will be used, and a photo or sample of anything similar"}, GEN="Pockets, fittings, ring size, what it holds, where it will be used, delivery address, deadlines";
+  var d=document.getElementById('details'), rs=document.getElementById('route-sov'), rp=document.getElementById('route-print');
+  function upd(){var o=p.options[p.selectedIndex],g=o?o.getAttribute('data-group'):'';
+    if(d)d.placeholder=HINTS[g]||GEN; if(rs)rs.hidden=g!=='sov'; if(rp)rp.hidden=g!=='print';}
+  var s=new URLSearchParams(location.search).get('product');
+  if(s){for(var i=0;i<p.options.length;i++){if(p.options[i].getAttribute('data-slug')===s){p.selectedIndex=i;break;}}}
+  p.addEventListener('change',upd); upd();
+})();
+
+// Lead source: remember the first page, referrer, UTM tags and Google Ads click ID for this visit and add them to every form
+(function(){
+  var K='bpc_src', src=null;
+  try{src=JSON.parse(sessionStorage.getItem(K)||'null');}catch(e){}
+  if(!src){var q=new URLSearchParams(location.search);
+    src={landing_page:location.pathname+location.search,referrer:document.referrer||'',utm_source:q.get('utm_source')||'',utm_medium:q.get('utm_medium')||'',
+         utm_campaign:q.get('utm_campaign')||'',gclid:q.get('gclid')||'',came_from:q.get('from')||''};
+    try{sessionStorage.setItem(K,JSON.stringify(src));}catch(e){}}
+  [].forEach.call(document.querySelectorAll('form[data-netlify] input[type=hidden]'),function(i){if(src[i.name]!==undefined&&!i.value)i.value=src[i.name];});
+  window.BPC_SRC=src;
+})();
+
+// Visitors redirected from plasticsunique.com.au or sovservices.net.au see a one-line welcome
+(function(){
+  var f=(window.BPC_SRC||{}).came_from; if(f!=='pu'&&f!=='sov')return;
+  try{if(sessionStorage.getItem('bpc_welcome_closed'))return;}catch(e){}
+  var name=f==='pu'?'Plastics Unique':'Sov Services', link=f==='pu'?'/products':'/hospital/';
+  var b=document.createElement('div'); b.className='welcome-bar'; b.setAttribute('role','status');
+  b.innerHTML='<div class="wrap"><p><strong>'+name+' has a new website.</strong> Same team, same Tingalpa factory, same products, item codes and phone numbers. <a href="'+link+'">Find your product</a></p><button type="button" aria-label="Close">×</button></div>';
+  var m=document.getElementById('main'); (m||document.body).insertBefore(b,(m||document.body).firstChild);
+  b.querySelector('button').onclick=function(){b.remove();try{sessionStorage.setItem('bpc_welcome_closed','1');}catch(e){}};
 })();
 
 // Photo lightbox for product galleries

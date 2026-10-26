@@ -5,47 +5,48 @@
 #      Copy the MX and TXT records exactly. support@sovservices.net.au mail must keep working.
 #   3. Paste the blocks below into netlify.toml ABOVE the existing redirects, swap TARGET for the
 #      live primary domain (brisplastics.com.au or plasticsunique.com.au), commit and deploy.
+#   ?from=sov on each target shows visitors a one-line "Sov Services has a new website" welcome.
 #   4. Test every old URL returns 301 to the right page, then add sovservices.net.au to Search Console
 #      and use the Change of Address tool.
 
 [[redirects]]
   from = "https://sovservices.net.au/products"
-  to = "https://TARGET/hospital/"
+  to = "https://TARGET/hospital/?from=sov"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sovservices.net.au/contact"
-  to = "https://TARGET/hospital/order"
+  to = "https://TARGET/hospital/order?from=sov"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sovservices.net.au/m/*"
-  to = "https://TARGET/hospital/order"
+  to = "https://TARGET/hospital/order?from=sov"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://sovservices.net.au/*"
-  to = "https://TARGET/hospital/"
+  to = "https://TARGET/hospital/?from=sov"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sovservices.net.au/products"
-  to = "https://TARGET/hospital/"
+  to = "https://TARGET/hospital/?from=sov"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sovservices.net.au/contact"
-  to = "https://TARGET/hospital/order"
+  to = "https://TARGET/hospital/order?from=sov"
   status = 301
   force = true
 
 [[redirects]]
   from = "https://www.sovservices.net.au/*"
-  to = "https://TARGET/hospital/"
+  to = "https://TARGET/hospital/?from=sov"
   status = 301
   force = true

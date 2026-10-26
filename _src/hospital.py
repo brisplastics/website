@@ -1,5 +1,6 @@
 """Hospital section: Sov Services range, rebuilt from sovservices.net.au (read 24/10/2026)."""
 from shell import *
+from forms import TRACKING, ART_ACCEPT
 
 FOLDER_COLOURS = [  # (name, code, swatch)
     ("Oxford Blue", "01", "#1F3A68"), ("Red", "02", "#D7322E"), ("Yellow", "03", "#F3C623"),
@@ -126,6 +127,7 @@ def build():
 <section class="block alt" id="range"><div class="wrap">
 <div class="section-head"><h2>The range</h2><p class="lede">Built for wards: wipe-clean, colour-coded and made to fit the bed rail, the wall and the 2-ring binder. Prices exclude GST.</p></div>
 {range_groups}
+<div class="notice"><p><strong>Need ward or wayfinding signs?</strong> We print ward, room and directory signs in the same factory. <a href="/uv-printing/hospital-signs">Hospital and clinic signs</a></p></div>
 </div></section>
 <section class="block"><div class="wrap split">
 <div>
@@ -328,6 +330,7 @@ def build():
     main += f'''<section class="block" style="padding-top:1.5rem"><div class="wrap">
 <form class="quote" name="hospital-order" method="POST" action="/hospital/thanks" data-netlify="true" netlify-honeypot="company_website" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="hospital-order">
+{TRACKING}
 <p class="hidden"><label>Leave this empty <input name="company_website"></label></p>
 <fieldset>
 <legend>Order type</legend>
@@ -361,7 +364,7 @@ def build():
 <legend>Anything else</legend>
 <div class="grid2">
 <div class="field"><label for="needed_by">Needed by</label><input id="needed_by" name="needed_by" type="date"></div>
-<div class="field"><label for="artwork">Order sheet or artwork <span class="hint">PDF or JPG, up to 8 MB</span></label><input id="artwork" name="attachment" type="file" accept=".pdf,.jpg,.jpeg,application/pdf,image/jpeg"><p id="artwork-error" class="error" role="alert"></p></div>
+<div class="field"><label for="artwork">Order sheet or artwork <span class="hint">PDF, PNG or JPG, up to 8 MB</span></label><input id="artwork" name="attachment" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>
 <div class="field full"><label for="notes">Notes</label><textarea id="notes" name="notes" placeholder="Bed numbers, print wording, delivery instructions, previous order reference"></textarea></div>
 <div class="field full"><label class="check"><input type="checkbox" name="new_supplier_details" value="yes"> Send our supply team Brisbane Plastics Company's vendor details (ABN and bank details, verified by phone)</label></div>
 </div>

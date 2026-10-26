@@ -2,6 +2,7 @@
 Spec from Canon ANZ product page and Canon spec sheet (read 24/10/2026).
 Configuration per Bruce 24/10/2026: white ink yes, varnish no, roll option no."""
 from shell import *
+from forms import TRACKING, optin, artwork_fields
 
 HUB = "/uv-printing/"
 C_HUB = [("/", "Home"), (HUB, "UV flatbed printing")]
@@ -59,6 +60,9 @@ PAGES_INDEX = [
     ("/uv-printing/safety-industrial-signs", "Safety and industrial signs", "Site signs, machine labels, nameplates and control panel overlays.", "var(--pvc-yellow)"),
     ("/uv-printing/pos-displays", "Retail and POS displays", "Counter displays, menu boards, shelf signs and packaging prototypes.", "var(--pvc-red)"),
     ("/uv-printing/printed-plastic-products", "Printed and fabricated products", "Printed, then cut, welded, creased or foiled in the same factory.", "var(--pvc-green)"),
+    ("/uv-printing/office-signs", "Office and business signs", "Reception, door, room and wayfinding signs for offices, clinics and shops.", "var(--blue)"),
+    ("/uv-printing/school-signs", "School signs and honour boards", "Campus wayfinding, building, sports and honour boards for schools.", "var(--pvc-yellow)"),
+    ("/uv-printing/hospital-signs", "Hospital and clinic signs", "Ward, room, wayfinding and notice signs for hospitals, clinics and aged care.", "var(--teal)"),
 ]
 
 def index_cards(exclude=None):
@@ -80,6 +84,7 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
 <form class="quote" name="print-quote" method="POST" action="/uv-printing/thanks" data-netlify="true" netlify-honeypot="company_website" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="print-quote">
 <input type="hidden" name="page" value="{path}">
+{TRACKING}
 <p class="hidden"><label>Leave this empty <input name="company_website"></label></p>
 <h2 style="font-size:1.6rem">{heading}</h2>
 <fieldset>
@@ -98,17 +103,21 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
 <fieldset>
 <legend>The job</legend>
 <div class="grid2">
+<div class="field"><label for="pq-use">What is it?</label><select id="pq-use" name="job_type"><option>Sign or panel</option><option>Display or stand</option><option>Label, nameplate or overlay</option><option>Award, plaque or gift</option><option>Printing on items I supply</option><option>Prototype or sample</option><option>Other</option></select></div>
+<div class="field"><label for="pq-where">Where will it be used?</label><select id="pq-where" name="location"><option>Indoors</option><option>Outdoors</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-material">Material</label><select id="pq-material" name="material">{mats}</select></div>
 <div class="field"><label for="pq-supply">Who supplies the material?</label><select id="pq-supply" name="material_supply"><option>You supply it</option><option>I supply it</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-size">Finished size <span class="hint">W × H mm</span></label><input id="pq-size" name="size" placeholder="e.g. 600 × 900"></div>
 <div class="field"><label for="pq-thick">Thickness <span class="hint">mm, if known</span></label><input id="pq-thick" name="thickness" placeholder="e.g. 3"></div>
-<div class="field"><label for="pq-qty">Quantity</label><input id="pq-qty" name="quantity" inputmode="numeric" placeholder="e.g. 20"></div>
+<div class="field"><label for="pq-qty">Quantity <span class="hint">list several for price breaks</span></label><input id="pq-qty" name="quantity" placeholder="e.g. 20, or 10 / 50 / 100"></div>
 <div class="field"><label for="pq-sides">Print</label><select id="pq-sides" name="print_sides"><option>Full colour, one side</option><option>Full colour, both sides</option><option>Reverse print on clear (second surface)</option><option>White ink only or spot white</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-cut">Cutting</label><select id="pq-cut" name="cutting"><option>Supplied to size, no cutting</option><option>Straight cuts to size</option><option>Shaped or die cut</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-date">Needed by</label><input id="pq-date" name="needed_by" type="date"></div>
-<div class="field"><label for="artwork">Artwork <span class="hint">PDF or JPG, up to 8 MB</span></label><input id="artwork" name="artwork" type="file" accept=".pdf,.jpg,.jpeg,application/pdf,image/jpeg"><p id="artwork-error" class="error" role="alert"></p></div>
-<div class="field"><label for="pq-link">Or a file link <span class="hint">WeTransfer, Dropbox, Drive</span></label><input id="pq-link" name="file_link" type="url" placeholder="https://"></div>
-<div class="field full"><label for="pq-notes">Anything else</label><textarea id="pq-notes" name="notes" placeholder="Where it will be used (indoor or outdoor), finish, fixing holes, delivery address, repeat frequency"></textarea></div>
+<div class="field"><label for="pq-post">Delivery suburb and postcode <span class="hint">for freight</span></label><input id="pq-post" name="delivery_postcode" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
+<div class="field"><label for="pq-repeat">Will you need this again?</label><select id="pq-repeat" name="repeat"><option>One-off</option><option>Yes, regularly</option><option>Not sure</option></select></div>
+{artwork_fields()}
+<div class="field full"><label for="pq-notes">Anything else</label><textarea id="pq-notes" name="notes" placeholder="Finish, fixing holes or stand-offs, double-sided tape, shape, brand colours to match"></textarea></div>
+{optin()}
 </div>
 </fieldset>
 <button class="btn" type="submit">Send for a quote</button>
@@ -401,6 +410,101 @@ def build():
     pages[p] = sub(p, "Printed and fabricated products", "Full-Colour Printed PVC & Polypropylene Products | Brisbane", desc,
                    "Full-colour printed plastic products, made in Brisbane",
                    "We print full colour onto PVC and polypropylene sheet, then cut, weld, crease, foil and assemble it into finished folders, wallets, tags and covers, all in one Brisbane factory.",
+                   body, faqs)
+
+
+    # ---------- OFFICE AND BUSINESS SIGNS ----------
+    p = "/uv-printing/office-signs"
+    body = block(
+        '''<h2>Signs we print</h2>
+<ul class="ticks">
+<li>Reception and feature wall signs with your logo</li>
+<li>Door, room and meeting room signs</li>
+<li>Wayfinding and directory boards</li>
+<li>Shopfront, window and counter signs</li>
+<li>Opening hours, notice and policy boards</li>
+<li>Desk plates and staff name plates</li>
+<li>Car park and building signs on ACM</li>
+</ul>''',
+        '''<h2>How it is made</h2>
+<ul class="facts">
+<li><strong>Printed direct.</strong> Full colour and white ink straight onto acrylic, foamed PVC, ACM or aluminium. No vinyl to lift or peel.</li>
+<li><strong>Reverse-printed acrylic.</strong> Your logo printed behind clear acrylic for a glossy, protected face.</li>
+<li><strong>Cut in house.</strong> Cut to size and drilled for fixings in our Tingalpa factory.</li>
+<li><strong>One sign or a full fit-out.</strong> A single door sign or every sign for a new office, quoted per job.</li>
+</ul>
+<p>We print and cut the signs. We do not install them, so your builder or fit-out team fits them on site.</p>''')
+    faqs = [
+        ("What material is best for a reception sign?", "Reverse-printed clear acrylic gives the classic glossy look. Foamed PVC is lighter and costs less. ACM suits large signs and outdoor walls. Tell us the size and where it goes and we will suggest one."),
+        ("Can you match our brand colours?", "Yes. Send your brand colours as CMYK or Pantone references and we print a test if an exact match matters."),
+        ("Do you install signs?", "No. We print and cut the signs, drilled for fixings if you need them. Your builder, fit-out team or handyman installs them."),
+        ("Can you do all the signs for a new office?", "Yes. Send the sign schedule or floor plan with the wording for each sign and we quote the full set."),
+    ]
+    desc = "Office and business signs printed in Brisbane: reception, door, room and wayfinding signs on acrylic, PVC and ACM. Full colour with white ink. One sign or a full fit-out."
+    pages[p] = sub(p, "Office and business signs", "Office, Reception & Wayfinding Signs Brisbane | Printed Acrylic & PVC", desc,
+                   "Office, reception and wayfinding signs",
+                   "Reception, door, room and wayfinding signs printed in full colour on acrylic, foamed PVC and ACM in our Tingalpa factory. One sign or every sign for a new fit-out.",
+                   body, faqs)
+
+    # ---------- SCHOOL SIGNS ----------
+    p = "/uv-printing/school-signs"
+    body = block(
+        '''<h2>Signs for schools</h2>
+<ul class="ticks">
+<li>Campus maps and wayfinding signs</li>
+<li>Building, block and classroom signs</li>
+<li>Honour boards, dux and captain boards</li>
+<li>Sports, house and trophy displays</li>
+<li>Reception and front office signs</li>
+<li>Rules, safety and notice boards</li>
+<li>Event, open day and fete signs on corflute</li>
+</ul>''',
+        '''<h2>Already a supplier to schools</h2>
+<p>Plastics Unique has made school folders, music folders, student portfolios and certificate pockets for Queensland schools for years. The same factory now prints signs, so your school can order folders and signs from one supplier with one account.</p>
+<ul class="facts">
+<li><strong>Your crest in full colour.</strong> Printed direct onto acrylic, PVC or ACM, with white ink on clear and dark boards.</li>
+<li><strong>Add names each year.</strong> Honour boards can be made as panels so new names are added without replacing the board.</li>
+<li><strong>Indoor or outdoor.</strong> ACM and aluminium for outdoor signs, acrylic and PVC indoors.</li>
+</ul>''')
+    faqs = [
+        ("Can you add names to an honour board each year?", "Yes. We can design the board as separate panels or strips so a new panel is printed each year and added to the board."),
+        ("Do you supply signs to schools outside Brisbane?", "Yes. We freight Australia-wide. Signs are packed flat and protected for transport."),
+        ("Can we order on a school purchase order?", "Yes. Send your purchase order with the quote acceptance."),
+    ]
+    desc = "School signs printed in Brisbane: campus wayfinding, building and classroom signs, honour boards and sports displays on acrylic, PVC and ACM. From the makers of Plastics Unique school folders."
+    pages[p] = sub(p, "School signs and honour boards", "School Signs & Honour Boards Brisbane | Printed Acrylic, PVC & ACM", desc,
+                   "School signs and honour boards",
+                   "Campus wayfinding, building and classroom signs, honour boards and sports displays printed in full colour on acrylic, PVC and ACM, by the Brisbane factory that makes Plastics Unique school folders.",
+                   body, faqs)
+
+    # ---------- HOSPITAL AND CLINIC SIGNS ----------
+    p = "/uv-printing/hospital-signs"
+    body = block(
+        '''<h2>Signs for wards and clinics</h2>
+<ul class="ticks">
+<li>Ward, room and bed bay signs</li>
+<li>Wayfinding and department directories</li>
+<li>Reception and nurse station signs</li>
+<li>Patient information and notice boards</li>
+<li>Door signs for consulting and treatment rooms</li>
+<li>Staff-only, restricted area and safety signs</li>
+</ul>''',
+        '''<h2>From the makers of Sov Services chart folders</h2>
+<p>Sov Services has supplied patient chart folders and holders to Australian hospitals since 1994. The same Tingalpa factory now prints ward and wayfinding signs, so your ward can order folders, holders and signs from one supplier.</p>
+<ul class="facts">
+<li><strong>Smooth, flat faces.</strong> Printed direct onto acrylic, PVC or ACM, with no vinyl edges to lift.</li>
+<li><strong>Your colour coding.</strong> Match the colours you already use for wards and departments.</li>
+<li><strong>Your standards.</strong> Send your health service's sign templates or style guide and we print to them.</li>
+</ul>''')
+    faqs = [
+        ("Can you match our hospital's sign templates?", "Yes. Send the templates, style guide or a photo of an existing sign and we print to match."),
+        ("Can we order signs with our chart folders?", f"Yes. Add the signs to your Sov Services order, or email {SOV_EMAIL} and we quote both together."),
+        ("Do you install signs?", "No. We print and cut the signs and drill them for fixings if needed. Your maintenance team installs them."),
+    ]
+    desc = "Hospital, clinic and aged care signs printed in Brisbane: ward, room and wayfinding signs on acrylic, PVC and ACM. From the makers of Sov Services patient chart folders."
+    pages[p] = sub(p, "Hospital and clinic signs", "Hospital, Ward & Clinic Signs | Printed in Brisbane | Sov Services", desc,
+                   "Hospital, ward and clinic signs",
+                   "Ward, room, wayfinding and notice signs printed in full colour on acrylic, PVC and ACM for hospitals, clinics and aged care, by the Brisbane factory that makes Sov Services chart folders.",
                    body, faqs)
 
     # ---------- THANKS ----------
