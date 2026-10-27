@@ -32,8 +32,8 @@ t, d, m = v6("index.html")
 m = m.replace("Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up.</p>", "Cut, printed, welded and assembled in Tingalpa, checked and dispatched or ready for pick-up. Standard jobs take 10 to 15 working days from order and artwork approval. Ask about express turnaround.</p>")
 assert "10 to 15 working days" in m
 m = fix(m)
-m = m.replace("<h1>Custom PVC and polypropylene products, made in Brisbane.</h1>", "<h1>Custom PVC and polypropylene products, and UV printing, in Brisbane.</h1>")
-assert "and UV printing, in Brisbane." in m
+m = m.replace("<h1>Custom PVC and polypropylene products, made in Brisbane.</h1>", "<h1>Custom PVC and polypropylene products and UV printing in Brisbane</h1>")
+assert "and UV printing in Brisbane</h1>" in m
 m = m.replace('<div class="hero-sheets" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>',
     '<div class="hero-photos">' + "".join(f'<img src="/assets/img/products/{f}" alt="{a}" loading="eager" decoding="async">' for f, a in [
         ("ring-binders/ring-binders-pu-01.jpg", "Range of custom printed ring binders"), ("notebook-covers/notebook-covers-pu-02.jpg", "Screen printed pocket notebook covers"),
@@ -54,7 +54,7 @@ feature = ('<section class="block"><div class="wrap">\n<div class="section-head"
              "Your logo and artwork on folders, binders, wallets, satchels, tags and covers, by screen print, foil blocking or full-colour UV.", "See printed products")
     + _route("/products", "/assets/img/products/pvc-satchel-flap.jpg", "Blue welded PVC satchel with flap", "Made to your size",
              "Custom-size PVC and polypropylene products, RF welded, die cut and creased in our factory to fit exactly what you need.", "See what we make")
-    + _route("/products/noren-tags", "/assets/img/products/noren-tags-sizes.jpg", "Clear PVC noren tags in three sizes", "Standard products",
+    + _route("/products", "/assets/img/products/noren-tags-sizes.jpg", "Clear PVC noren tags in three sizes", "Standard products",
              "Ready-made lines in standard sizes: noren tags, chart folders, tally book refills, TAB wallets and X-ray sleeves.", "See standard products")
     + _route("/hospital/", "/assets/img/products/sov/chart-folders-colour-range-t.jpg", "Patient chart folders in ten colours", "Hospital range",
              "Sov Services patient chart folders, chart holders, clipboards and dividers, with the same item codes.", "Order or reorder")
@@ -115,6 +115,10 @@ m = m.replace("""<p>Bruce spent 20 years building a project management consultan
 <p>At Brisbane Plastics Company he leads strategy, systems and investment, and finds the commercial opportunity inside the operational challenge.</p>""",
   """<p>Brisbane Plastics Company is Bruce's third business venture. As Director he leads strategy, systems and investment: pricing and quoting, finance, and the systems that connect customers, the office and the factory.</p>""")
 assert "third business venture" in m and "stationery manufacturer" in m
+m = m.replace('<div class="monogram" aria-hidden="true">MB</div>', f'<img class="portrait" src="{BRAND}director-mathew-bowden.jpg" alt="Mathew Bowden, Managing Director" width="240" height="240" loading="lazy">')
+m = m.replace('<div class="monogram" aria-hidden="true">BB</div>', f'<img class="portrait" src="{BRAND}director-bruce-bairstow.jpg" alt="Bruce Bairstow, Director" width="240" height="240" loading="lazy">')
+m = m.replace("two service lines trusted by local businesses for 27 years.", "two service lines trusted by local businesses for decades.")
+assert "portrait" in m and "for decades" in m
 m = m.replace("<li><strong>Owner-operated.</strong> The founders run the businesses themselves, alongside their investors.</li>", "<li><strong>Owner-operated.</strong> Our directors run the business from the Tingalpa factory.</li>")
 m = m.replace("<li><strong>Engineering depth.</strong> Controls, automation and IoT experience applied inside our own factories.</li>", "<li><strong>Engineering depth.</strong> Controls, automation and systems experience applied on our factory floor.</li>")
 assert "inside our own factories" not in m

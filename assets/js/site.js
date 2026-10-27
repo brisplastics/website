@@ -217,3 +217,44 @@
       [].forEach.call(g.querySelectorAll('.more-photo'),function(f){f.hidden=false;}); b.parentNode.remove();});
   });
 })();
+
+// Repeat orders: show the short repeat fields instead of the full item specification
+(function(){
+  var f=document.querySelector('form[name=quote-request]'); if(!f)return;
+  var rep=f.querySelector('.repeat-fs'), items=f.querySelector('.items-fs'), ref=f.querySelector('#repeat_ref');
+  var flag=f.querySelector('#repeat_same'), chg=f.querySelector('.repeat-changes');
+  function upd(){
+    var r=(f.querySelector('input[name=enquiry_type]:checked')||{}).value==='repeat';
+    rep.hidden=!r; items.hidden=r; ref.required=r;
+    chg.hidden=flag.value.indexOf('Some')<0;
+  }
+  f.addEventListener('change',function(e){if(e.target.name==='enquiry_type'||e.target===flag)upd();});
+  upd();
+})();
+
+// Hospital order form: colour choices follow the item chosen on each line
+(function(){
+  var ord=document.querySelector('form[name=hospital-order]'); if(!ord)return;
+  var FOLDER=['Oxford Blue 01','Red 02','Yellow 03','Purple 04','Navy 06','Grey 07','Orange 09','Pink 10','Apple Green 11','Sky Blue 13','Black (on request)'];
+  function allowed(t){
+    t=t.toLowerCase();
+    if(!t)return null;
+    if(t.indexOf('holder')>=0)return ['Black gloss','White gloss'];
+    if(t.indexOf('clipboard')>=0)return ['White'];
+    if(t.indexOf('divider')>=0)return ['Not applicable'];
+    return FOLDER;
+  }
+  [].forEach.call(ord.querySelectorAll('tr.order-line'),function(row){
+    var item=row.querySelector('select[name^=item_]'), col=row.querySelector('select[name^=colour_]');
+    var all=[].map.call(col.options,function(o){return o.text;});
+    function upd(){
+      var a=allowed(item.options[item.selectedIndex].value?item.options[item.selectedIndex].text:''), keep=col.value;
+      col.innerHTML='';
+      var list=a||all.slice(1);
+      var o0=document.createElement('option');o0.value='';o0.text='Colour';col.add(o0);
+      list.forEach(function(t){var o=document.createElement('option');o.text=t;col.add(o);});
+      if(list.length===1)col.selectedIndex=1; else if(list.indexOf(keep)>=0)col.value=keep;
+    }
+    item.addEventListener('change',upd); upd();
+  });
+})();

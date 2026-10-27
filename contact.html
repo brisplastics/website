@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/css/site.css?v=202610271036">
+<link rel="stylesheet" href="/assets/css/site.css?v=202610271143">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "LocalBusiness", "@id": "https://brisplastics.com.au/#business", "name": "Brisbane Plastics Company", "legalName": "Brisbane Plastics Company Pty Ltd", "url": "https://brisplastics.com.au/", "logo": "https://brisplastics.com.au/assets/img/brand/icon-512.png", "image": "https://brisplastics.com.au/assets/img/og-image.png", "email": "sales@brisplastics.com.au", "description": "Brisbane manufacturer of custom PVC and polypropylene products, hospital chart folders and holders (Sov Services), and trade UV flatbed printing up to 1250 x 2500 mm.", "telephone": "+61733963744", "address": {"@type": "PostalAddress", "streetAddress": "45a Millennium Place", "addressLocality": "Tingalpa", "addressRegion": "QLD", "postalCode": "4173", "addressCountry": "AU"}, "areaServed": "Australia", "brand": [{"@type": "Brand", "name": "Plastics Unique"}, {"@type": "Brand", "name": "Sov Services"}], "alternateName": ["Plastics Unique", "Sov Services", "BPC"], "sameAs": ["https://plasticsunique.com.au/", "https://sovservices.net.au/"], "hasMap": "https://www.google.com/maps/search/?api=1&query=Plastics%20Unique%20Tingalpa&query_place_id=ChIJq8TfafNekWsREC4BYQTPcIg", "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday"], "opens": "08:30", "closes": "17:00"}, {"@type": "OpeningHoursSpecification", "dayOfWeek": "Friday", "opens": "08:30", "closes": "15:00"}], "knowsAbout": ["PVC fabrication", "Polypropylene products", "RF welding", "Ring binders", "Patient chart folders", "UV flatbed printing", "Acrylic printing", "Screen printing", "Foil blocking"], "founder": [{"@type": "Person", "name": "Bruce Bairstow", "jobTitle": "Director"}, {"@type": "Person", "name": "Mathew Bowden", "jobTitle": "Managing Director"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Home", "item": "https://brisplastics.com.au/"}, {"@type": "ListItem", "position": 2, "name": "Request a quote", "item": "https://brisplastics.com.au/contact"}]}</script>
 </head>
@@ -54,6 +54,17 @@
 <label><input type="radio" name="enquiry_type" value="repeat"> Reorder a past job</label>
 <label><input type="radio" name="enquiry_type" value="order"> Place an order</label>
 <label><input type="radio" name="enquiry_type" value="general"> General enquiry</label>
+</div>
+</fieldset>
+<fieldset class="repeat-fs" hidden>
+<legend>Your repeat order</legend>
+<p class="form-note">We pull up your last job, confirm the price and send it back for your OK. Only tell us what has changed.</p>
+<div class="grid2">
+<div class="field"><label for="repeat_ref">Previous job number, invoice or PO</label><input id="repeat_ref" name="repeat_reference" placeholder="e.g. invoice 12345 or your PO"></div>
+<div class="field"><label for="repeat_qty">Quantity this time</label><input id="repeat_qty" name="repeat_quantity" placeholder="e.g. 250"></div>
+<div class="field"><label for="repeat_same">Any changes?</label><select id="repeat_same" name="repeat_changes_flag"><option>Exactly the same as last time</option><option>Some changes</option></select></div>
+<div class="field"><label for="repeat_product">Product <span class="hint">if you know it</span></label><input id="repeat_product" name="repeat_product" placeholder="e.g. glove box wallets"></div>
+<div class="field full repeat-changes" hidden><label for="repeat_changes">What has changed?</label><textarea id="repeat_changes" name="repeat_changes" style="min-height:80px" placeholder="New artwork, different colour, new address, different quantity breaks"></textarea></div>
 </div>
 </fieldset>
 <fieldset>
@@ -264,6 +275,6 @@
 <p class="legal">© 2026 Brisbane Plastics Company Pty Ltd · ACN 699 248 658 · <a href="https://abr.business.gov.au/ABN/View?id=14699248658" rel="noopener">ABN 14 699 248 658</a></p>
 </div>
 </footer>
-<script src="/assets/js/site.js?v=202610271036" defer></script>
+<script src="/assets/js/site.js?v=202610271143" defer></script>
 </body>
 </html>

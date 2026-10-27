@@ -306,7 +306,7 @@ def build():
     cr = C_HUB + [(p, "Order form")]
     opts = '<option value="">Choose an item</option>' + "".join(
         f'<optgroup label="{esc(g)}">' + "".join(f"<option>{esc(o)}</option>" for o in items) + "</optgroup>" for g, items in ORDER_CODES)
-    colours = '<option value="">Colour</option>' + "".join(f"<option>{n} {c}</option>" for n, c, _ in FOLDER_COLOURS) + "<option>Black gloss</option><option>White gloss</option><option>Not applicable</option>"
+    colours = '<option value="">Colour</option>' + "".join(f"<option>{n} {c}</option>" for n, c, _ in FOLDER_COLOURS) + "<option>Black (on request)</option><option>Black gloss</option><option>White gloss</option><option>White</option><option>Not applicable</option>"
     lines = ""
     for i in range(1, 9):
         req = " required" if i == 1 else ""

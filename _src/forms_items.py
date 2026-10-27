@@ -90,6 +90,17 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <label><input type="radio" name="enquiry_type" value="general"> General enquiry</label>
 </div>
 </fieldset>
+<fieldset class="repeat-fs" hidden>
+<legend>Your repeat order</legend>
+<p class="form-note">We pull up your last job, confirm the price and send it back for your OK. Only tell us what has changed.</p>
+<div class="grid2">
+<div class="field"><label for="repeat_ref">Previous job number, invoice or PO</label><input id="repeat_ref" name="repeat_reference" placeholder="e.g. invoice 12345 or your PO"></div>
+<div class="field"><label for="repeat_qty">Quantity this time</label><input id="repeat_qty" name="repeat_quantity" placeholder="e.g. 250"></div>
+<div class="field"><label for="repeat_same">Any changes?</label><select id="repeat_same" name="repeat_changes_flag"><option>Exactly the same as last time</option><option>Some changes</option></select></div>
+<div class="field"><label for="repeat_product">Product <span class="hint">if you know it</span></label><input id="repeat_product" name="repeat_product" placeholder="e.g. glove box wallets"></div>
+<div class="field full repeat-changes" hidden><label for="repeat_changes">What has changed?</label><textarea id="repeat_changes" name="repeat_changes" style="min-height:80px" placeholder="New artwork, different colour, new address, different quantity breaks"></textarea></div>
+</div>
+</fieldset>
 <fieldset>
 <legend>Your details</legend>
 <div class="grid2">
