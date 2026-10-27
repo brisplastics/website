@@ -83,11 +83,11 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
     t_chk = " checked" if trade_default else ""
     d_chk = "" if trade_default else " checked"
     return f'''<section class="block alt" id="quote"><div class="wrap two-col">
-<form class="quote" name="print-quote" method="POST" action="/uv-printing/thanks" data-netlify="true" netlify-honeypot="company_website" enctype="multipart/form-data">
+<form class="quote" name="print-quote" method="POST" action="/uv-printing/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="print-quote">
 <input type="hidden" name="page" value="{path}">
 {TRACKING}
-<p class="hidden"><label>Leave this empty <input name="company_website"></label></p>
+<p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
 <h2 style="font-size:1.6rem">{heading}</h2>
 <fieldset>
 <legend>About you</legend>

@@ -103,10 +103,10 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
     sov_colours = '<option value="">Colour</option>' + "".join(f"<option>{n} {c}</option>" for n, c, _ in hospital.FOLDER_COLOURS) + \
         "<option>Black (on request)</option><option>Black gloss</option><option>White gloss</option><option>White</option><option>Not applicable</option>"
     items = "".join(item_block(n, generic_hint, sov_opts, sov_colours) for n in range(1, ITEMS_MAX + 1))
-    return f'''<form class="quote" name="quote-request" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="company_website" enctype="multipart/form-data">
+    return f'''<form class="quote" name="quote-request" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="quote-request">
 <textarea name="quote_summary" class="hidden" aria-hidden="true" tabindex="-1"></textarea>
-<p class="hidden"><label>Leave this empty <input name="company_website"></label></p>
+<p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
 <fieldset>
 <legend>What do you need?</legend>
 <div class="choice">

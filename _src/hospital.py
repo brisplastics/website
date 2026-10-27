@@ -320,10 +320,10 @@ def build():
     main = hero(cr, "Hospital order and reorder form", f"Order Sov Services products for your ward. We confirm price, print and delivery by return email before anything is made. Prefer email or phone? Send your purchase order to <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> or call <a href=\"tel:1300744104\">1300 744 104</a>.",
                 kicker="Sov Services · Australian made")
     main += f'''<section class="block" style="padding-top:1.5rem"><div class="wrap">
-<form class="quote" name="hospital-order" method="POST" action="/hospital/thanks" data-netlify="true" netlify-honeypot="company_website" enctype="multipart/form-data">
+<form class="quote" name="hospital-order" method="POST" action="/hospital/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="hospital-order">
 {TRACKING}
-<p class="hidden"><label>Leave this empty <input name="company_website"></label></p>
+<p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
 <fieldset>
 <legend>Order type</legend>
 <div class="choice">
