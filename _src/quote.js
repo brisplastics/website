@@ -34,116 +34,78 @@
   });
   renderButtons();
 
-  // ---- /contact: item blocks ----
-  var ORDEROPT=__ORDEROPT__;
-  var FOLDER=['Oxford Blue 01','Red 02','Yellow 03','Purple 04','Navy 06','Grey 07','Orange 09','Pink 10','Apple Green 11','Sky Blue 13','Black (on request)'];
-  function sovColours(t){t=(t||'').toLowerCase(); if(!t)return null;
-    if(t.indexOf('holder')>=0)return ['Black gloss','White gloss']; if(t.indexOf('clipboard')>=0)return ['White'];
-    if(t.indexOf('custom tab divider')>=0)return ['Standard colours (white, red, orange, green, yellow)','Another colour from the range (add it to the notes)']; if(t.indexOf('divider')>=0)return ['Not applicable']; return FOLDER;}
-  function fillColours(col,allowed){var keep=col.value; col.innerHTML='';var o0=document.createElement('option');o0.value='';o0.text='Colour';col.add(o0);
-    (allowed||FOLDER.concat(['Black gloss','White gloss','White','Not applicable'])).forEach(function(t){var o=document.createElement('option');o.text=t;col.add(o);});
-    if(allowed&&allowed.length===1)col.selectedIndex=1; else if(allowed&&allowed.indexOf(keep)>=0)col.value=keep;}
-  window.BPC_sovColours=sovColours; window.BPC_fillColours=fillColours;
+  // ---- /contact: item blocks (general products only; hospital and UV printing have their own forms) ----
   var form=document.querySelector('form[name=quote-request]');
   if(form){
     var items=[].slice.call(form.querySelectorAll('.item')), addBtn=document.getElementById('add-item');
     function opt(sel){return sel.options[sel.selectedIndex];}
-    function val(div,sel){var e=div.querySelector(sel);return e?e.value.trim():'';}
-    function syncHidden(div){
-      div.querySelector('.item-extras-value').value=[].map.call(div.querySelectorAll('.item-extras input:checked'),function(c){return c.value;}).join(', ');
-      div.querySelector('.item-pos-value').value=[].map.call(div.querySelectorAll('.item-pos input:checked'),function(c){return c.value;}).join(', ');
-    }
-    function routes(){
-      var groups=items.filter(function(d){return !d.hidden;}).map(function(d){var o=opt(d.querySelector('.item-product'));return o?o.getAttribute('data-group'):'';});
-      document.getElementById('route-print').hidden=groups.indexOf('print')<0;
-      document.getElementById('route-sov').hidden=true;
-    }
-    function onSov(div){var s=div.querySelector('.sov-item');fillColours(div.querySelector('.sov-colour'),sovColours(s.value?opt(s).text:''));}
+    function v(div,suffix){var e=div.querySelector('#item_'+div.getAttribute('data-n')+'_'+suffix);return e?e.value.trim():'';}
+    function checked(div,cls){return [].map.call(div.querySelectorAll(cls+' input:checked'),function(c){return c.value;}).join(', ');}
     function onProduct(div){
-      var o=opt(div.querySelector('.item-product')), slug=o?o.getAttribute('data-slug'):'', g=o?o.getAttribute('data-group'):'';
+      var o=opt(div.querySelector('.item-product'));
+      if(o&&o.getAttribute('data-go')){location.href=o.getAttribute('data-go');return;}
+      var slug=o?o.getAttribute('data-slug'):'', g=o?o.getAttribute('data-group'):'';
       var std=STANDARD[slug], p=div.querySelector('.item-std'), wrap=div.querySelector('.item-extras-wrap'), box=div.querySelector('.item-extras');
-      var sov=g==='sov';
-      div.querySelector('.sov-fields').hidden=!sov; div.querySelector('.pu-fields').hidden=sov;
-      if(sov){p.textContent='Choose the item code, colour and ward print below.';p.hidden=false;}
-      else if(std){p.textContent='Comes with: '+std.desc; p.hidden=false;} else {p.textContent=''; p.hidden=true;}
-      var dl=div.querySelector('datalist'); dl.innerHTML=''; ((std&&std.sizes)||[]).forEach(function(x){var op=document.createElement('option');op.value=x;dl.appendChild(op);});
-      var keep=[].map.call(box.querySelectorAll('input:checked'),function(c){return c.value;});
+      if(std){p.textContent='Comes with: '+std.desc; p.hidden=false;} else {p.textContent=''; p.hidden=true;}
+      var dl=div.querySelector('datalist'), sizes=(std&&std.sizes)||[]; dl.innerHTML='';
+      sizes.forEach(function(x){var op=document.createElement('option');op.value=x;dl.appendChild(op);});
+      div.querySelector('.size-hint').textContent=sizes.length?'pick from the list or type':'W × H mm';
+      var keep=checked(div,'.item-extras').split(', ');
       box.innerHTML='';
-      if(!sov&&std&&std.extras.length){
+      if(std&&std.extras.length){
         std.extras.forEach(function(x){var l=document.createElement('label');var c=document.createElement('input');c.type='checkbox';c.value=x;c.checked=keep.indexOf(x)>=0;l.appendChild(c);l.appendChild(document.createTextNode(' '+x));box.appendChild(l);});
         wrap.hidden=false;
       } else wrap.hidden=true;
-      div.querySelector('.item-notes').placeholder=sov?'Bed numbers, ward name wording, delivery to ward':(HINTS[g]||GENERIC);
-      if(sov)onSov(div);
-      syncHidden(div); routes();
+      div.querySelector('.item-notes').placeholder=HINTS[g]||GENERIC;
     }
     function show(div){div.hidden=false; addBtn.hidden=items.every(function(d){return !d.hidden;});}
     function selectSlug(div,slug){var s=div.querySelector('.item-product');for(var i=0;i<s.options.length;i++){if(s.options[i].getAttribute('data-slug')===slug){s.selectedIndex=i;break;}}onProduct(div);}
-    function selectGroup(div,g){var s=div.querySelector('.item-product');for(var i=0;i<s.options.length;i++){if(s.options[i].getAttribute('data-group')===g){s.selectedIndex=i;break;}}onProduct(div);}
-    function pickText(sel,text){for(var j=0;j<sel.options.length;j++){if(sel.options[j].text===text){sel.selectedIndex=j;return true;}}return false;}
     items.forEach(function(div){
       div.querySelector('.item-product').addEventListener('change',function(){onProduct(div);});
-      div.querySelector('.sov-item').addEventListener('change',function(){onSov(div);});
-      div.addEventListener('change',function(e){if(e.target.type==='checkbox')syncHidden(div);});
       var r=div.querySelector('.item-remove');
       if(r)r.addEventListener('click',function(){
         var k=div.getAttribute('data-key'); if(k){drop(k);div.removeAttribute('data-key');renderButtons();}
         [].forEach.call(div.querySelectorAll('input,select,textarea'),function(f){if(f.type==='checkbox')f.checked=false;else if(f.tagName==='SELECT')f.selectedIndex=0;else f.value='';});
-        onProduct(div); div.hidden=true; addBtn.hidden=false; routes();
+        onProduct(div); div.hidden=true; addBtn.hidden=false;
       });
     });
     addBtn.addEventListener('click',function(){var d=items.filter(function(x){return x.hidden;})[0]; if(d){show(d); d.querySelector('.item-product').focus();}});
-    // Fill from ?product= and from the chosen items
-    var q=new URLSearchParams(location.search).get('product'), queue=list.slice();
-    if(q&&!queue.some(function(x){return x.key==='pu:'+q;}))queue.unshift({key:'pu:'+q,name:'',fromLink:true});
-    queue.slice(0,items.length).forEach(function(x,i){
-      var div=items[i]; show(div);
-      if(!x.fromLink)div.setAttribute('data-key',x.key);
-      if(x.key.indexOf('pu:')===0)selectSlug(div,x.key.slice(3));
-      else {selectGroup(div,'sov'); var id=x.key.slice(4), s=div.querySelector('.sov-item');
-        if(!(ORDEROPT[id]&&pickText(s,ORDEROPT[id])))div.querySelector('.item-notes').value=x.name; onSov(div);}
-    });
+    // Fill from ?product= and from the chosen items. Hospital items belong on the hospital order form.
+    var q=new URLSearchParams(location.search).get('product');
+    var queue=list.filter(function(x){return x.key.indexOf('pu:')===0;});
+    if(q&&!queue.some(function(x){return x.key==='pu:'+q;}))queue.unshift({key:'pu:'+q,fromLink:true});
+    queue.slice(0,items.length).forEach(function(x,i){var div=items[i]; show(div); if(!x.fromLink)div.setAttribute('data-key',x.key); selectSlug(div,x.key.slice(3));});
+    document.getElementById('route-sov').hidden=!list.some(function(x){return x.key.indexOf('sov:')===0;});
     items.forEach(function(d){if(!d.hidden)onProduct(d);});
 
-    // On send: write a plain summary at the top of the email and leave out empty items
+    function ddmmyyyy(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s);return m?m[3]+'/'+m[2]+'/'+m[1]:s;}
+    // On send: one plain summary of every item goes in the email
     form.addEventListener('submit',function(){
       var rep=(form.querySelector('input[name=enquiry_type]:checked')||{}).value==='repeat', out=[];
-      function add(k,v){if(v)out.push('  '+k+': '+v);}
+      function add(k,val){if(val)out.push('  '+k+': '+val);}
+      function g(id){var e=form.querySelector('#'+id);return e?e.value.trim():'';}
       if(rep){
         out.push('REPEAT ORDER');
-        add('Previous job, invoice or PO',val(form,'#repeat_ref')); add('Product',val(form,'#repeat_product'));
-        add('Quantity',val(form,'#repeat_qty')); add('Changes',val(form,'#repeat_same')); add('What has changed',val(form,'#repeat_changes'));
+        add('Previous job, invoice or PO',g('repeat_ref')); add('Product',g('repeat_product'));
+        add('Quantity',g('repeat_qty')); add('Changes',g('repeat_same')); add('What has changed',g('repeat_changes'));
       } else {
         var n=0;
         items.forEach(function(div){
           if(div.hidden)return; var ps=div.querySelector('.item-product'); if(!ps.value)return; n++;
-          var o=opt(ps), slug=o.getAttribute('data-slug'), sov=o.getAttribute('data-group')==='sov', std=STANDARD[slug];
-          var N='[name=item_'+div.getAttribute('data-n')+'_';
-          out.push('ITEM '+n+': '+(sov?'Sov Services: '+(val(div,'.sov-item')||'item not chosen'):o.text));
-          if(sov){add('Colour',val(div,'.sov-colour')); add('Ward and bed print',val(div,N+'sov_print]'));}
-          else {
-            if(std)add('Comes with',std.desc);
-            add('Size',val(div,N+'size]')); add('Material',val(div,N+'material]')); add('Colour',val(div,N+'colour]'));
-            var pr=val(div,N+'print]'), pos=val(div,'.item-pos-value'), ink=val(div,N+'ink_colour]');
-            if(pr)add('Printing',pr+(pos?', '+pos:'')+(ink?', ink '+ink:''));
-            add('Extras',val(div,'.item-extras-value'));
-          }
-          add('Quantity',val(div,N+'quantity]')); add('Notes',val(div,'.item-notes'));
+          var o=opt(ps), std=STANDARD[o.getAttribute('data-slug')];
+          out.push('ITEM '+n+': '+o.text);
+          if(std)add('Comes with',std.desc);
+          add('Size',v(div,'size')); add('Material',v(div,'material')); add('Colour',v(div,'colour'));
+          var pr=v(div,'print'), pos=checked(div,'.item-pos'), ink=v(div,'ink');
+          if(pr||pos||ink)add('Printing',[pr,pos?'on '+pos:'',ink?'ink '+ink:''].filter(Boolean).join(', '));
+          add('Extras',checked(div,'.item-extras'));
+          add('Quantity',v(div,'qty')); add('Notes',v(div,'notes'));
           out.push('');
         });
+        if(!n)out.push('No product chosen');
       }
-      add('Needed by',val(form,'#needed_by')); add('Deliver to',val(form,'#postcode')); add('PO number',val(form,'#reference'));
-      form.querySelector('[name=quote_summary]').value=out.join('\n');
-      // Leave unused parts out of the email
-      items.forEach(function(div){var used=!rep&&!div.hidden&&div.querySelector('.item-product').value;
-        var sov=used&&opt(div.querySelector('.item-product')).getAttribute('data-group')==='sov';
-        [].forEach.call(div.querySelectorAll('input,select,textarea'),function(f){f.disabled=!used;});
-        if(used){[].forEach.call(div.querySelectorAll(sov?'.pu-fields input,.pu-fields select':'.sov-fields input,.sov-fields select'),function(f){f.disabled=true;});}
-      });
-      [].forEach.call(form.querySelectorAll('.repeat-fs input,.repeat-fs select,.repeat-fs textarea'),function(f){f.disabled=!rep;});
-      [].forEach.call(form.querySelectorAll('input[type=hidden]'),function(f){if(!f.value&&f.name!=='form-name')f.disabled=true;});
+      form.querySelector('[name=quote_summary]').value=out.join('\n').trim();
     });
-    window.addEventListener('pageshow',function(){[].forEach.call(form.querySelectorAll('[disabled]'),function(f){f.disabled=false;});});
   }
 
   // ---- /hospital/order: fill order lines from chosen Sov products ----

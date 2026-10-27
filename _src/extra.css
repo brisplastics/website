@@ -282,3 +282,10 @@ section.block.alt .notice{background:#fff}
 .finder+.pgroup{padding-top:1.5rem}
 .pu-fields>.grid2,.sov-fields>.grid2{margin:0}
 [hidden]{display:none!important}
+
+/* Labels with hints on one line, so fields line up */
+.lab{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .5rem;min-height:1.6rem;margin-bottom:.1rem}
+.lab .hint{font-size:.82rem}
+.field>.lab+.hint{display:none}
+.lab{flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
+.lab .hint{overflow:hidden;text-overflow:ellipsis}

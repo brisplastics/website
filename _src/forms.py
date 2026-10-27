@@ -7,8 +7,7 @@ ART_ACCEPT = ".pdf,.jpg,.jpeg,.png,.ai,.eps,.svg,application/pdf,image/jpeg,imag
 ART_HINT = "PDF, AI, EPS, SVG, PNG or JPG, up to 8 MB"
 
 # Filled by site.js from the visitor's first page this session (Google Ads click ID, UTM tags, old-site redirect flag).
-TRACKING = "".join(f'<input type="hidden" name="{n}" value="">' for n in
-                   ("landing_page", "referrer", "utm_source", "utm_medium", "utm_campaign", "gclid", "came_from", "quote_list"))
+TRACKING = '<input type="hidden" name="lead_source" value="">'  # one line: landing page, referrer, UTM tags, Google Ads click ID, old-site flag
 
 def optin(label="Send me occasional product news and offers by email. You can unsubscribe at any time."):
     return f'<div class="field full"><label class="check"><input type="checkbox" name="news_optin" value="yes"> {label}</label></div>'

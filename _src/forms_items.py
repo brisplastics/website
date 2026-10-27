@@ -50,60 +50,57 @@ MATERIALS = ["Standard PVC", "Clear PVC", "Leather-look PVC", "Padded PVC", "Pol
 MAT_OPTS = '<option value="">Choose one</option>' + "".join(f"<option>{m}</option>" for m in MATERIALS)
 
 
+# Plastics Unique PVC colour range (35 colours, plasticsunique.com.au colour swatch, read 27/10/2026). * = pastel surcharge.
+PVC_COLOURS = ["Sand White", "Sand Black", "Sea Blue*", "Cool Blue", "Mint*", "Cool Aqua", "Sky Blue", "Ultra Marine", "Royal Blue", "Mikado Blue",
+               "Navy Blue", "Portfolio Blue", "Sweet Yellow*", "Yellow", "Gold", "Orange", "Sandstone", "Beige*", "Red", "Hot Red", "Burgundy",
+               "Hot Magenta", "Hot Pink", "Peony Pink*", "Lilac*", "Hot Purple", "Lime", "Emerald", "Pine", "Arctic Grey", "Mist Grey",
+               "Charcoal Grey", "Silver", "Black", "White"]
+
 def product_select(n):
-    opts = '<option value="">Choose a product</option>'
+    opts = ('<option value="">Choose a product</option>'
+            '<option data-go="/hospital/" style="font-weight:700">Hospital Ward Range (Sov Services)</option>'
+            '<option data-go="/uv-printing/#quote" style="font-weight:700">UV Flatbed Printing</option>')
     for g in GROUP_ORDER:
         opts += f'<optgroup label="{esc(g)}">' + "".join(
             f'<option data-slug="{p["slug"]}" data-group="{esc(g)}">{esc(p["title"])}</option>'
             for p in PRODUCTS if p["group"] == g) + "</optgroup>"
-    opts += ('<optgroup label="Other"><option data-group="sov">Hospital product (Sov Services)</option>'
-             '<option data-group="print">UV flatbed printing</option><option>Something else or not sure</option></optgroup>')
-    return f'<select id="item_{n}_product" name="item_{n}_product" class="item-product">{opts}</select>'
+    opts += '<optgroup label="Other"><option>Something else or not sure</option></optgroup>'
+    return f'<select id="item_{n}_product" class="item-product">{opts}</select>'
 
 
-def L(n, text, for_id):
-    """Label with a hidden item number, so each field has a unique name in the submission email."""
-    return f'<label for="{for_id}"><span class="vh">Item {n} </span>{text}</label>'
+def F(for_id, text, hint="", control=""):
+    """Field with the hint beside the label, so fields line up whether or not they have a hint."""
+    h = f' <span class="hint">{hint}</span>' if hint else ""
+    lab = f'<label for="{for_id}">{text}</label>' if for_id else f'<span class="label">{text}</span>'
+    return f'<div class="lab">{lab}{h}</div>{control}'
 
-def item_block(n, generic_hint, sov_opts, sov_colours):
+# Item fields have no name attribute: the browser builds one plain summary (quote_summary) on send,
+# so the email carries only that summary instead of every empty field for 8 items.
+def item_block(n, generic_hint):
     hidden = "" if n == 1 else " hidden"
     remove = "" if n == 1 else '<button type="button" class="item-remove">Remove this item</button>'
+    colours = '<option value="">Choose one</option>' + "".join(f"<option>{c}</option>" for c in PVC_COLOURS) + "<option>Clear</option><option>Other (add to notes)</option>"
+    pos = "".join(f'<label><input type="checkbox" value="{p}"> {p}</label>' for p in ("Front", "Back", "Spine", "Inside"))
     return f'''<div class="item" data-n="{n}"{hidden}>
 <div class="item-head"><h3>Item {n}</h3>{remove}</div>
 <div class="grid2">
-<div class="field full">{L(n, "Product", f"item_{n}_product")}{product_select(n)}
-<p class="item-std" hidden></p></div>
-<div class="sov-fields field full" hidden><div class="grid2">
-<div class="field full">{L(n, "Hospital item", f"item_{n}_sov_item")}<select id="item_{n}_sov_item" name="item_{n}_sov_item" class="sov-item">{sov_opts}</select></div>
-<div class="field">{L(n, "Colour", f"item_{n}_sov_colour")}<select id="item_{n}_sov_colour" name="item_{n}_sov_colour" class="sov-colour">{sov_colours}</select></div>
-<div class="field">{L(n, "Ward and bed print", f"item_{n}_sov_print")}<input id="item_{n}_sov_print" name="item_{n}_sov_print" placeholder="e.g. Ward 4B, beds 1 to 24"></div>
-</div></div>
-<div class="pu-fields field full"><div class="grid2">
-<div class="field">{L(n, "Size", f"item_{n}_size")}<span class="hint">pick or type</span><input id="item_{n}_size" name="item_{n}_size" list="item_{n}_sizes" placeholder="e.g. A4 or 310 × 240"><datalist id="item_{n}_sizes"></datalist></div>
-<div class="field">{L(n, "Material", f"item_{n}_material")}<select id="item_{n}_material" name="item_{n}_material">{MAT_OPTS}</select></div>
-<div class="field">{L(n, "Colour", f"item_{n}_colour")}<span class="hint">see our <a href="/products/printing-and-finishing" target="_blank" rel="noopener">colour range</a></span><input id="item_{n}_colour" name="item_{n}_colour" placeholder="e.g. black, navy, clear"></div>
-<div class="field">{L(n, "Printing", f"item_{n}_print")}<select id="item_{n}_print" name="item_{n}_print">{PRINT_OPTS}</select></div>
-<div class="field"><span class="label">Where is the print?</span><span class="hint">tick all that apply</span>
-<div class="choice inline item-pos"><label><input type="checkbox" value="Front"> Front</label><label><input type="checkbox" value="Back"> Back</label><label><input type="checkbox" value="Spine"> Spine</label><label><input type="checkbox" value="Inside"> Inside</label></div>
-<input type="hidden" name="item_{n}_print_position" class="item-pos-value"></div>
-<div class="field">{L(n, "Ink or foil colour", f"item_{n}_ink")}<span class="hint">e.g. white, gold foil, PMS 286</span><input id="item_{n}_ink" name="item_{n}_ink_colour"></div>
-<div class="field full item-extras-wrap" hidden><span class="label">Extras</span><span class="hint">tick any you need</span><div class="choice inline item-extras"></div>
-<input type="hidden" name="item_{n}_extras" class="item-extras-value"></div>
-</div></div>
-<div class="field">{L(n, "Quantity", f"item_{n}_qty")}<span class="hint">list several for price breaks</span><input id="item_{n}_qty" name="item_{n}_quantity" placeholder="e.g. 50, or 50 / 100 / 250"></div>
-<div class="field full">{L(n, "Notes or other customisation", f"item_{n}_notes")}<textarea id="item_{n}_notes" name="item_{n}_notes" class="item-notes" style="min-height:80px" placeholder="{generic_hint}"></textarea></div>
+<div class="field full">{F(f"item_{n}_product", "Product", "", product_select(n))}<p class="item-std" hidden></p></div>
+<div class="field">{F(f"item_{n}_size", "Size", "<span class=size-hint>W × H mm</span>", f'<input id="item_{n}_size" list="item_{n}_sizes" placeholder="e.g. A4 or 310 × 240"><datalist id="item_{n}_sizes"></datalist>')}</div>
+<div class="field">{F(f"item_{n}_qty", "Quantity", "several for price breaks", f'<input id="item_{n}_qty" placeholder="e.g. 50, or 50 / 100 / 250">')}</div>
+<div class="field">{F(f"item_{n}_material", "Material", "", f'<select id="item_{n}_material">{MAT_OPTS}</select>')}</div>
+<div class="field">{F(f"item_{n}_colour", "Colour", '<a href="/products/printing-and-finishing" target="_blank" rel="noopener">see colours</a>', f'<select id="item_{n}_colour">{colours}</select>')}</div>
+<div class="field">{F(f"item_{n}_print", "Printing", "", f'<select id="item_{n}_print">{PRINT_OPTS}</select>')}</div>
+<div class="field">{F(f"item_{n}_ink", "Ink or foil colour", "e.g. gold, PMS 286", f'<input id="item_{n}_ink">')}</div>
+<div class="field full">{F("", "Where is the print?", "tick all that apply", f'<div class="choice inline item-pos">{pos}</div>')}</div>
+<div class="field full item-extras-wrap" hidden>{F("", "Extras", "tick any you need", '<div class="choice inline item-extras"></div>')}</div>
+<div class="field full">{F(f"item_{n}_notes", "Notes or other customisation", "", f'<textarea id="item_{n}_notes" class="item-notes" style="min-height:80px" placeholder="{generic_hint}"></textarea>')}</div>
 </div>
 </div>'''
 
 
 def contact_form(tracking, artwork, optin_html, generic_hint):
-    import hospital
-    sov_opts = '<option value="">Choose an item</option>' + "".join(
-        f'<optgroup label="{esc(g)}">' + "".join(f"<option>{esc(o)}</option>" for o in items) + "</optgroup>" for g, items in hospital.ORDER_CODES)
-    sov_colours = '<option value="">Colour</option>' + "".join(f"<option>{n} {c}</option>" for n, c, _ in hospital.FOLDER_COLOURS) + \
-        "<option>Black (on request)</option><option>Black gloss</option><option>White gloss</option><option>White</option><option>Not applicable</option>"
-    items = "".join(item_block(n, generic_hint, sov_opts, sov_colours) for n in range(1, ITEMS_MAX + 1))
-    return f'''<form class="quote" name="quote-request" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
+    items = "".join(item_block(n, generic_hint) for n in range(1, ITEMS_MAX + 1))
+    return _labels(f'''<form class="quote" name="quote-request" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="quote-request">
 <textarea name="quote_summary" class="hidden" aria-hidden="true" tabindex="-1"></textarea>
 <p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
@@ -120,11 +117,11 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <legend>Your repeat order</legend>
 <p class="form-note">We pull up your last job, confirm the price and send it back for your OK. Only tell us what has changed.</p>
 <div class="grid2">
-<div class="field"><label for="repeat_ref">Previous job number, invoice or PO</label><input id="repeat_ref" name="repeat_reference" placeholder="e.g. invoice 12345 or your PO"></div>
-<div class="field"><label for="repeat_qty">Quantity this time</label><input id="repeat_qty" name="repeat_quantity" placeholder="e.g. 250"></div>
-<div class="field"><label for="repeat_same">Any changes?</label><select id="repeat_same" name="repeat_changes_flag"><option>Exactly the same as last time</option><option>Some changes</option></select></div>
-<div class="field"><label for="repeat_product">Product</label><span class="hint">if you know it</span><input id="repeat_product" name="repeat_product" placeholder="e.g. glove box wallets"></div>
-<div class="field full repeat-changes" hidden><label for="repeat_changes">What has changed?</label><textarea id="repeat_changes" name="repeat_changes" style="min-height:80px" placeholder="New artwork, different colour, new address, different quantity breaks"></textarea></div>
+<div class="field"><label for="repeat_ref">Previous job number, invoice or PO</label><input id="repeat_ref" placeholder="e.g. invoice 12345 or your PO"></div>
+<div class="field"><label for="repeat_qty">Quantity this time</label><input id="repeat_qty" placeholder="e.g. 250"></div>
+<div class="field"><label for="repeat_same">Any changes?</label><select id="repeat_same" ><option>Exactly the same as last time</option><option>Some changes</option></select></div>
+<div class="field"><label for="repeat_product">Product</label><span class="hint">if you know it</span><input id="repeat_product" placeholder="e.g. glove box wallets"></div>
+<div class="field full repeat-changes" hidden><label for="repeat_changes">What has changed?</label><textarea id="repeat_changes" style="min-height:80px" placeholder="New artwork, different colour, new address, different quantity breaks"></textarea></div>
 </div>
 </fieldset>
 <fieldset>
@@ -141,8 +138,7 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <fieldset class="items-fs">
 <legend>Items you have chosen</legend>
 <p class="form-note">Products you added with "Add to quote request" appear here. Add more below, up to {ITEMS_MAX} items.</p>
-<div class="notice" id="route-sov" hidden><p>Hospital order? The <a href="/hospital/order">hospital order form</a> asks for item code, spine, colour and ward print, so we can quote it straight away.</p></div>
-<div class="notice" id="route-print" hidden><p>Printing a sign or panel? The <a href="/uv-printing/#quote">print quote form</a> asks for material, thickness and cutting, so we can quote it straight away.</p></div>
+<div class="notice" id="route-sov" hidden><p>You also chose hospital items. Order those on the <a href="/hospital/order">hospital order form</a>, which asks for item code, colour and ward print.</p></div>
 {items}
 <button type="button" class="btn ghost" id="add-item">Add another product</button>
 </fieldset>
@@ -161,4 +157,12 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 {tracking}
 <button class="btn" type="submit">Send request</button>
 <p class="form-note" style="margin-top:1rem">We reply within one business day. Your details are used only to respond to this request and, if you tick the box, to send you news. See our <a href="/privacy">privacy statement</a>.</p>
-</form>'''
+</form>''')
+
+
+def _labels(html):
+    """Put each hint on the same line as its label (class lab), so fields line up."""
+    import re
+    html = re.sub(r'(<label for="[^"]+">[^<]*</label>)<span class="hint">(.*?)</span>', r'<div class="lab">\1 <span class="hint">\2</span></div>', html)
+    html = re.sub(r'(<div class="field(?: full)?">)(<label for="[^"]+">[^<]*</label>)', r'\1<div class="lab">\2</div>', html)
+    return html

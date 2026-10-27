@@ -210,7 +210,8 @@ js += '''
     src={landing_page:location.pathname+location.search,referrer:document.referrer||'',utm_source:q.get('utm_source')||'',utm_medium:q.get('utm_medium')||'',
          utm_campaign:q.get('utm_campaign')||'',gclid:q.get('gclid')||'',came_from:q.get('from')||''};
     try{sessionStorage.setItem(K,JSON.stringify(src));}catch(e){}}
-  [].forEach.call(document.querySelectorAll('form[data-netlify] input[type=hidden]'),function(i){if(src[i.name]!==undefined&&!i.value)i.value=src[i.name];});
+  var line=['landing '+src.landing_page,src.referrer?'from '+src.referrer:'',src.utm_source?'utm '+[src.utm_source,src.utm_medium,src.utm_campaign].filter(Boolean).join(' / '):'',src.gclid?'Google Ads click '+src.gclid:'',src.came_from?'old site '+src.came_from:''].filter(Boolean).join(' | ');
+  [].forEach.call(document.querySelectorAll('input[name=lead_source]'),function(i){i.value=line;});
   window.BPC_SRC=src;
 })();
 
