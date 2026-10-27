@@ -312,10 +312,10 @@ def build():
         req = " required" if i == 1 else ""
         hid = "" if i == 1 else " hidden"
         lines += f'''<tr class="order-line"{hid}>
-<td data-label="Item"><select name="item_{i}" aria-label="Item {i}"{req}>{opts}</select></td>
-<td data-label="Colour"><select name="colour_{i}" aria-label="Colour {i}">{colours}</select></td>
-<td data-label="Print (ward, beds)"><input name="print_{i}" aria-label="Print text {i}" placeholder="e.g. Ward 4B, beds 1 to 24"></td>
-<td data-label="Quantity"><input name="qty_{i}" aria-label="Quantity {i}" inputmode="numeric" pattern="[0-9]*[1-9][0-9]*" title="Enter a whole number" placeholder="Qty"{req}></td>
+<td data-label="Item"><select class="ol-item" aria-label="Item {i}"{req}>{opts}</select></td>
+<td data-label="Colour"><select class="ol-colour" aria-label="Colour {i}">{colours}</select></td>
+<td data-label="Print (ward, beds)"><input class="ol-print" aria-label="Print text {i}" placeholder="e.g. Ward 4B, beds 1 to 24"></td>
+<td data-label="Quantity"><input class="ol-qty" aria-label="Quantity {i}" inputmode="numeric" pattern="[0-9]*[1-9][0-9]*" title="Enter a whole number" placeholder="Qty"{req}></td>
 </tr>'''
     main = hero(cr, "Hospital order and reorder form", f"Order Sov Services products for your ward. We confirm price, print and delivery by return email before anything is made. Prefer email or phone? Send your purchase order to <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> or call <a href=\"tel:1300744104\">1300 744 104</a>.",
                 kicker="Sov Services · Australian made")
@@ -327,21 +327,21 @@ def build():
 <fieldset>
 <legend>Order type</legend>
 <div class="choice">
-<label><input type="radio" name="order_type" value="reorder" checked> Reorder, same as last time</label>
-<label><input type="radio" name="order_type" value="new" > New order or change</label>
-<label><input type="radio" name="order_type" value="quote"> Price check or quote only</label>
+<label><input type="radio" data-group="order_type" value="reorder" checked> Reorder, same as last time</label>
+<label><input type="radio" data-group="order_type" value="new" > New order or change</label>
+<label><input type="radio" data-group="order_type" value="quote"> Price check or quote only</label>
 </div>
 </fieldset>
 <fieldset>
 <legend>Hospital and ward</legend>
 <div class="grid2">
-<div class="field"><label for="facility">Hospital or facility</label><input id="facility" name="facility" autocomplete="organization" required></div>
-<div class="field"><label for="ward">Ward or department</label><input id="ward" name="ward" required></div>
-<div class="field"><label for="name">Your name</label><input id="name" name="name" autocomplete="name" required></div>
+<div class="field"><label for="facility">Hospital or facility</label><input id="facility" autocomplete="organization" required></div>
+<div class="field"><label for="ward">Ward or department</label><input id="ward" required></div>
+<div class="field"><label for="name">Your name</label><input id="name" autocomplete="name" required></div>
 <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-<div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
-<div class="field"><label for="po">Purchase order number <span class="hint">if you have one</span></label><input id="po" name="po_number"></div>
-<div class="field full"><label for="delivery">Delivery address</label><textarea id="delivery" name="delivery_address" style="min-height:80px" placeholder="Ward, building, street, suburb, state, postcode"></textarea></div>
+<div class="field"><label for="phone">Phone</label><input id="phone" type="tel" autocomplete="tel"></div>
+<div class="field"><label for="po">Purchase order number <span class="hint">if you have one</span></label><input id="po"></div>
+<div class="field full"><label for="delivery">Delivery address</label><textarea id="delivery" style="min-height:80px" placeholder="Ward, building, street, suburb, state, postcode"></textarea></div>
 </div>
 </fieldset>
 <fieldset>
@@ -357,10 +357,10 @@ def build():
 <fieldset>
 <legend>Anything else</legend>
 <div class="grid2">
-<div class="field"><label for="needed_by">Needed by</label><input id="needed_by" name="needed_by" type="date"></div>
-<div class="field"><label for="artwork">Order sheet or artwork <span class="hint">PDF, PNG or JPG, up to 8 MB. Please do not include patient information.</span></label><input id="artwork" name="attachment" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>
-<div class="field full"><label for="notes">Notes</label><textarea id="notes" name="notes" placeholder="Bed numbers, print wording, delivery instructions, previous order reference"></textarea></div>
-<div class="field full"><label class="check"><input type="checkbox" name="new_supplier_details" value="yes"> Send our supply team Brisbane Plastics Company's vendor details (ABN and bank details, verified by phone)</label></div>
+<div class="field"><label for="needed_by">Needed by</label><input id="needed_by" type="date"></div>
+<div class="field"><label for="artwork">Order sheet or artwork</label> <span class="hint">PDF, PNG or JPG, up to 8 MB. Please do not include patient information.</span><input id="artwork" name="attachment" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>
+<div class="field full"><label for="notes">Notes</label><textarea id="notes" placeholder="Bed numbers, print wording, delivery instructions, previous order reference"></textarea></div>
+<div class="field full"><label class="check"><input type="checkbox" id="new_supplier_details" value="yes"> Send our supply team Brisbane Plastics Company's vendor details (ABN and bank details, verified by phone)</label></div>
 </div>
 </fieldset>
 <button class="btn" type="submit">Send order</button>

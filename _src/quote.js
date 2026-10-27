@@ -1,3 +1,32 @@
+// Form emails: every form sends one plain-text "request" block laid out for Xero, plus the email field (for Reply) and any file.
+// Radio groups carry data-group instead of a name so they are not listed separately in the email; names are added here
+// for the browser to group them and removed again on submit.
+var BPCF=(function(){
+  [].forEach.call(document.querySelectorAll('input[data-group]'),function(r){r.name=r.getAttribute('data-group');});
+  function el(f,id){return f.querySelector('#'+id);}
+  function val(f,id){var e=el(f,id);if(!e)return '';if(e.type==='checkbox')return e.checked?'Yes':'';return (e.value||'').trim();}
+  function radio(f,g){var e=f.querySelector('input[data-group="'+g+'"]:checked');return e?e.parentNode.textContent.trim():'';}
+  function dmy(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||'');return m?m[3]+'/'+m[2]+'/'+m[1]:(s||'');}
+  function row(L,k,v){if(v)L.push(k+': '+v);}
+  // Contact block in the order Xero's new contact screen asks for it
+  function contact(L,c){
+    var p=(c.name||'').trim().split(/\s+/), first=p.shift()||'', last=p.join(' ');
+    L.push('','CONTACT (for Xero)');
+    row(L,'Contact name',c.org||c.name); row(L,'First name',first); row(L,'Last name',last);
+    row(L,'Email',c.email); row(L,'Phone',c.phone);
+    (c.more||[]).forEach(function(x){row(L,x[0],x[1]);});
+  }
+  function finish(f,subject,L){
+    var src=window.BPC_SRC_LINE||'';
+    if(src)L.push('','Source: '+src);
+    f.querySelector('[name=request]').value=L.join('\n').replace(/\n{3,}/g,'\n\n').trim();
+    var s=f.querySelector('[name=subject]'); if(s&&subject)s.value=subject.slice(0,150);
+    [].forEach.call(f.querySelectorAll('input[data-group]'),function(r){r.removeAttribute('name');});
+  }
+  function plural(n,w){return n+' '+w+(n===1?'':'s');}
+  return {el:el,val:val,radio:radio,dmy:dmy,row:row,contact:contact,finish:finish,plural:plural};
+})();
+
 // Quote request: "Add to quote request" buttons collect products (kept in this browser only).
 // On /contact each chosen product becomes an item block with its standard inclusions and extras.
 // On /hospital/order chosen Sov products fill the order lines.
@@ -78,33 +107,44 @@
     document.getElementById('route-sov').hidden=!list.some(function(x){return x.key.indexOf('sov:')===0;});
     items.forEach(function(d){if(!d.hidden)onProduct(d);});
 
-    function ddmmyyyy(s){var m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s);return m?m[3]+'/'+m[2]+'/'+m[1]:s;}
-    // On send: one plain summary of every item goes in the email
+    // On send: one plain block for the email, contact details first, then one line per item ready for a Xero quote line
     form.addEventListener('submit',function(){
-      var rep=(form.querySelector('input[name=enquiry_type]:checked')||{}).value==='repeat', out=[];
-      function add(k,val){if(val)out.push('  '+k+': '+val);}
-      function g(id){var e=form.querySelector('#'+id);return e?e.value.trim():'';}
-      if(rep){
-        out.push('REPEAT ORDER');
-        add('Previous job, invoice or PO',g('repeat_ref')); add('Product',g('repeat_product'));
-        add('Quantity',g('repeat_qty')); add('Changes',g('repeat_same')); add('What has changed',g('repeat_changes'));
+      var F=BPCF, f=form, L=[], val=function(id){return F.val(f,id);};
+      var kind=(f.querySelector('input[data-group=enquiry_type]:checked')||{}).value||'quote';
+      var who=val('company')||val('name'), n=0, subject;
+      var KIND={quote:'QUOTE REQUEST',repeat:'REPEAT ORDER',order:'ORDER',general:'GENERAL ENQUIRY'};
+      var head=[KIND[kind]||'REQUEST'];
+      var needed=F.dmy(val('needed_by'));
+      var lines=[];
+      if(kind==='repeat'){
+        lines.push('','REPEAT ORDER');
+        F.row(lines,'Previous job, invoice or PO',val('repeat_ref')); F.row(lines,'Product',val('repeat_product'));
+        F.row(lines,'Quantity',val('repeat_qty')); F.row(lines,'Changes',val('repeat_same')); F.row(lines,'What has changed',val('repeat_changes'));
+        subject='Repeat order: '+who+(val('repeat_ref')?', ref '+val('repeat_ref'):'');
       } else {
-        var n=0;
+        lines.push('','ITEMS (one Xero quote line each)');
         items.forEach(function(div){
           if(div.hidden)return; var ps=div.querySelector('.item-product'); if(!ps.value)return; n++;
-          var o=opt(ps), std=STANDARD[o.getAttribute('data-slug')];
-          out.push('ITEM '+n+': '+o.text);
-          if(std)add('Comes with',std.desc);
-          add('Size',v(div,'size')); add('Material',v(div,'material')); add('Colour',v(div,'colour'));
-          var pr=v(div,'print'), pos=checked(div,'.item-pos'), ink=v(div,'ink');
-          if(pr||pos||ink)add('Printing',[pr,pos?'on '+pos:'',ink?'ink '+ink:''].filter(Boolean).join(', '));
-          add('Extras',checked(div,'.item-extras'));
-          add('Quantity',v(div,'qty')); add('Notes',v(div,'notes'));
-          out.push('');
+          var pr=v(div,'print'), pos=checked(div,'.item-pos'), ink=v(div,'ink'), ex=checked(div,'.item-extras');
+          var printing=pr?pr+(pos?' on '+pos.toLowerCase():'')+(ink?', ink '+ink:''):'';
+          var desc=[opt(ps).text,v(div,'size'),v(div,'material'),v(div,'colour'),printing,ex].filter(function(x){return x&&!/^Choose/.test(x);}).join(', ');
+          lines.push('',n+'. Qty '+(v(div,'qty')||'not given'));
+          lines.push('   '+desc);
+          if(v(div,'notes'))lines.push('   Notes: '+v(div,'notes'));
         });
-        if(!n)out.push('No product chosen');
+        if(!n)lines.push('No product chosen');
+        head.push(F.plural(n,'item'));
+        subject=(kind==='order'?'Order: ':kind==='general'?'Enquiry: ':'Quote request: ')+who+(n?', '+F.plural(n,'item'):'');
       }
-      form.querySelector('[name=quote_summary]').value=out.join('\n').trim();
+      if(needed){head.push('needed by '+needed);subject+=', needed '+needed;}
+      L.push(head.join(' · '));
+      F.contact(L,{org:val('company'),name:val('name'),email:val('email'),phone:val('phone'),more:[
+        ['Delivery suburb and postcode',val('postcode')],['Customer PO',val('reference')],
+        ['Prefers',val('contact_pref')],['Ordered before',val('past')]]});
+      L=L.concat(lines);
+      var other=[]; F.row(other,'File link',val('file_link')); F.row(other,'Notes',val('details')); F.row(other,'News opt-in',val('news_optin'));
+      if(other.length)L=L.concat(['','OTHER'],other);
+      F.finish(f,subject,L);
     });
   }
 
@@ -114,9 +154,9 @@
     var lines=[].slice.call(ord.querySelectorAll('tr.order-line')), addLine=document.getElementById('add-line');
     var MAP={}; try{MAP=JSON.parse(document.getElementById('order-map').textContent);}catch(e){}
     function refreshAdd(){if(addLine)addLine.hidden=lines.every(function(r){return !r.hidden;});}
-    function freeLine(){for(var i=0;i<lines.length;i++){var s=lines[i].querySelector('select');if(!s.value){lines[i].hidden=false;refreshAdd();return s;}}return null;}
+    function freeLine(){for(var i=0;i<lines.length;i++){var s=lines[i].querySelector('.ol-item');if(!s.value){lines[i].hidden=false;refreshAdd();return s;}}return null;}
     function pick(sel,text){for(var j=0;j<sel.options.length;j++){if(sel.options[j].text===text||sel.options[j].text.indexOf(text)===0){sel.selectedIndex=j;return true;}}return false;}
-    if(addLine)addLine.addEventListener('click',function(){var r=lines.filter(function(x){return x.hidden;})[0];if(r){r.hidden=false;r.querySelector('select').focus();}refreshAdd();});
+    if(addLine)addLine.addEventListener('click',function(){var r=lines.filter(function(x){return x.hidden;})[0];if(r){r.hidden=false;r.querySelector('.ol-item').focus();}refreshAdd();});
     var left=[], wanted=[];
     var it=new URLSearchParams(location.search).get('item'); if(it&&MAP[it])wanted.push({text:MAP[it]});
     list.filter(function(x){return x.key.indexOf('sov:')===0;}).forEach(function(x){
@@ -127,7 +167,7 @@
       if(!w.text){left.push(w.name);return;}
       var s=freeLine(); if(!s||!pick(s,w.text))left.push(w.text);
     });
-    if(left.length){var n=ord.querySelector('textarea[name=notes]'); if(n&&!n.value)n.value='Also: '+left.join('; ');}
+    if(left.length){var n=ord.querySelector('#notes'); if(n&&!n.value)n.value='Also: '+left.join('; ');}
     refreshAdd();
   }
 })();
@@ -182,7 +222,7 @@
     return FOLDER;
   }
   [].forEach.call(ord.querySelectorAll('tr.order-line'),function(row){
-    var item=row.querySelector('select[name^=item_]'), col=row.querySelector('select[name^=colour_]');
+    var item=row.querySelector('.ol-item'), col=row.querySelector('.ol-colour');
     var all=[].map.call(col.options,function(o){return o.text;});
     function upd(){
       var a=allowed(item.options[item.selectedIndex].value?item.options[item.selectedIndex].text:''), keep=col.value;
@@ -193,5 +233,43 @@
       if(list.length===1)col.selectedIndex=1; else if(list.indexOf(keep)>=0)col.value=keep;
     }
     item.addEventListener('change',upd); upd();
+  });
+})();
+
+// Hospital order form email
+(function(){
+  var f=document.querySelector('form[name=hospital-order]'); if(!f)return;
+  f.addEventListener('submit',function(){
+    var F=BPCF, val=function(id){return F.val(f,id);}, L=[], n=0, items=['','ITEMS (one Xero line each)'];
+    [].forEach.call(f.querySelectorAll('tr.order-line'),function(r){
+      var it=r.querySelector('.ol-item'); if(!it.value)return; n++;
+      var c=r.querySelector('.ol-colour').value, p=r.querySelector('.ol-print').value.trim(), q=r.querySelector('.ol-qty').value.trim();
+      items.push('',n+'. Qty '+(q||'not given'),'   '+[it.options[it.selectedIndex].text,c&&c!=='Not applicable'?c:'',p?'print: '+p:''].filter(Boolean).join(', '));
+    });
+    var type=F.radio(f,'order_type'), needed=F.dmy(val('needed_by'));
+    L.push(['HOSPITAL ORDER',type,F.plural(n,'line'),needed?'needed by '+needed:''].filter(Boolean).join(' · '));
+    F.contact(L,{org:val('facility'),name:val('name'),email:val('email'),phone:val('phone'),more:[
+      ['Ward or department',val('ward')],['Delivery address',val('delivery').replace(/\s*\n\s*/g,', ')],['Customer PO',val('po')]]});
+    L=L.concat(items);
+    var other=[]; F.row(other,'Notes',val('notes')); F.row(other,'Send vendor details to supply team',val('new_supplier_details'));
+    if(other.length)L=L.concat(['','OTHER'],other);
+    var kind=(f.querySelector('input[data-group=order_type]:checked')||{}).value;
+    F.finish(f,'Hospital '+(kind==='reorder'?'reorder':kind==='quote'?'quote':'order')+': '+[val('facility'),val('ward')].filter(Boolean).join(', ')+', '+F.plural(n,'line')+(needed?', needed '+needed:''),L);
+  });
+})();
+
+// UV print quote email
+(function(){
+  var f=document.querySelector('form[name=print-quote]'); if(!f)return;
+  f.addEventListener('submit',function(){
+    var F=BPCF, val=function(id){return F.val(f,id);}, L=[], needed=F.dmy(val('pq-date'));
+    var size=val('pq-size'), th=val('pq-thick');
+    L.push(['UV PRINT QUOTE',F.radio(f,'customer_type').split(' (')[0],needed?'needed by '+needed:''].filter(Boolean).join(' · '));
+    F.contact(L,{org:val('pq-company'),name:val('pq-name'),email:val('pq-email'),phone:val('pq-phone'),more:[['Delivery suburb and postcode',val('pq-post')]]});
+    L.push('','JOB (Xero quote line)','','1. Qty '+(val('pq-qty')||'not given'),
+      '   '+['UV print: '+val('pq-use'),size?size+' mm':'',th?th+' mm thick':'',val('pq-material'),'material: '+val('pq-supply').toLowerCase(),val('pq-sides'),val('pq-cut'),val('pq-where').toLowerCase()].filter(Boolean).join(', '));
+    var other=[]; F.row(other,'Repeat work',val('pq-repeat')); F.row(other,'File link',val('file_link')); F.row(other,'Notes',val('pq-notes')); F.row(other,'News opt-in',val('news_optin')); F.row(other,'Form page',val('pq-page'));
+    L=L.concat(['','OTHER'],other);
+    F.finish(f,'UV print quote: '+(val('pq-company')||val('pq-name'))+', '+val('pq-use')+(needed?', needed '+needed:''),L);
   });
 })();

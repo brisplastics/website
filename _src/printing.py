@@ -85,40 +85,40 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
     return f'''<section class="block alt" id="quote"><div class="wrap two-col">
 <form class="quote" name="print-quote" method="POST" action="/uv-printing/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="print-quote">
-<input type="hidden" name="page" value="{path}">
+<input type="hidden" id="pq-page" value="{path}">
 {TRACKING}
 <p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
 <h2 style="font-size:1.6rem">{heading}</h2>
 <fieldset>
 <legend>About you</legend>
 <div class="choice" style="margin-bottom:1rem">
-<label><input type="radio" name="customer_type" value="trade"{t_chk}> Trade (sign shop, printer, designer, reseller)</label>
-<label><input type="radio" name="customer_type" value="direct"{d_chk}> Business or organisation</label>
+<label><input type="radio" data-group="customer_type" value="trade"{t_chk}> Trade (sign shop, printer, designer, reseller)</label>
+<label><input type="radio" data-group="customer_type" value="direct"{d_chk}> Business or organisation</label>
 </div>
 <div class="grid2">
-<div class="field"><label for="pq-name">Name</label><input id="pq-name" name="name" autocomplete="name" required></div>
-<div class="field"><label for="pq-company">Business</label><input id="pq-company" name="company" autocomplete="organization"></div>
+<div class="field"><label for="pq-name">Name</label><input id="pq-name" autocomplete="name" required></div>
+<div class="field"><label for="pq-company">Business</label><input id="pq-company" autocomplete="organization"></div>
 <div class="field"><label for="pq-email">Email</label><input id="pq-email" name="email" type="email" autocomplete="email" required></div>
-<div class="field"><label for="pq-phone">Phone</label><input id="pq-phone" name="phone" type="tel" autocomplete="tel"></div>
+<div class="field"><label for="pq-phone">Phone</label><input id="pq-phone" type="tel" autocomplete="tel"></div>
 </div>
 </fieldset>
 <fieldset>
 <legend>The job</legend>
 <div class="grid2">
-<div class="field"><label for="pq-use">What is it?</label><select id="pq-use" name="job_type"><option>Sign or panel</option><option>Display or stand</option><option>Label, nameplate or overlay</option><option>Award, plaque or gift</option><option>Printing on items I supply</option><option>Prototype or sample</option><option>Other</option></select></div>
-<div class="field"><label for="pq-where">Where will it be used?</label><select id="pq-where" name="location"><option>Indoors</option><option>Outdoors</option><option>Not sure</option></select></div>
-<div class="field"><label for="pq-material">Material</label><select id="pq-material" name="material">{mats}</select></div>
-<div class="field"><label for="pq-supply">Who supplies the material?</label><select id="pq-supply" name="material_supply"><option>You supply it</option><option>I supply it</option><option>Not sure</option></select></div>
-<div class="field"><label for="pq-size">Finished size <span class="hint">W × H mm</span></label><input id="pq-size" name="size" placeholder="e.g. 600 × 900"></div>
-<div class="field"><label for="pq-thick">Thickness <span class="hint">mm, if known</span></label><input id="pq-thick" name="thickness" placeholder="e.g. 3"></div>
-<div class="field"><label for="pq-qty">Quantity <span class="hint">list several for price breaks</span></label><input id="pq-qty" name="quantity" placeholder="e.g. 20, or 10 / 50 / 100"></div>
-<div class="field"><label for="pq-sides">Print</label><select id="pq-sides" name="print_sides"><option>Full colour, one side</option><option>Full colour, both sides</option><option>Reverse print on clear (second surface)</option><option>White ink only or spot white</option><option>Not sure</option></select></div>
-<div class="field"><label for="pq-cut">Cutting</label><select id="pq-cut" name="cutting"><option>Supplied to size, no cutting</option><option>Straight cuts to size</option><option>Shaped or die cut</option><option>Not sure</option></select></div>
-<div class="field"><label for="pq-date">Needed by <span class="hint">standard 10 to 15 working days, express available</span></label><input id="pq-date" name="needed_by" type="date"></div>
-<div class="field"><label for="pq-post">Delivery suburb and postcode <span class="hint">for freight</span></label><input id="pq-post" name="delivery_postcode" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
-<div class="field"><label for="pq-repeat">Will you need this again?</label><select id="pq-repeat" name="repeat"><option>One-off</option><option>Yes, regularly</option><option>Not sure</option></select></div>
+<div class="field"><label for="pq-use">What is it?</label><select id="pq-use"><option>Sign or panel</option><option>Display or stand</option><option>Label, nameplate or overlay</option><option>Award, plaque or gift</option><option>Printing on items I supply</option><option>Prototype or sample</option><option>Other</option></select></div>
+<div class="field"><label for="pq-where">Where will it be used?</label><select id="pq-where"><option>Indoors</option><option>Outdoors</option><option>Not sure</option></select></div>
+<div class="field"><label for="pq-material">Material</label><select id="pq-material">{mats}</select></div>
+<div class="field"><label for="pq-supply">Who supplies the material?</label><select id="pq-supply"><option>You supply it</option><option>I supply it</option><option>Not sure</option></select></div>
+<div class="field"><label for="pq-size">Finished size <span class="hint">W × H mm</span></label><input id="pq-size" placeholder="e.g. 600 × 900"></div>
+<div class="field"><label for="pq-thick">Thickness <span class="hint">mm, if known</span></label><input id="pq-thick" placeholder="e.g. 3"></div>
+<div class="field"><label for="pq-qty">Quantity <span class="hint">list several for price breaks</span></label><input id="pq-qty" placeholder="e.g. 20, or 10 / 50 / 100"></div>
+<div class="field"><label for="pq-sides">Print</label><select id="pq-sides"><option>Full colour, one side</option><option>Full colour, both sides</option><option>Reverse print on clear (second surface)</option><option>White ink only or spot white</option><option>Not sure</option></select></div>
+<div class="field"><label for="pq-cut">Cutting</label><select id="pq-cut"><option>Supplied to size, no cutting</option><option>Straight cuts to size</option><option>Shaped or die cut</option><option>Not sure</option></select></div>
+<div class="field"><label for="pq-date">Needed by <span class="hint">standard 10 to 15 working days, express available</span></label><input id="pq-date" type="date"></div>
+<div class="field"><label for="pq-post">Delivery suburb and postcode <span class="hint">for freight</span></label><input id="pq-post" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
+<div class="field"><label for="pq-repeat">Will you need this again?</label><select id="pq-repeat"><option>One-off</option><option>Yes, regularly</option><option>Not sure</option></select></div>
 {artwork_fields()}
-<div class="field full"><label for="pq-notes">Anything else</label><textarea id="pq-notes" name="notes" placeholder="Finish, fixing holes or stand-offs, double-sided tape, shape, brand colours to match"></textarea></div>
+<div class="field full"><label for="pq-notes">Anything else</label><textarea id="pq-notes" placeholder="Finish, fixing holes or stand-offs, double-sided tape, shape, brand colours to match"></textarea></div>
 {optin()}
 </div>
 </fieldset>

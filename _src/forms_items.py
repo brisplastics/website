@@ -79,7 +79,7 @@ def F(for_id, text, hint="", control=""):
 def item_block(n, generic_hint):
     hidden = "" if n == 1 else " hidden"
     remove = "" if n == 1 else '<button type="button" class="item-remove">Remove this item</button>'
-    colours = '<option value="">Choose one</option>' + "".join(f"<option>{c}</option>" for c in PVC_COLOURS) + "<option>Clear</option><option>Other (add to notes)</option>"
+    colours = '<option value="">Choose one</option>' + "".join(f"<option>{i} {c}</option>" for i, c in enumerate(PVC_COLOURS, 1)) + "<option>Clear</option><option>Other (add to notes)</option>"
     pos = "".join(f'<label><input type="checkbox" value="{p}"> {p}</label>' for p in ("Front", "Back", "Spine", "Inside"))
     return f'''<div class="item" data-n="{n}"{hidden}>
 <div class="item-head"><h3>Item {n}</h3>{remove}</div>
@@ -102,15 +102,15 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
     items = "".join(item_block(n, generic_hint) for n in range(1, ITEMS_MAX + 1))
     return _labels(f'''<form class="quote" name="quote-request" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">
 <input type="hidden" name="form-name" value="quote-request">
-<textarea name="quote_summary" class="hidden" aria-hidden="true" tabindex="-1"></textarea>
+{tracking}
 <p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
 <fieldset>
 <legend>What do you need?</legend>
 <div class="choice">
-<label><input type="radio" name="enquiry_type" value="quote" checked> A quote for a new job</label>
-<label><input type="radio" name="enquiry_type" value="repeat"> Reorder a past job</label>
-<label><input type="radio" name="enquiry_type" value="order"> Place an order</label>
-<label><input type="radio" name="enquiry_type" value="general"> General enquiry</label>
+<label><input type="radio" data-group="enquiry_type" value="quote" checked> A quote for a new job</label>
+<label><input type="radio" data-group="enquiry_type" value="repeat"> Reorder a past job</label>
+<label><input type="radio" data-group="enquiry_type" value="order"> Place an order</label>
+<label><input type="radio" data-group="enquiry_type" value="general"> General enquiry</label>
 </div>
 </fieldset>
 <fieldset class="repeat-fs" hidden>
@@ -127,12 +127,12 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <fieldset>
 <legend>Your details</legend>
 <div class="grid2">
-<div class="field"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required></div>
-<div class="field"><label for="company">Company or school</label><input id="company" name="company" autocomplete="organization"></div>
+<div class="field"><label for="name">Name</label><input id="name" autocomplete="name" required></div>
+<div class="field"><label for="company">Company or school</label><input id="company" autocomplete="organization"></div>
 <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-<div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel"></div>
-<div class="field"><label for="contact_pref">Best way to reach you</label><select id="contact_pref" name="contact_preference"><option>Email</option><option>Phone</option><option>Either</option></select></div>
-<div class="field"><label for="past">Ordered from us before?</label><select id="past" name="past_customer"><option value="">Choose one</option><option>Yes, from Plastics Unique</option><option>Yes, from Sov Services</option><option>No, first order</option></select></div>
+<div class="field"><label for="phone">Phone</label><input id="phone" type="tel" autocomplete="tel"></div>
+<div class="field"><label for="contact_pref">Best way to reach you</label><select id="contact_pref"><option>Email</option><option>Phone</option><option>Either</option></select></div>
+<div class="field"><label for="past">Ordered from us before?</label><select id="past"><option value="">Choose one</option><option>Yes, from Plastics Unique</option><option>Yes, from Sov Services</option><option>No, first order</option></select></div>
 </div>
 </fieldset>
 <fieldset class="items-fs">
@@ -145,16 +145,15 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <fieldset>
 <legend>Delivery and artwork</legend>
 <div class="grid2">
-<div class="field"><label for="needed_by">Needed by</label><span class="hint">standard 10 to 15 working days from order and artwork approval</span><input id="needed_by" name="needed_by" type="date"></div>
-<div class="field"><label for="postcode">Delivery suburb and postcode</label><span class="hint">for freight</span><input id="postcode" name="delivery_postcode" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
-<div class="field"><label for="reference">Your PO number</label><span class="hint">if you have one</span><input id="reference" name="po_number"></div>
+<div class="field"><label for="needed_by">Needed by</label><span class="hint">standard 10 to 15 working days from order and artwork approval</span><input id="needed_by" type="date"></div>
+<div class="field"><label for="postcode">Delivery suburb and postcode</label><span class="hint">for freight</span><input id="postcode" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
+<div class="field"><label for="reference">Your PO number</label><span class="hint">if you have one</span><input id="reference"></div>
 <div class="field"></div>
 {artwork}
-<div class="field full"><label for="details">Anything else we should know</label><textarea id="details" name="details" placeholder="Delivery instructions, deadlines, anything that applies to the whole order"></textarea></div>
+<div class="field full"><label for="details">Anything else we should know</label><textarea id="details" placeholder="Delivery instructions, deadlines, anything that applies to the whole order"></textarea></div>
 {optin_html}
 </div>
 </fieldset>
-{tracking}
 <button class="btn" type="submit">Send request</button>
 <p class="form-note" style="margin-top:1rem">We reply within one business day. Your details are used only to respond to this request and, if you tick the box, to send you news. See our <a href="/privacy">privacy statement</a>.</p>
 </form>''')
