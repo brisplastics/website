@@ -113,10 +113,11 @@ m = m.replace('<p class="lede">Brisbane Plastics Company is a Queensland-owned m
   '<p class="lede">Brisbane Plastics Company is a Queensland-owned plastics printing and stationery manufacturer. From 26 October 2026 the business incorporates Plastics Unique and Sov Services, two service lines trusted by local businesses for 27 years.</p>')
 m = m.replace("""<p>Bruce spent 20 years building a project management consultancy, LogiKal Projects, growing it to more than 100 consultants across Australia, Asia and the UK before selling it in 2022. His work spans major infrastructure and resources projects and managing complex programmes.</p>
 <p>At Brisbane Plastics Company he leads strategy, systems and investment, and finds the commercial opportunity inside the operational challenge.</p>""",
-  """<p>Brisbane Plastics Company is Bruce's third business venture. As Director he leads strategy, systems and investment: pricing and quoting, finance, and the systems that connect customers, the office and the factory.</p>""")
+  """<p>Bruce is an engineer, a Graduate of the Australian Institute of Company Directors (GAICD) and a business mentor. He and Mathew first went into business together in 2017 with the IoT start-up Alertify.</p>
+<p>Brisbane Plastics Company is Bruce's third business venture. As Director he leads strategy, systems and investment: pricing and quoting, finance, and the systems that connect customers, the office and the factory.</p>""")
 assert "third business venture" in m and "stationery manufacturer" in m
 m = m.replace('<div class="monogram" aria-hidden="true">MB</div>', f'<img class="portrait" src="{BRAND}director-mathew-bowden.jpg" alt="Mathew Bowden, Managing Director" width="240" height="240" loading="lazy">')
-m = m.replace('<div class="monogram" aria-hidden="true">BB</div>', f'<img class="portrait" src="{BRAND}director-bruce-bairstow.jpg" alt="Bruce Bairstow, Director" width="240" height="240" loading="lazy">')
+m = m.replace('<div class="monogram" aria-hidden="true">BB</div>', f'<img class="portrait" src="{BRAND}director-bruce-bairstow-v2.jpg" alt="Bruce Bairstow, Director" width="240" height="240" loading="lazy">')
 m = m.replace("two service lines trusted by local businesses for 27 years.", "two service lines trusted by local businesses for decades.")
 assert "portrait" in m and "for decades" in m
 m = m.replace("<li><strong>Owner-operated.</strong> The founders run the businesses themselves, alongside their investors.</li>", "<li><strong>Owner-operated.</strong> Our directors run the business from the Tingalpa factory.</li>")
