@@ -17,9 +17,9 @@ ORDER_CODES = [
     ("Chart folders: ward and bed print", ["SS-PCU-03 (30 mm spine)", "SS-PCU-04 (40 mm spine)", "SS-PCU-05 (55 mm spine)", "SS-PCU-06 (68 mm spine)"]),
     ("Hanging chart folders: unprinted", ["SS-PCU-13 H (30 mm spine)", "SS-PCU-14 H (40 mm spine)"]),
     ("Hanging chart folders: ward and bed print", ["SS-PCU-03 H (30 mm spine)", "SS-PCU-04 H (40 mm spine)"]),
-    ("Custom printed folders", ["Custom printed chart folder", "Custom printed hanging folder"]),
+    ("Custom printed folders", ["Custom printed chart folder (30 mm spine)", "Custom printed chart folder (40 mm spine)", "Custom printed chart folder (55 mm spine)", "Custom printed chart folder (68 mm spine)", "Custom printed hanging folder (30 mm spine)", "Custom printed hanging folder (40 mm spine)"]),
     ("Chart holders and clipboards", ["SS-PCU-033 A3 chart holder, horizontal", "SS-PCU-034 A4 chart holder, vertical", "SS-PCU-038 A4 wall-mounted holder, horizontal", "SS-PCU-039 A4 wall-mounted holder, vertical", "SS-CCB-010 A4 patient clipboard, vertical", "SS-CCB-011 A4 patient clipboard, horizontal", "SS-CCB-012 A4 patient clipboard, horizontal with D-rings", "SS-CCB-015 A3 patient clipboard, horizontal"]),
-    ("Dividers", ["SS-PCU-043 5-tab divider, blank", "SS-PCU-045 5-tab divider, printed", "Custom tab dividers (1 to 10 tabs)"]),
+    ("Dividers", ["SS-PCU-043 5-tab divider, blank", "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "Custom tab dividers (1 to 10 tabs)"]),
 ]
 
 import json as _json, os as _os
@@ -47,8 +47,8 @@ SOV_PRODUCTS = [
     P("folder-hanging", P_FOLD, "Patient chart hanging folder, unprinted", "SS-PCU-13 H / 14 H", ASK, "10 colours. " + BLACK_NOTE, "Polypropylene. 30 and 40 mm spines.", "hanging-chart-folder", "Open red hanging patient chart folder with clip, rings and hanging strip"),
     P("folder-hanging-printed", P_FOLD, "Hanging folder, ward and bed or custom print", "SS-PCU-03 H / 04 H, custom HC", ASK, "10 colours. " + BLACK_NOTE, "Ward and bed or custom print on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
     P("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "From $12 ex GST per set", "", "Five blank tabs. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
-    P("dividers-printed", P_DIV, "5-tab dividers, printed", "SS-PCU-045", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
-    P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $28 ex GST per set", "", "Your wording on 1 to 10 tabs. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
+    P("dividers-printed", P_DIV, "5-tab dividers, generic printed", "SS-PCU-045", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
+    P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $28 ex GST per set", "", "Your wording on 1 to 10 tabs. Divider sheets in any colour from our colour range, not only the standard white, red, orange, green and yellow. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
 ]
 
 # Product tile id -> the order-form line it preselects (/hospital/order?item=<id>). Colour-chart card has no line.
@@ -56,9 +56,9 @@ ORDER_OPT = {
     "a3-chart-holder": "SS-PCU-033 A3 chart holder, horizontal", "a4-chart-holder": "SS-PCU-034 A4 chart holder, vertical",
     "a4-wall-holder": "SS-PCU-038 A4 wall-mounted holder, horizontal", "a4-clipboard": "SS-CCB-010 A4 patient clipboard, vertical",
     "a3-clipboard": "SS-CCB-015 A3 patient clipboard, horizontal", "folder-unprinted": "SS-PCU-13 (30 mm spine)",
-    "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder", "folder-hanging": "SS-PCU-13 H (30 mm spine)",
+    "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder (30 mm spine)", "folder-hanging": "SS-PCU-13 H (30 mm spine)",
     "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SS-PCU-043 5-tab divider, blank",
-    "dividers-printed": "SS-PCU-045 5-tab divider, printed", "dividers-custom": "Custom tab dividers (1 to 10 tabs)",
+    "dividers-printed": "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "dividers-custom": "Custom tab dividers (1 to 10 tabs)",
 }
 
 def _img(photo, alt):
@@ -186,7 +186,7 @@ def build():
     p = "/hospital/patient-chart-folders"
     cr = C_HUB + [(p, "Patient chart folders")]
     faqs = [
-        ("Which spine size do I need?", "Choose by how thick your charts get. If you are unsure, tell us the ward type and what your current folders look like, and we will suggest a size."),
+        ("Which spine size do I need?", "Choose by how many pages the chart holds during an admission. Tell us roughly how many pages your charts carry and we will suggest a spine size."),
         ("What is the difference between generic and custom print?", "Generic print has ward and bed fields on the front and spine for staff to fill in. Custom print has your ward name and the bed number printed for you. Custom print has a one-off digital artwork set-up charge."),
         ("Which colours work best with black print?", "Yellow and grey give the strongest contrast with black print. White print works best on the darker colours such as Navy, Oxford Blue and Purple."),
         ("Can we order a single colour per ward?", "Yes. Many hospitals colour-code by ward or unit. Tell us the colour code and quantity for each ward on one order."),
@@ -246,7 +246,7 @@ def build():
     trs = "".join(f"<tr><td><code>{a}</code></td><th scope=\"row\">{b}</th><td>{c}</td><td>{d}</td></tr>" for a, b, c, d in items)
     faqs = [
         ("What is the rollover?", "The rollover is the curved top lip that hooks over the bed-end rail, so the chart sits at the foot of the bed without fixings."),
-        ("Do the clipboards take a ring binder?", "Each clipboard is fitted with either a standard clipboard clip or two D-ring clips. Tell us which on your order."),
+        ("Do the clipboards take a ring binder?", "Each clipboard is fitted with either a standard clipboard clip or a two D-ring. Tell us which on your order."),
         ("Can the A4 holder go on the wall?", "Yes. The wall-mounted A4 holder comes in horizontal (SS-PCU-038) and vertical (SS-PCU-039) versions."),
     ]
     main = hero(cr, "Patient chart holders and clipboards", "A3 and A4 chart holders that hook over the bed rail or mount on the wall, and impact-resistant ABS clipboards with a rollover top for rail mounting.",
@@ -272,7 +272,7 @@ def build():
     p = "/hospital/chart-dividers"
     cr = C_HUB + [(p, "Chart dividers")]
     faqs = [
-        ("Is there a minimum order?", "There is no minimum for the standard blank and printed 5-tab dividers. Custom tab dividers have a minimum of 50 sets."),
+        ("Is there a minimum order?", "There is no minimum for the blank and standard (generic) printed 5-tab dividers. Custom tab dividers have a minimum of 50 sets."),
         ("What if we need more than seven tabs?", "With eight or more tabs we suggest a set of five in front with the rest behind, so every tab stays readable in the binder."),
         ("Will they fit our binders?", "The dividers are made for A4 2-ring (2D) binders, which most patient chart systems use. If yours differ, send us a sample or the ring spacing."),
     ]
@@ -285,8 +285,8 @@ def build():
 <thead><tr><th>Item code</th><th>Divider</th><th>Tabs</th><th>Minimum order</th></tr></thead>
 <tbody>
 <tr><td><code>SS-PCU-043</code></td><th scope="row">5-tab divider, blank</th><td>Five blank tabs</td><td>None</td></tr>
-<tr><td><code>SS-PCU-045</code></td><th scope="row">5-tab divider, printed</th><td>Observations, Medications, Fluids, Care Plans, Other</td><td>None</td></tr>
-<tr><td>Custom</td><th scope="row">Custom tab divider</th><td>1 to 10 tabs, your wording</td><td>50 sets</td></tr>
+<tr><td><code>SS-PCU-045</code></td><th scope="row">5-tab divider, generic printed</th><td>Observations, Medications, Fluids, Care Plans, Other</td><td>None</td></tr>
+<tr><td>Custom</td><th scope="row">Custom tab divider</th><td>1 to 10 tabs, your wording, sheets in any colour from our range</td><td>50 sets</td></tr>
 </tbody></table></div>
 <p class="form-note" style="margin-top:.8rem">Suits hospitals, medical centres and health administration. Fits A4 2-ring (2D) binders.</p>
 </div></section>
@@ -298,7 +298,7 @@ def build():
 </div></section>
 {order_cta()}'''
     pages[p] = page(p, "Patient Chart Dividers, 5-Tab & Custom | Sov Services",
-                    "A4 2-ring patient chart dividers: 5-tab blank, 5-tab printed (Observations, Medications, Fluids, Care Plans, Other) and custom 1 to 10 tabs. Order online.",
+                    "A4 2-ring patient chart dividers: 5-tab blank, 5-tab generic printed (Observations, Medications, Fluids, Care Plans, Other) and custom 1 to 10 tabs. Order online.",
                     main, cr, [faq_schema(faqs)])
 
     # ---------- ORDER FORM ----------

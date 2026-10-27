@@ -122,11 +122,11 @@
   renderButtons();
 
   // ---- /contact: item blocks ----
-  var ORDEROPT={"a3-chart-holder": "SS-PCU-033 A3 chart holder, horizontal", "a4-chart-holder": "SS-PCU-034 A4 chart holder, vertical", "a4-wall-holder": "SS-PCU-038 A4 wall-mounted holder, horizontal", "a4-clipboard": "SS-CCB-010 A4 patient clipboard, vertical", "a3-clipboard": "SS-CCB-015 A3 patient clipboard, horizontal", "folder-unprinted": "SS-PCU-13 (30 mm spine)", "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder", "folder-hanging": "SS-PCU-13 H (30 mm spine)", "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SS-PCU-043 5-tab divider, blank", "dividers-printed": "SS-PCU-045 5-tab divider, printed", "dividers-custom": "Custom tab dividers (1 to 10 tabs)"};
+  var ORDEROPT={"a3-chart-holder": "SS-PCU-033 A3 chart holder, horizontal", "a4-chart-holder": "SS-PCU-034 A4 chart holder, vertical", "a4-wall-holder": "SS-PCU-038 A4 wall-mounted holder, horizontal", "a4-clipboard": "SS-CCB-010 A4 patient clipboard, vertical", "a3-clipboard": "SS-CCB-015 A3 patient clipboard, horizontal", "folder-unprinted": "SS-PCU-13 (30 mm spine)", "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder (30 mm spine)", "folder-hanging": "SS-PCU-13 H (30 mm spine)", "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SS-PCU-043 5-tab divider, blank", "dividers-printed": "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "dividers-custom": "Custom tab dividers (1 to 10 tabs)"};
   var FOLDER=['Oxford Blue 01','Red 02','Yellow 03','Purple 04','Navy 06','Grey 07','Orange 09','Pink 10','Apple Green 11','Sky Blue 13','Black (on request)'];
   function sovColours(t){t=(t||'').toLowerCase(); if(!t)return null;
     if(t.indexOf('holder')>=0)return ['Black gloss','White gloss']; if(t.indexOf('clipboard')>=0)return ['White'];
-    if(t.indexOf('divider')>=0)return ['Not applicable']; return FOLDER;}
+    if(t.indexOf('custom tab divider')>=0)return ['Standard colours (white, red, orange, green, yellow)','Another colour from the range (add it to the notes)']; if(t.indexOf('divider')>=0)return ['Not applicable']; return FOLDER;}
   function fillColours(col,allowed){var keep=col.value; col.innerHTML='';var o0=document.createElement('option');o0.value='';o0.text='Colour';col.add(o0);
     (allowed||FOLDER.concat(['Black gloss','White gloss','White','Not applicable'])).forEach(function(t){var o=document.createElement('option');o.text=t;col.add(o);});
     if(allowed&&allowed.length===1)col.selectedIndex=1; else if(allowed&&allowed.indexOf(keep)>=0)col.value=keep;}
@@ -302,6 +302,7 @@
     if(!t)return null;
     if(t.indexOf('holder')>=0)return ['Black gloss','White gloss'];
     if(t.indexOf('clipboard')>=0)return ['White'];
+    if(t.indexOf('custom tab divider')>=0)return ['Standard colours (white, red, orange, green, yellow)','Another colour from the range (add it to the notes)'];
     if(t.indexOf('divider')>=0)return ['Not applicable'];
     return FOLDER;
   }
