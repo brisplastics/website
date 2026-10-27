@@ -1,6 +1,33 @@
 {
  "ring-binders": [
   {
+   "file": "ring-binders-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Range of custom printed ring binders",
+   "source": "plasticsunique.com.au: ringbinders-1.jpg"
+  },
+  {
+   "file": "ring-binders-pu-02",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Ring binders with foil and print branding",
+   "source": "plasticsunique.com.au: ringbinders-2.jpg"
+  },
+  {
+   "file": "ring-binders-pu-03",
+   "w": 1495,
+   "h": 1600,
+   "tw": 561,
+   "th": 600,
+   "alt": "Ring binder with encapsulated full-colour print",
+   "source": "plasticsunique.com.au: ecapsulated-Printed-folder-1.jpg"
+  },
+  {
    "file": "ring-binders-01",
    "w": 480,
    "h": 640,
@@ -534,6 +561,24 @@
  ],
  "tab-dividers": [
   {
+   "file": "tab-dividers-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Ring binders with custom printed tab dividers",
+   "source": "plasticsunique.com.au: ringbinders-and-custom-tabs.jpg"
+  },
+  {
+   "file": "tab-dividers-pu-02",
+   "w": 1200,
+   "h": 1600,
+   "tw": 450,
+   "th": 600,
+   "alt": "Custom printed tab dividers",
+   "source": "plasticsunique.com.au: tab-dividers.jpg"
+  },
+  {
    "file": "tab-dividers-01",
    "w": 640,
    "h": 480,
@@ -747,6 +792,24 @@
  ],
  "display-folders": [
   {
+   "file": "display-folders-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Material sample display folders",
+   "source": "plasticsunique.com.au: material-samples-dispaly-folder-compressed.jpg"
+  },
+  {
+   "file": "display-folders-pu-02",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Material sample display folder",
+   "source": "plasticsunique.com.au: material-samples-dispaly-folder-2-compressed.jpg"
+  },
+  {
    "file": "display-folders-01",
    "w": 480,
    "h": 640,
@@ -766,6 +829,15 @@
   }
  ],
  "clipboard-folders": [
+  {
+   "file": "clipboard-folders-pu-01",
+   "w": 1600,
+   "h": 1289,
+   "tw": 600,
+   "th": 483,
+   "alt": "Printed clipboards",
+   "source": "plasticsunique.com.au: clipboards.jpg"
+  },
   {
    "file": "clipboard-folders-01",
    "w": 480,
@@ -813,6 +885,33 @@
   }
  ],
  "notebook-covers": [
+  {
+   "file": "notebook-covers-pu-01",
+   "w": 1600,
+   "h": 603,
+   "tw": 600,
+   "th": 226,
+   "alt": "Range of printed pocket notebook covers",
+   "source": "plasticsunique.com.au: pocket-notebook-covers-group-compressed-1.jpg"
+  },
+  {
+   "file": "notebook-covers-pu-02",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Screen printed pocket notebook covers",
+   "source": "plasticsunique.com.au: screen-printed-pnbc-compressed.jpg"
+  },
+  {
+   "file": "notebook-covers-pu-03",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Pocket notebook cover with PVC colour swatch",
+   "source": "plasticsunique.com.au: pnbc-with-swatch.jpg"
+  },
   {
    "file": "notebook-covers-01",
    "w": 480,
@@ -1068,6 +1167,24 @@
  ],
  "take-5-safety-books": [
   {
+   "file": "take-5-safety-books-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Take 5 books with top and side opening covers",
+   "source": "plasticsunique.com.au: take5-top-and-side-opening.jpg"
+  },
+  {
+   "file": "take-5-safety-books-pu-02",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Top opening Take 5 book covers",
+   "source": "plasticsunique.com.au: take5-top-opening-more.jpg"
+  },
+  {
    "file": "take-5-safety-books-01",
    "w": 640,
    "h": 480,
@@ -1159,6 +1276,15 @@
   }
  ],
  "tally-books": [
+  {
+   "file": "tally-books-pu-01",
+   "w": 1000,
+   "h": 1000,
+   "tw": 600,
+   "th": 600,
+   "alt": "Printed tally book covers",
+   "source": "plasticsunique.com.au: tally-books-category-image.jpeg"
+  },
   {
    "file": "tally-books-01",
    "w": 480,
@@ -1762,6 +1888,15 @@
  ],
  "polypropylene-satchels": [
   {
+   "file": "polypropylene-satchels-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Printed polypropylene satchels and boxes",
+   "source": "plasticsunique.com.au: poly-satchels.jpg"
+  },
+  {
    "file": "polypropylene-satchels-01",
    "w": 640,
    "h": 480,
@@ -1917,6 +2052,15 @@
  ],
  "travel-wallets": [
   {
+   "file": "travel-wallets-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Printed travel wallets",
+   "source": "plasticsunique.com.au: travel-wallets.jpg"
+  },
+  {
    "file": "travel-wallets-01",
    "w": 240,
    "h": 320,
@@ -1945,6 +2089,15 @@
   }
  ],
  "tab-wallets": [
+  {
+   "file": "tab-wallets-pu-01",
+   "w": 639,
+   "h": 480,
+   "tw": 600,
+   "th": 451,
+   "alt": "Printed TAB wallets",
+   "source": "plasticsunique.com.au: tabwallet-compressed.jpg"
+  },
   {
    "file": "tab-wallets-01",
    "w": 480,
@@ -1992,6 +2145,24 @@
   }
  ],
  "id-tags": [
+  {
+   "file": "id-tags-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Printed ID pockets and lanyard tags",
+   "source": "plasticsunique.com.au: id-pockets.jpg"
+  },
+  {
+   "file": "id-tags-pu-02",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Printed student card wallets",
+   "source": "plasticsunique.com.au: card-wallets-compressed.jpg"
+  },
   {
    "file": "id-tags-01",
    "w": 480,
@@ -2114,6 +2285,15 @@
  ],
  "noren-tags": [
   {
+   "file": "noren-tags-pu-01",
+   "w": 1200,
+   "h": 1600,
+   "tw": 450,
+   "th": 600,
+   "alt": "Noren tags in three sizes",
+   "source": "plasticsunique.com.au: noren-tags.jpg"
+  },
+  {
    "file": "noren-tags-01",
    "w": 640,
    "h": 480,
@@ -2187,6 +2367,15 @@
   }
  ],
  "signs-and-tags": [
+  {
+   "file": "signs-and-tags-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Printed safety signs and danger tags",
+   "source": "plasticsunique.com.au: sign-cluster-jpg.jpg"
+  },
   {
    "file": "signs-and-tags-01",
    "w": 640,
@@ -2540,6 +2729,15 @@
  "funeral-folders": [],
  "student-portfolios": [
   {
+   "file": "student-portfolios-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Student portfolio folders with foil print and colour swatches",
+   "source": "plasticsunique.com.au: student-portfolios-compressed.jpg"
+  },
+  {
    "file": "student-portfolios-01",
    "w": 640,
    "h": 479,
@@ -2870,6 +3068,15 @@
  ],
  "music-folders": [
   {
+   "file": "music-folders-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Music folders with foil and screen print, and colour swatches",
+   "source": "plasticsunique.com.au: musicfolders-with-colour-swatch.jpg"
+  },
+  {
    "file": "music-folders-01",
    "w": 480,
    "h": 640,
@@ -2998,8 +3205,117 @@
    "source": "Rulers/Ruler.jpg"
   }
  ],
- "bean-lids": [],
+ "bean-lids": [
+  {
+   "file": "bean-lids-pu-01",
+   "w": 737,
+   "h": 462,
+   "tw": 600,
+   "th": 376,
+   "alt": "32-8 bean lid with polystyrene boxes",
+   "source": "plasticsunique.com.au: beanlids-with-boxes.png"
+  },
+  {
+   "file": "bean-lids-pu-02",
+   "w": 900,
+   "h": 800,
+   "tw": 600,
+   "th": 533,
+   "alt": "Polystyrene produce boxes",
+   "source": "plasticsunique.com.au: polystyrene-box-apples-compressed.jpg"
+  }
+ ],
  "printing-and-finishing": [
+  {
+   "file": "printing-and-finishing-pu-01",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Foil printed covers",
+   "source": "plasticsunique.com.au: foil-prints-compressed.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-02",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Debossed covers",
+   "source": "plasticsunique.com.au: debossing-compressed.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-03",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Full-colour digital prints",
+   "source": "plasticsunique.com.au: digital-prints-compressed.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-04",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Encapsulated prints",
+   "source": "plasticsunique.com.au: encapsulated-prints-smaller.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-05",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Leather-look PVC colours",
+   "source": "plasticsunique.com.au: leather-look-swatch.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-06",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Transparent polypropylene colours",
+   "source": "plasticsunique.com.au: transparent-poly-colours-compressed.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-07",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Metallic polypropylene colours",
+   "source": "plasticsunique.com.au: metallic-poly-colours-compressed.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-08",
+   "w": 1600,
+   "h": 1200,
+   "tw": 600,
+   "th": 450,
+   "alt": "Standard polypropylene colours",
+   "source": "plasticsunique.com.au: standard-poly-colours-compressed.jpg"
+  },
+  {
+   "file": "printing-and-finishing-pu-09",
+   "w": 1080,
+   "h": 717,
+   "tw": 600,
+   "th": 398,
+   "alt": "Tarp PVC colours",
+   "source": "plasticsunique.com.au: tarp-labeled-compressed.png"
+  },
+  {
+   "file": "printing-and-finishing-pu-10",
+   "w": 1123,
+   "h": 794,
+   "tw": 600,
+   "th": 424,
+   "alt": "PVC colour swatches",
+   "source": "plasticsunique.com.au: new-colour-swatch-compressed.jpg"
+  },
   {
    "file": "printing-and-finishing-01",
    "w": 640,

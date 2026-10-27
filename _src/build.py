@@ -36,8 +36,8 @@ m = m.replace("<h1>Custom PVC and polypropylene products, made in Brisbane.</h1>
 assert "and UV printing, in Brisbane." in m
 m = m.replace('<div class="hero-sheets" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>',
     '<div class="hero-photos">' + "".join(f'<img src="/assets/img/products/{f}" alt="{a}" loading="eager" decoding="async">' for f, a in [
-        ("ring-binders/ring-binders-29.jpg", "Full-colour printed ring binder"), ("notebook-covers/notebook-covers-22.jpg", "Printed pocket notebook covers"),
-        ("glovebox-wallets/glovebox-wallets-11.jpg", "Printed dealership glove box wallet"), ("sov/chart-folders-colour-range.jpg", "Patient chart folders in ten colours")]) + '</div>')
+        ("ring-binders/ring-binders-pu-01.jpg", "Range of custom printed ring binders"), ("notebook-covers/notebook-covers-pu-02.jpg", "Screen printed pocket notebook covers"),
+        ("glovebox-wallets/glovebox-wallets-07.jpg", "Range of printed dealership glove box wallets"), ("sov/chart-folders-colour-range.jpg", "Patient chart folders in ten colours")]) + '</div>')
 assert "hero-photos" in m
 m = m.replace('<li class="t-green"><h3>Hospital products</h3><p>Patient chart holders, bed chart folders and ward stationery, supplied through our Sov Services division.</p></li>',
               '<li class="t-green"><h3><a href="/hospital/" style="color:inherit">Hospital products</a></h3><p>Patient chart folders, chart holders, clipboards and dividers from our Sov Services range. <a href="/hospital/order">Order online</a>.</p></li>')
@@ -78,6 +78,16 @@ strip = f'''<section class="brand-strip"><div class="wrap"><span>Our brands</spa
 <a href="/hospital/"><img src="{BRAND}Sov_Logo_Endorsed_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="217" height="80"></a></div></section>'''
 m = m.replace('<a class="btn ghost" style="color:#fff;border-color:#fff" href="/about#ownership">What this means for you</a>\n</div></div>', '<a class="btn ghost" style="color:#fff;border-color:#fff" href="/about#ownership">What this means for you</a>\n</div></div>\n' + strip, 1)
 m = m.replace('<p style="margin-top:2rem"><a href="/products">See materials and processes</a></p>', '<p style="margin-top:2rem"><a class="btn" href="/products">See all products and photos</a></p>')
+# Testimonials published on plasticsunique.com.au (read 27/10/2026). Spelling corrected ("consistant").
+TESTIMONIALS = [
+    ("Highly recommended. The Plastics Unique team are fast, friendly, flexible and affordable.", "Sci-Fleet Toyota", ""),
+    ("Quality products every time and great service. I would highly recommend Plastics Unique.", "Lauren Logan", "Centre Manager, Snap Printing"),
+    ("We have been using Plastics Unique for 15 years. Consistent quality and great service you can rely on.", "Mark Emery", "Ramsay Health"),
+]
+quotes = "".join(f'<figure class="quote-card"><blockquote><p>{esc(q)}</p></blockquote><figcaption><strong>{esc(n)}</strong>{("<span>" + esc(r) + "</span>") if r else ""}</figcaption></figure>' for q, n, r in TESTIMONIALS)
+m = m.replace('<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>How ordering works</h2>',
+    '<section class="block"><div class="wrap"><div class="section-head"><h2>What our customers say</h2><p class="lede">From Plastics Unique customers. <a href="' + GBP_REVIEWS + '" rel="noopener">Read our Google reviews</a>.</p></div><div class="quotes">' + quotes + '</div></div></section>\n<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>How ordering works</h2>', 1)
+assert "What our customers say" in m
 pages["/"] = page("/", "Custom PVC & Polypropylene Products Brisbane | Plastics Unique & Sov Services",
                   "Brisbane Plastics Company, home of Plastics Unique and Sov Services: custom PVC and polypropylene products, hospital chart folders and holders, and UV flatbed printing. Tingalpa.", m)
 

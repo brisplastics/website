@@ -6,7 +6,9 @@ from catalogue_data import PRODUCTS, EXTERNAL_RELATED, GROUP_ORDER, COVERS
 HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = json.load(open(os.path.join(HERE, "photo_manifest.json")))
 for _s, _src in COVERS.items():  # move the cover photo to the front
-    _l = MANIFEST.get(_s, []); _i = next((i for i, x in enumerate(_l) if x["source"] == _src), None)
+    _l = MANIFEST.get(_s, [])
+    if _l and "-pu-" in _l[0]["file"]: continue  # PU studio photo leads
+    _i = next((i for i, x in enumerate(_l) if x["source"] == _src), None)
     if _i: _l.insert(0, _l.pop(_i))
 BY_SLUG = {p["slug"]: p for p in PRODUCTS}
 

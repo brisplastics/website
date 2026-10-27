@@ -415,3 +415,11 @@ section.block.alt .notice{background:#fff}
 .pgroup{scroll-margin-top:90px}
 #add-line{margin-top:.4rem}
 .site-foot .legal a{color:#C9D5E6}
+
+/* Testimonials */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem}
+.quote-card{margin:0;background:#fff;border:1px solid var(--rule);border-left:4px solid var(--teal);border-radius:var(--r);padding:1.2rem 1.3rem}
+.quote-card blockquote{margin:0 0 .8rem}
+.quote-card blockquote p{font-size:1.08rem;line-height:1.5;margin:0;max-width:none}
+.quote-card figcaption{font-size:.92rem;color:var(--steel)}
+.quote-card figcaption strong{display:block;color:var(--ink)}
