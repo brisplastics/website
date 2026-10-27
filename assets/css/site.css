@@ -425,3 +425,9 @@ section.block.alt .notice{background:#fff}
 .quote-card figcaption strong{display:block;color:var(--ink)}
 
 .portrait{width:120px;height:120px;border-radius:50%;object-fit:cover;margin-bottom:1rem;border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+
+.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.field>.hint{margin-top:-.2rem}
+.finder+.pgroup{padding-top:1.5rem}
+.pu-fields>.grid2,.sov-fields>.grid2{margin:0}
+[hidden]{display:none!important}

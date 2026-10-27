@@ -241,7 +241,7 @@ js += '''
   document.addEventListener('keydown',function(e){if(!d.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1);});
 })();
 '''
-js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT))
+js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT)).replace("__ORDEROPT__", json.dumps(hospital.ORDER_OPT))
 open(os.path.join(OUT, "assets/js/site.js"), "w", encoding="utf-8").write(js)
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "favicon.svg"))
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "assets/img/logo.svg"))

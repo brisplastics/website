@@ -14,10 +14,10 @@ def optin(label="Send me occasional product news and offers by email. You can un
     return f'<div class="field full"><label class="check"><input type="checkbox" name="news_optin" value="yes"> {label}</label></div>'
 
 def artwork_fields(link=True):
-    out = (f'<div class="field"><label for="artwork">Artwork, logo or drawing <span class="hint">{ART_HINT}</span></label>'
+    out = (f'<div class="field"><label for="artwork">Artwork, logo or drawing</label><span class="hint">{ART_HINT}</span>'
            f'<input id="artwork" name="artwork" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>')
     if link:
-        out += ('<div class="field"><label for="file_link">Or a file link <span class="hint">WeTransfer, Dropbox, Drive</span></label>'
+        out += ('<div class="field"><label for="file_link">Or a file link</label><span class="hint">WeTransfer, Dropbox, Drive</span>'
                 '<input id="file_link" name="file_link" type="url" placeholder="https://"></div>')
     return out
 
