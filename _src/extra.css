@@ -289,3 +289,9 @@ section.block.alt .notice{background:#fff}
 .field>.lab+.hint{display:none}
 .lab{flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
 .lab .hint{overflow:hidden;text-overflow:ellipsis}
+
+/* privacy and terms */
+.legal{max-width:820px}
+.legal h2{font-size:1.25rem;margin:1.8rem 0 .5rem}
+.legal ul{padding-left:1.2rem}
+.legal li{margin:.35rem 0}

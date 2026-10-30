@@ -139,9 +139,9 @@ m = m.replace('<li><strong>Live chat</strong>', f'<li><strong>Hospital orders</s
 pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Request a quote")])
 
 # ---- Privacy, thanks, 404 ----
-t, d, m = v6("privacy.html")
-m = fix(m).replace("Live chat is provided by Tawk.to.", "Live chat is provided by Tawk.to. We measure website visits with Google Analytics, which uses cookies to count visits and see which pages are used. We use these reports in aggregate and do not use them to identify individual visitors.").replace("Last updated 30/09/2026", "Last updated 26/10/2026").replace("We do not sell your information", "Our forms record how you reached the site (for example a Google Ads click or an email campaign) so we can see which advertising works. Google Ads uses cookies to count enquiries that come from an ad. If you tick the news box on a form, we add your email to our mailing list and send occasional product news and offers; every email has an unsubscribe link. We do not sell your information")
-pages["/privacy"] = page("/privacy", t, d, m)
+import legal
+pages["/privacy"] = page("/privacy", "Privacy | Brisbane Plastics Company", "How Brisbane Plastics Company (Plastics Unique and Sov Services) collects, uses, shares and protects your information, including card payments by Stripe.", legal.privacy_main(), [("/", "Home"), ("/privacy", "Privacy")])
+pages["/terms"] = page("/terms", "Terms of Trade | Brisbane Plastics Company", "Terms of Trade for Plastics Unique and Sov Services: quotes, artwork and proofs, turnaround, payment, returns and the Australian Consumer Law.", legal.terms_main(), [("/", "Home"), ("/terms", "Terms of Trade")])
 t, d, m = v6("thanks.html"); pages["/thanks"] = page("/thanks", t, d, fix(m), noindex=True)
 t, d, m = v6("404.html"); pages["/404"] = page("/404", t, d, fix(m), noindex=True)
 
