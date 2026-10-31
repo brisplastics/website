@@ -5,6 +5,9 @@ from catalogue_data import PRODUCTS, EXTERNAL_RELATED, GROUP_ORDER, COVERS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = json.load(open(os.path.join(HERE, "photo_manifest.json")))
+# Photos pulled from the site after review (Elbe, 31/10/2026): reflection on the certificate pocket, fake checkerboard background on the bean lids
+EXCLUDE = {"certificate-pockets-06", "bean-lids-pu-02"}
+MANIFEST = {k: [x for x in v if x.get("file") not in EXCLUDE] for k, v in MANIFEST.items()}
 for _s, _src in COVERS.items():  # move the cover photo to the front
     _l = MANIFEST.get(_s, [])
     if _l and "-pu-" in _l[0]["file"]: continue  # PU studio photo leads

@@ -1,3 +1,53 @@
+
+// Xero item code and Karen's quote tool sheet for a PU item. Draft mapping (Xero items import of 06/10/2026 and Karens_Quote_Tool_v4); Karen to confirm.
+function xeroRef(slug,size,ring,extras){
+  size=(size||'').toLowerCase(); ring=(ring||'').toLowerCase(); extras=(extras||'').toLowerCase();
+  var custom=/custom/.test(size), a5=/a5/.test(size), m, t08=/0\.8 mm/.test(extras), t06=/0\.6 mm/.test(extras);
+  var r=function(code,tool){return {code:code,tool:tool};};
+  switch(slug){
+    case 'ring-binders':
+      if(custom)return r('PU-PB-41117 (custom)','Binders A4');
+      var p=a5?'PU-A5-':'PU-A4-', tool=a5?'Binders A5':'Binders A4';
+      if((m=/(\d+) mm/.exec(ring)))return (a5&&['15','20','25','38','50','65'].indexOf(m[1])<0)?r('PU-PB-41117 (A5 '+m[1]+' mm not on price list)',tool):r(p+'RING-BINDER-2D-'+m[1],tool);
+      if(/lever/.test(ring))return a5?r('PU-PB-41117 (A5 lever arch not on price list)',tool):r('PU-A4-LEVER-ARCH',tool);
+      if(/no rings/.test(ring))return r(p+'FOLDER',tool);
+      return r(p+'RING-BINDER-2D-(ring size)',tool);
+    case 'glovebox-wallets': return custom?r('PU-GBW-41113 (custom)','Glove Box Wallets'):r('PU-GLOVE-BOX-WALLET-STD','Glove Box Wallets');
+    case 'travel-wallets': return custom?r('PU-TW-41114 (custom)','Travel Wallets'):r('PU-TRAVEL-WALLET-36','Travel Wallets');
+    case 'tab-wallets': return r('PU-TAB-WALLET-78','TAB Wallets');
+    case 'id-tags':
+      if(/small/.test(size))return r('PU-CONF-ID-TAG-SMALL-203','Conference ID Tags');
+      if(/large/.test(size))return r('PU-CONF-ID-TAG-LARGE-34','Conference ID Tags');
+      if(/card wallet/.test(size))return r('PU-CARD-WALLET-21','Card Wallets');
+      return r('PU-IH-41139 (custom)','Conference ID Tags');
+    case 'music-folders': return custom?r('PU-MF-41112 (custom)','Music Folders'):r('PU-MUSIC-FOLDER-341','Music Folders');
+    case 'notebook-covers': return custom?r('PU-PNC-41111 (custom)','Pocket Note Book'):r(/hard cover/.test(extras)?'PU-PNBC-TOPSIDE-BOARD':'PU-PNBC-TOPSIDE-NOBOARD','Pocket Note Book');
+    case 'tally-books': return /small/.test(size)?r('PU-TALLY-SMALL-UNPRINTED','Tally Covers Small'):r('PU-TALLY-LARGE-UNPRINTED','Tally Covers Large');
+    case 'clipboard-folders': return custom?r('PU-POLYCB-41130 or PU-PVCCB-41129 (custom)','Binders A4'):(a5?r('PU-A5-CLIPBOARD-FOLDER','Binders A5'):r('PU-A4-CLIPBOARD-FOLDER','Binders A4'));
+    case 'certificate-pockets': return custom?r('PU-CP-41159 (custom)','Certificate Pockets A4'):r(/cord/.test(extras)?'PU-A4-CERTPKT-UNPRINTED-CORD':'PU-A4-CERTPKT-UNPRINTED','Certificate Pockets A4');
+    case 'pvc-satchels':
+      if(/job bag/.test(size))return r(/both sides/.test(extras)?'PU-JOB-BAG-A4-POCKET-2SIDE':/one side/.test(extras)?'PU-JOB-BAG-A4-POCKET-1SIDE':'PU-JOB-BAG-NO-POCKETS','Job Bags');
+      if(/v-flap/.test(size))return r('PU-PVC-SATCHEL-VFLAP-S508','PVC Satchels');
+      if(/tear drop/.test(size))return r('PU-PVC-SATCHEL-TEARDROP-8','PVC Satchels');
+      if(/zip/.test(size))return r('PU-PVC-SATCHEL-ZIP-85','PVC Satchels');
+      return r('PU-PS-41126 (custom)','PVC Satchels');
+    case 'polypropylene-satchels':
+      var th=t08?'08':t06?'06':'038';
+      if(/envelope/.test(size))return r('PU-A4-POLY-ENVELOPE-'+th,'Poly Envelopes A4');
+      if(/box satchel/.test(size))return r('PU-A4-POLY-BOX-SATCHEL-'+th,'Poly Box Satchels A4');
+      return r('PU-PS-41119 (custom)','Poly Box Satchels A4');
+    case 'luggage-tags': return r('PU-LUGGAGE-TAG-39','Luggage Tags');
+    case 'noren-tags': return r(/large/.test(size)?'PU-NOREN-TAG-LARGE':/small/.test(size)?'PU-NOREN-TAG-SMALL':'PU-NOREN-TAG-STANDARD','Noren Tag Holders');
+    case 'presentation-folders':
+      if((m=/(\d+) × (\d+)/.exec(size)))return r('PU-DIARY-COVER-'+(t08?'08':'06')+'PP-'+m[1]+'X'+m[2],'Diary Covers');
+      return r('PU-DC-41123 (custom)','Diary Covers');
+    case 'promotional-products':
+      if(/business card/.test(size))return r('PU-POLY-BUSCARD','Poly Business Cards');
+      if(/mouse mat/.test(size))return r('PU-MOUSE-MAT','Mouse Mats');
+      return r('PU-MPP-41146 (custom)','');
+  }
+  return null;
+}
 // Form emails: every form sends one plain-text "request" block laid out for Xero, plus the email field (for Reply) and any file.
 // Radio groups carry data-group instead of a name so they are not listed separately in the email; names are added here
 // for the browser to group them and removed again on submit.
@@ -79,6 +129,8 @@ var BPCF=(function(){
       var dl=div.querySelector('datalist'), sizes=(std&&std.sizes)||[]; dl.innerHTML='';
       sizes.forEach(function(x){var op=document.createElement('option');op.value=x;dl.appendChild(op);});
       div.querySelector('.size-hint').textContent=sizes.length?'pick from the list or type':'W × H mm';
+      var rw=div.querySelector('.item-ring-wrap'), rs=div.querySelector('#item_'+div.getAttribute('data-n')+'_ring'), rings=(std&&std.rings)||[], rk=rs.value;
+      rs.innerHTML='<option value="">Choose one</option>'; rings.forEach(function(x){var op=document.createElement('option');op.text=x;rs.add(op);}); rs.value=rk; rw.hidden=!rings.length;
       var keep=checked(div,'.item-extras').split(', ');
       box.innerHTML='';
       if(std&&std.extras.length){
@@ -127,9 +179,11 @@ var BPCF=(function(){
           if(div.hidden)return; var ps=div.querySelector('.item-product'); if(!ps.value)return; n++;
           var pr=v(div,'print'), pos=checked(div,'.item-pos'), ink=v(div,'ink'), ex=checked(div,'.item-extras');
           var printing=pr?pr+(pos?' on '+pos.toLowerCase():'')+(ink?', ink '+ink:''):'';
-          var desc=[opt(ps).text,v(div,'size'),v(div,'material'),v(div,'colour'),printing,ex].filter(function(x){return x&&!/^Choose/.test(x);}).join(', ');
+          var desc=[opt(ps).text,v(div,'size'),v(div,'ring'),v(div,'material'),v(div,'colour'),printing,ex].filter(function(x){return x&&!/^Choose/.test(x);}).join(', ');
           lines.push('',n+'. Qty '+(v(div,'qty')||'not given'));
           lines.push('   '+desc);
+          var xr=xeroRef(opt(ps).getAttribute('data-slug'),v(div,'size'),v(div,'ring'),ex);
+          if(xr)lines.push('   Xero: '+xr.code+'  |  Quote tool: '+xr.tool);
           if(v(div,'notes'))lines.push('   Notes: '+v(div,'notes'));
         });
         if(!n)lines.push('No product chosen');
@@ -217,6 +271,7 @@ var BPCF=(function(){
     if(!t)return null;
     if(t.indexOf('holder')>=0)return ['Black gloss','White gloss'];
     if(t.indexOf('clipboard')>=0)return ['White'];
+    if(t.indexOf('chest support')>=0)return ['Clear'];
     if(t.indexOf('custom tab divider')>=0)return ['Standard colours (white, red, orange, green, yellow)','Another colour from the range (add it to the notes)'];
     if(t.indexOf('divider')>=0)return ['Not applicable'];
     return FOLDER;
@@ -243,8 +298,8 @@ var BPCF=(function(){
     var F=BPCF, val=function(id){return F.val(f,id);}, L=[], n=0, items=['','ITEMS (one Xero line each)'];
     [].forEach.call(f.querySelectorAll('tr.order-line'),function(r){
       var it=r.querySelector('.ol-item'); if(!it.value)return; n++;
-      var c=r.querySelector('.ol-colour').value, p=r.querySelector('.ol-print').value.trim(), q=r.querySelector('.ol-qty').value.trim();
-      items.push('',n+'. Qty '+(q||'not given'),'   '+[it.options[it.selectedIndex].text,c&&c!=='Not applicable'?c:'',p?'print: '+p:''].filter(Boolean).join(', '));
+      var c=r.querySelector('.ol-colour').value, pf=r.querySelector('.ol-front').value.trim(), ps=r.querySelector('.ol-spine').value.trim(), q=r.querySelector('.ol-qty').value.trim();
+      items.push('',n+'. Qty '+(q||'not given'),'   '+[it.options[it.selectedIndex].text,c&&c!=='Not applicable'?c:'',pf?'front: '+pf:'',ps?'spine: '+ps:''].filter(Boolean).join(', '));
     });
     var type=F.radio(f,'order_type'), needed=F.dmy(val('needed_by'));
     L.push(['HOSPITAL ORDER',type,F.plural(n,'line'),needed?'needed by '+needed:''].filter(Boolean).join(' · '));

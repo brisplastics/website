@@ -17,7 +17,7 @@ def v6(name):
     return title, desc, main
 
 def fix(s):
-    s = s.replace("<li><strong>Factory</strong><br>Tingalpa QLD 4173</li>", f"<li><strong>Phone</strong><br><a href=\"tel:{TEL_07}\">{PHONE_07}</a> or <a href=\"tel:{TEL_1300}\">{PHONE_1300}</a></li>\n<li><strong>Factory</strong><br>{ADDRESS}</li>")
+    s = s.replace("<li><strong>Factory</strong><br>Tingalpa QLD 4173</li>", f"<li><strong>Phone</strong><br><a href=\"tel:{TEL_07}\">{PHONE_07}</a></li>\n<li><strong>Factory</strong><br>{ADDRESS}</li>")
     s = s.replace("Same factory in Tingalpa and the same product range.", "Same factory at 45a Millennium Place, Tingalpa, the same phone numbers and the same product range.")
     s = s.replace("From 12 October 2026", "From 26 October 2026")
     s = s.replace("from 12 October 2026", "from 26 October 2026")
@@ -136,6 +136,8 @@ assert 'name="request"' in m
 m = m.replace('<li><strong>Factory</strong><br>45a Millennium Place, Tingalpa QLD 4173</li>', f'<li><strong>Factory and collection</strong><br><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a><br>{HOURS_TEXT}</li>\n<li><strong>Google reviews</strong><br><a href="{GBP_REVIEWS}" rel="noopener">Read our reviews</a> or <a href="{GBP_WRITE}" rel="noopener">leave one</a></li>')
 assert 'Factory and collection' in m
 m = m.replace('<li><strong>Live chat</strong>', f'<li><strong>Hospital orders</strong><br>Use the <a href="/hospital/order">hospital order form</a> or email <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li>\n<li><strong>Printing</strong><br>Use the <a href="/uv-printing/#quote">print quote form</a> for UV printing jobs.</li>\n<li><strong>Live chat</strong>')
+m = m.replace('</ul>\n</aside>', '</ul>\n<div id="colour-chart" class="colour-chart"><h3>PVC colour chart</h3><a class="lb" href="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10.jpg"><img src="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10-t.jpg" alt="Plastics Unique standard PVC colour chart, colours 1 to 35" loading="lazy" width="600" height="424"></a><p>The numbers match the colour list in the form. * pastel surcharge. Tap the chart to enlarge.</p><p><a href="/products/printing-and-finishing">Polypropylene, leather-look and tarp colours</a></p></div>\n</aside>', 1)
+assert 'colour-chart' in m
 pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Request a quote")])
 
 # ---- Privacy, thanks, 404 ----
@@ -270,7 +272,7 @@ L=["# Brisbane Plastics Company", "",
    "> Brisbane Plastics Company Pty Ltd (ABN " + ABN + ") makes custom PVC and polypropylene products in Tingalpa, Brisbane, Queensland, Australia. "
    "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, clipboards and dividers for hospitals since 1994), "
    "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
-   "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744 or 1300 744 104",
+   "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744",
    "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 working days from order and artwork approval for standard jobs; ask about express turnaround.", ""]
 for name, test in SECTIONS:
     L.append("## " + name); L.append("")

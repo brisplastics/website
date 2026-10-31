@@ -6,13 +6,14 @@ from catalogue_data import PRODUCTS, GROUP_ORDER
 
 # desc: what comes as standard. sizes: suggestions for the Size box. extras: physical add-ons only
 # (print methods live in the Printing list; sizes in the Size box).
-def S(desc, sizes=(), extras=()):
-    return {"desc": desc, "sizes": list(sizes), "extras": list(extras)}
+def S(desc, sizes=(), extras=(), rings=()):
+    return {"desc": desc, "sizes": list(sizes), "extras": list(extras), "rings": list(rings)}
+RINGS = [f"2 D-ring {m} mm" for m in (15, 20, 25, 32, 38, 45, 50, 65)] + ["Half lever arch", "Full lever arch", "No rings (folder only)", "Not sure"]
 STANDARD = {
     "ring-binders": S("Standard coloured PVC with a 2 D-ring from 15 to 65 mm, or a half or full lever arch.",
         ["A4", "A5", "Custom size"],
         ["3 D-ring", "4 D-ring", "Half clear pocket inside front", "Half clear pockets inside front and back", "Welded business card pocket",
-         "Welded CD pocket", "Clear overlay on front, back and spine", "Pen loop"]),
+         "Welded CD pocket", "Clear overlay on front, back and spine", "Internal clear pages", "Pen loop"], RINGS),
     "glovebox-wallets": S("Standard PVC. Clear pocket inside front and back, and 4 business card pockets inside.",
         ["250 × 350 mm open (standard)", "270 × 370 mm open", "270 × 405 mm open", "Custom size"]),
     "travel-wallets": S("Standard PVC. Clear pocket inside front and back.", ["250 × 250 mm open", "240 × 240 mm open", "Custom size"]),
@@ -22,7 +23,7 @@ STANDARD = {
     "music-folders": S("Clear diagonal pocket inside front and back, and a business card pocket on the outside front, top right.",
         ["555 × 355 mm open (standard)", "A4", "Custom size"]),
     "notebook-covers": S("Standard PVC.", ["Top opening 257 × 85 mm open", "Side opening 125 × 200 mm open", "Side opening 140 × 190 mm open", "Custom size"],
-        ["Hard cover (with board)", "Clear overlay front and back", "Clear pages", "Spine weld", "Double thickness PVC", "Notebooks supplied", "Notebooks supplied and inserted"]),
+        ["Hard cover (with board)", "Clear overlay front and back", "Clear pages", "Spine weld", "Double thickness PVC", "Pen loop", "Notebooks supplied", "Notebooks supplied and inserted"]),
     "tally-books": S("Hard cover with 1200 micron board and a clear pocket inside front and back. Notebook not included.",
         ["Large 198 × 208 mm open", "Small 150 × 200 mm open"],
         ["Foam padding", "Swing pockets", "Exercise book cut down and inserted", "Wiro ruled notebook supplied and inserted"]),
@@ -86,9 +87,10 @@ def item_block(n, generic_hint):
 <div class="grid2">
 <div class="field full">{F(f"item_{n}_product", "Product", "", product_select(n))}<p class="item-std" hidden></p></div>
 <div class="field">{F(f"item_{n}_size", "Size", "<span class=size-hint>W × H mm</span>", f'<input id="item_{n}_size" list="item_{n}_sizes" placeholder="e.g. A4 or 310 × 240"><datalist id="item_{n}_sizes"></datalist>')}</div>
+<div class="field item-ring-wrap" hidden>{F(f"item_{n}_ring", "Rings", "", f'<select id="item_{n}_ring"></select>')}</div>
 <div class="field">{F(f"item_{n}_qty", "Quantity", "several for price breaks", f'<input id="item_{n}_qty" placeholder="e.g. 50, or 50 / 100 / 250">')}</div>
 <div class="field">{F(f"item_{n}_material", "Material", "", f'<select id="item_{n}_material">{MAT_OPTS}</select>')}</div>
-<div class="field">{F(f"item_{n}_colour", "Colour", '<a href="/products/printing-and-finishing" target="_blank" rel="noopener">see colours</a>', f'<select id="item_{n}_colour">{colours}</select>')}</div>
+<div class="field">{F(f"item_{n}_colour", "Colour", '<a href="#colour-chart">see colour chart</a>', f'<select id="item_{n}_colour">{colours}</select>')}</div>
 <div class="field">{F(f"item_{n}_print", "Printing", "", f'<select id="item_{n}_print">{PRINT_OPTS}</select>')}</div>
 <div class="field">{F(f"item_{n}_ink", "Ink or foil colour", "e.g. gold, PMS 286", f'<input id="item_{n}_ink">')}</div>
 <div class="field full">{F("", "Where is the print?", "tick all that apply", f'<div class="choice inline item-pos">{pos}</div>')}</div>

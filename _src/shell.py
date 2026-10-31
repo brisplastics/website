@@ -110,7 +110,7 @@ def header(path):
         lis.append(f'<li><a href="{href}"{cur}>{label}</a></li>')
     lis.append('<li><a class="btn" href="/contact">Request a quote</a></li>')
     return f'''<a class="skip" href="#main">Skip to content</a>
-<div class="topbar"><div class="wrap"><span>{ADDRESS}</span><span><a href="tel:{TEL_07}">{PHONE_07}</a> · <a href="tel:{TEL_1300}">{PHONE_1300}</a></span></div></div>
+<div class="topbar"><div class="wrap"><span>{ADDRESS}</span><span><a href="tel:{TEL_07}">{PHONE_07}</a></span></div></div>
 <header class="site-head">
 <div class="wrap">
 <a class="brand" href="/" aria-label="Brisbane Plastics Company home"><img src="{BRAND}BPC_Logo_Fan_Stacked_v1_CAI.svg" alt="Brisbane Plastics Company" width="193" height="52"></a>
@@ -148,7 +148,7 @@ def footer():
 </div>
 <div>
 <h2>Contact</h2>
-<ul><li>Phone: <a href="tel:{TEL_07}">{PHONE_07}</a></li><li>Phone: <a href="tel:{TEL_1300}">{PHONE_1300}</a></li><li>Sales: <a href="mailto:{SALES}">{SALES}</a></li><li>Hospital orders: <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li><li><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a></li><li>{HOURS_TEXT}</li><li><a href="{GBP_REVIEWS}" rel="noopener">Read our Google reviews</a> · <a href="{GBP_WRITE}" rel="noopener">Leave a review</a></li></ul>
+<ul><li>Phone: <a href="tel:{TEL_07}">{PHONE_07}</a></li><li>Sales: <a href="mailto:{SALES}">{SALES}</a></li><li>Hospital orders: <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li><li><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a></li><li>{HOURS_TEXT}</li><li><a href="{GBP_REVIEWS}" rel="noopener">Read our Google reviews</a> · <a href="{GBP_WRITE}" rel="noopener">Leave a review</a></li></ul>
 </div>
 <div>
 <h2>Site</h2>
