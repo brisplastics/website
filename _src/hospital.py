@@ -120,7 +120,7 @@ def swatches():
 def order_cta(extra=""):
     return f'''<section class="cta"><div class="wrap">
 <h2>Ordering for your ward?</h2>
-<div class="btn-row" style="margin:0"><a class="btn" href="/hospital/order">Order or reorder online</a><a class="btn ghost" href="mailto:{SOV_EMAIL}">Email {SOV_EMAIL}</a><a class="btn ghost" href="tel:1300744104">Call 1300 744 104</a></div>
+<div class="btn-row" style="margin:0"><a class="btn" href="/hospital/order">Order or reorder online</a><a class="btn ghost" href="mailto:{SOV_EMAIL}">Email {SOV_EMAIL}</a><a class="btn ghost" href="tel:+61733963744">Call (07) 3396 3744</a></div>
 </div></section>'''
 
 def related(current):
@@ -135,7 +135,7 @@ def build():
     faqs = [
         ("Is Sov Services still trading?", "Yes. Sov Services has supplied patient chart folders and holders to Australian hospitals since 1994. From 26 October 2026 it is owned and run by Brisbane Plastics Company from the same Tingalpa factory, with the same products and item codes."),
         ("Do your item codes stay the same?", "Yes, for every product we still make, so you can reorder from your last order sheet or purchase order. Glove box holders (SS-GB-015, SS-GB-008) and the accessory basket (SS-GB-029) are no longer made, and hanging folders now come in 30 and 40 mm spines only."),
-        ("Can we still email our orders?", f"Yes. <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> stays open, and so does our phone number, 1300 744 104. The online order form is quicker because it asks for the ward, colour and print details we need, so we do not have to come back to you."),
+        ("Can we still email our orders?", f"Yes. <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> stays open, and you can still call us on (07) 3396 3744. The online order form is quicker because it asks for the ward, colour and print details we need, so we do not have to come back to you."),
         ("Has your ABN changed?", f"Yes. Orders from 26 October 2026 are supplied and invoiced by Brisbane Plastics Company Pty Ltd, ABN {ABN}. If your purchasing system still lists the old supplier, please ask your supply team to update the vendor record. We will verify bank details by phone on request."),
         ("How long does an order take?", "Standard orders take 10 to 15 working days from order and artwork approval. Ask about express turnaround. Put your date in the Needed by box on the order form."),
         ("Can you print our ward name and bed numbers?", "Yes. Folders can be printed with the ward name and bed number on the front and spine in black or white. Tell us the ward name and the bed numbers you need on the order form."),
@@ -171,7 +171,7 @@ def build():
 <div>
 <h2>Ordering in three steps</h2>
 <ol class="steps" style="grid-template-columns:1fr">
-<li><h3>Send the order</h3><p>Use the <a href="/hospital/order">online order form</a>, email your purchase order to {SOV_EMAIL} or call 1300 744 104.</p></li>
+<li><h3>Send the order</h3><p>Use the <a href="/hospital/order">online order form</a>, email your purchase order to {SOV_EMAIL} or call (07) 3396 3744.</p></li>
 <li><h3>We confirm</h3><p>We confirm price, print details and delivery by return email, and send a proof for any new printing.</p></li>
 <li><h3>Made and delivered</h3><p>Printed and packed in Tingalpa and freighted to your ward or store anywhere in Australia. Standard orders take 10 to 15 working days from order and artwork approval. Ask about express turnaround.</p></li>
 </ol>
@@ -321,7 +321,7 @@ def build():
 <td data-label="Spine print"><input class="ol-spine" aria-label="Spine print {i}" placeholder="e.g. 4B 1 to 24"></td>
 <td data-label="Quantity"><input class="ol-qty" aria-label="Quantity {i}" inputmode="numeric" pattern="[0-9]*[1-9][0-9]*" title="Enter a whole number" placeholder="Qty"{req}></td>
 </tr>'''
-    main = hero(cr, "Hospital order and reorder form", f"Order Sov Services products for your ward. We confirm price, print and delivery by return email before anything is made. Prefer email or phone? Send your purchase order to <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> or call <a href=\"tel:1300744104\">1300 744 104</a>.",
+    main = hero(cr, "Hospital order and reorder form", f"Order Sov Services products for your ward. We confirm price, print and delivery by return email before anything is made. Prefer email or phone? Send your purchase order to <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> or call <a href=\"tel:+61733963744\">(07) 3396 3744</a>.",
                 kicker="Sov Services · Australian made")
     main += f'''<section class="block" style="padding-top:1.5rem"><div class="wrap">
 <form class="quote" name="hospital-order" method="POST" action="/hospital/thanks" data-netlify="true" netlify-honeypot="hp_check" enctype="multipart/form-data">

@@ -201,7 +201,7 @@ def build():
 <section class="block"><div class="wrap" style="max-width:860px">{faq_block(faqs)}</div></section>
 {quote_form(HUB)}'''
     desc = "UV flatbed printing in Brisbane on acrylic, PVC, ACM, wood, glass and more. Up to 1250 x 2500 mm and 50.8 mm thick, with white ink. Trade and direct. Tingalpa."
-    pages[HUB] = page(HUB, "UV Flatbed Printing Brisbane | Trade & Direct | Brisbane Plastics", desc, main, C_HUB,
+    pages[HUB] = page(HUB, "UV Flatbed Printing Brisbane | Trade & Direct | Plastics Unique", desc, main, C_HUB,
                       [service_schema(HUB, "UV flatbed printing", desc), faq_schema(faqs)])
 
     # ---------- TRADE ----------
@@ -224,7 +224,7 @@ def build():
     body += f'''<section class="block"><div class="wrap printer"><h2>Specification</h2><div class="printer-bed">{BED_SVG}</div>{spec_table()}</div></section>'''
     faqs = [
         ("Do you offer trade pricing?", "Yes. Regular trade customers can apply for a trade account and trade pricing. Ask on the quote form."),
-        ("Will you contact my customer?", "No. Trade work is yours. We deal only with you and can deliver in plain packaging with no Brisbane Plastics branding."),
+        ("Will you contact my customer?", "No. Trade work is yours. We deal only with you and can deliver in plain packaging with no Plastics Unique branding."),
         ("Can you print on material I supply?", "Yes. Supply cut blanks or full sheets. For a material we have not printed before, we run a test piece first."),
         ("How big can a single print be?", "1250 × 2500 mm and up to 50.8 mm thick, edge to edge. Smaller pieces are ganged across the bed."),
     ]
@@ -518,5 +518,5 @@ def build():
 <p class="lede">We check your files and reply with a quote within one business day. If your files are large, reply to our email with a download link.</p>
 <div class="btn-row"><a class="btn" href="/uv-printing/">Back to UV Printing</a><a class="btn ghost" href="/">Home</a></div>
 </div></section>'''
-    pages[p] = page(p, "Enquiry received | Brisbane Plastics Company", "Thank you for your print enquiry.", main, noindex=True)
+    pages[p] = page(p, "Enquiry received | Plastics Unique", "Thank you for your print enquiry.", main, noindex=True)
     return pages

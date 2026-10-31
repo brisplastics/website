@@ -13,7 +13,7 @@
     err.textContent='';
     var file=f.files[0]; if(!file)return;
     if(!/\.(pdf|jpe?g|png|ai|eps|svg)$/i.test(file.name)){err.textContent='Upload a PDF, AI, EPS, SVG, PNG or JPG file.';f.value='';return;}
-    if(file.size>MAX){err.textContent='File is over 8 MB. Email larger files to sales@brisplastics.com.au.';f.value='';}
+    if(file.size>MAX){err.textContent='File is over 8 MB. Email larger files to sales@plasticsunique.com.au.';f.value='';}
   });
 })();
 
@@ -54,7 +54,7 @@
     src={landing_page:location.pathname+location.search,referrer:document.referrer||'',utm_source:q.get('utm_source')||'',utm_medium:q.get('utm_medium')||'',
          utm_campaign:q.get('utm_campaign')||'',gclid:q.get('gclid')||'',came_from:q.get('from')||''};
     try{sessionStorage.setItem(K,JSON.stringify(src));}catch(e){}}
-  var line=['landing '+src.landing_page,src.referrer?'from '+src.referrer:'',src.utm_source?'utm '+[src.utm_source,src.utm_medium,src.utm_campaign].filter(Boolean).join(' / '):'',src.gclid?'Google Ads click '+src.gclid:'',src.came_from?'old site '+src.came_from:''].filter(Boolean).join(' | ');
+  var line=['landing '+src.landing_page,src.referrer?'from '+src.referrer.replace(/^https?:\/\//,'').replace(/\/$/,''):'',src.utm_source?'utm '+[src.utm_source,src.utm_medium,src.utm_campaign].filter(Boolean).join(' / '):'',src.gclid?'Google Ads click '+src.gclid:'',src.came_from?'old site '+src.came_from:''].filter(Boolean).join(' | ');
   [].forEach.call(document.querySelectorAll('input[name=lead_source]'),function(i){i.value=line;});
   window.BPC_SRC=src; window.BPC_SRC_LINE=line;
 })();

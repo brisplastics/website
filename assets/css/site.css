@@ -452,3 +452,13 @@ section.block.alt .notice{background:#fff}
 .colour-chart h3{font-size:1.05rem;margin:0 0 .5rem}
 .colour-chart p{font-size:.88rem;margin:.4rem 0}
 @media (min-width:861px){.colour-chart{position:sticky;top:90px}}
+
+/* ===== Plastics Unique colour scheme (rebrand 31/10/2026): navy #0D264B and #123A5C, PU teal #32C0C5 =====
+   PU teal is too light for text on white (2.2:1), so text, links and buttons use a deeper teal #17777D (5.3:1). */
+:root{--ink:#123A5C;--deep:#0D264B;--blue-deep:#0D264B;--teal:#32C0C5;--pvc-blue:#32C0C5;--blue:#17777D;--sheet:#E3F6F7}
+.kicker{color:#17777D}
+.brand img{height:64px}
+@media (max-width:560px){.brand img{height:50px}}
+.site-foot .foot-logo{height:70px}
+.sprods li:target,.pgrid li:target{box-shadow:0 0 0 3px rgba(50,192,197,.35)}
+.page-hero .hero-brand{display:block;height:56px;width:auto;margin:0 0 .9rem}

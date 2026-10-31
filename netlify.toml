@@ -32,3 +32,290 @@
   to = "/404"
   status = 404
   force = true
+
+# ===== Old Plastics Unique website paths (301 to the new pages) =====
+[[redirects]]
+  from = "/product-range"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/services"
+  to = "/products/printing-and-finishing?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/photo-gallery"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/request-a-quote"
+  to = "/contact?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/about-us"
+  to = "/about?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/testimonials"
+  to = "/about?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/notebook-covers"
+  to = "/products/notebook-covers?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/notebook-folders"
+  to = "/products/notebook-covers?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/glovebox-wallets"
+  to = "/products/glovebox-wallets?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/dealership-wallets"
+  to = "/products/glovebox-wallets?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/key-tags"
+  to = "/products/glovebox-wallets?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/clipboards"
+  to = "/products/clipboard-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/school-clipboards"
+  to = "/products/clipboard-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/custom-ring-binders"
+  to = "/products/tab-dividers?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/id-tags"
+  to = "/products/id-tags?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/student-card-wallets"
+  to = "/products/id-tags?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/x-ray-pockets"
+  to = "/products/x-ray-sleeves?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/pvc-satchels"
+  to = "/products/pvc-satchels?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/vinyl"
+  to = "/products/pvc-satchels?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/luggage-tags"
+  to = "/products/luggage-tags?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/hospital-room-compendiums"
+  to = "/products/room-compendiums?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/toyota-noren-tag-holders"
+  to = "/products/noren-tags?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/room-compendiums"
+  to = "/products/room-compendiums?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/polypropylene-satchels"
+  to = "/products/polypropylene-satchels?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/satchels/polypropylene-satchels"
+  to = "/products/polypropylene-satchels?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/signs"
+  to = "/products/signs-and-tags?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/student-portfolio-folders"
+  to = "/products/student-portfolios?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/ring-binders"
+  to = "/products/ring-binders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/ring-binders-school"
+  to = "/products/school-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/travel-wallets"
+  to = "/products/travel-wallets?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/buffet_foodservice_signage"
+  to = "/products/food-service-signage?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/tabwallet"
+  to = "/products/tab-wallets?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/funeral-folder"
+  to = "/products/funeral-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/certificate-display-pockets"
+  to = "/products/certificate-pockets?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/sample_display_folder"
+  to = "/products/display-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/tally-books"
+  to = "/products/tally-books?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/music-folders"
+  to = "/products/music-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/32-8-bean-lids"
+  to = "/products/bean-lids?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/take-5-safety-book"
+  to = "/products/take-5-safety-books?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/corporate-and-promo"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/construction"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/automotive"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/healthcare"
+  to = "/hospital/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/travel-hospitality"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/education"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/private-policy"
+  to = "/privacy?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/terms-and-conditions"
+  to = "/privacy?from=pu"
+  status = 301
+
+
+# ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====
+[[redirects]]
+  from = "https://sovservices.net.au/products"
+  to = "https://plasticsunique.com.au/hospital/?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://sovservices.net.au/contact"
+  to = "https://plasticsunique.com.au/hospital/order?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://sovservices.net.au/m/*"
+  to = "https://plasticsunique.com.au/hospital/order?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://sovservices.net.au/*"
+  to = "https://plasticsunique.com.au/hospital/?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sovservices.net.au/products"
+  to = "https://plasticsunique.com.au/hospital/?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sovservices.net.au/contact"
+  to = "https://plasticsunique.com.au/hospital/order?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sovservices.net.au/m/*"
+  to = "https://plasticsunique.com.au/hospital/order?from=sov"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.sovservices.net.au/*"
+  to = "https://plasticsunique.com.au/hospital/?from=sov"
+  status = 301
+  force = true
+

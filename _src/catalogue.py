@@ -75,7 +75,7 @@ def product_page(p):
               "url": url(path)}
     if photos:
         schema["image"] = [url(img_url(p["slug"], x["file"])) for x in photos[:5]]
-    return path, page(path, f"{p['title']} | Custom Made in Brisbane | Brisbane Plastics", desc, main, cr, [schema])
+    return path, page(path, f"{p['title']} | Custom Made in Brisbane | Plastics Unique", desc, main, cr, [schema])
 
 def index_page(materials_html):
     path = "/products"
@@ -106,10 +106,10 @@ def index_page(materials_html):
                '<p class="lede">Patient chart folders, holders, clipboards and dividers. Prices exclude GST. <a href="/hospital/">See the hospital range</a> or <a href="/hospital/order">order online</a>.</p>'
                + sov_link_tiles() + '</div></section>')
     main += groups + materials_html + cta()
-    schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Brisbane Plastics Company",
+    schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Plastics Unique",
               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url(f"/products/{p['slug']}"), "name": p["title"]}
                                   for i, p in enumerate(PRODUCTS)]}
-    return path, page(path, "Custom PVC & Polypropylene Products | Brisbane Plastics Company",
+    return path, page(path, "Custom PVC & Polypropylene Products | Plastics Unique",
                       "Ring binders, notebook covers, glove box wallets, satchels, tags, compendiums, school and music folders, all custom made in Brisbane. Photos and options for every product.",
                       main, cr, [schema])
 

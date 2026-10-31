@@ -1,0 +1,15 @@
+# CUTOVER ONLY. Paste into netlify.toml (top of the redirects) on the day plasticsunique.com.au is primary on Netlify.
+# Until then brisplastics.com.au is the live address and this rule would send visitors to the old WordPress site.
+
+[[redirects]]
+  from = "https://brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
