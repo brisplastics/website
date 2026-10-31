@@ -444,3 +444,11 @@ section.block.alt .notice{background:#fff}
 .legal h2{font-size:1.25rem;margin:1.8rem 0 .5rem}
 .legal ul{padding-left:1.2rem}
 .legal li{margin:.35rem 0}
+
+/* quote form: long hints must not widen the grid; colour chart follows the form */
+.grid2>.field{min-width:0}
+.colour-chart{margin-top:1.5rem}
+.colour-chart img{width:100%;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.colour-chart h3{font-size:1.05rem;margin:0 0 .5rem}
+.colour-chart p{font-size:.88rem;margin:.4rem 0}
+@media (min-width:861px){.colour-chart{position:sticky;top:90px}}
