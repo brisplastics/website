@@ -19,6 +19,7 @@ ORDER_CODES = [
     ("Hanging chart folders: generic print (blank Ward and Bed fields to write in)", ["SS-PCU-03 H (30 mm spine)", "SS-PCU-04 H (40 mm spine)"]),
     ("Custom printed folders (your ward name and bed numbers printed)", ["Custom printed chart folder (30 mm spine)", "Custom printed chart folder (40 mm spine)", "Custom printed chart folder (55 mm spine)", "Custom printed chart folder (68 mm spine)", "Custom printed hanging folder (30 mm spine)", "Custom printed hanging folder (40 mm spine)"]),
     ("Chart holders and clipboards", ["SS-PCU-033 A3 chart holder, horizontal", "SS-PCU-034 A4 chart holder, vertical", "SS-PCU-038 A4 wall-mounted holder, horizontal", "SS-PCU-039 A4 wall-mounted holder, vertical", "SS-CCB-010 A4 patient clipboard, vertical", "SS-CCB-011 A4 patient clipboard, horizontal", "SS-CCB-012 A4 patient clipboard, horizontal with D-rings", "SS-CCB-015 A3 patient clipboard, horizontal"]),
+    ("Ward accessories", ["SOV-ACRYLIC-CHEST-160 acrylic chest support"]),
     ("Dividers", ["SS-PCU-043 5-tab divider, blank", "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "Custom tab dividers (1 to 10 tabs)"]),
 ]
 
@@ -29,7 +30,7 @@ _SIZES = _json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(__file_
 # glove box holders and basket discontinued; hanging folders 30 and 40 mm only; custom dividers from $28.
 # Prices ex GST. Folder prices are not published.
 P_FOLD, P_HOLD, P_DIV = "/hospital/patient-chart-folders", "/hospital/patient-chart-holders", "/hospital/chart-dividers"
-SOV_GROUPS = [(P_HOLD, "Patient clipboards and chart holders"), (P_FOLD, "Patient chart folders and hanging folders"), (P_DIV, "Chart dividers")]
+SOV_GROUPS = [(P_HOLD, "Patient clipboards, chart holders and accessories"), (P_FOLD, "Patient chart folders and hanging folders"), (P_DIV, "Chart dividers")]
 ASK = "Price on request"
 def P(a, page, name, code, price, colours, spec, photo, alt):
     return dict(id=a, page=page, name=name, code=code, price=price, colours=colours, spec=spec, photo=photo, alt=alt)
@@ -40,6 +41,7 @@ SOV_PRODUCTS = [
     P("a4-wall-holder", P_HOLD, "A4 patient chart holder, wall mounted", "SS-PCU-038 / 039", "From $38 ex GST", GLOSS, "SS-PCU-038 horizontal, SS-PCU-039 vertical. 255 W × 315 H × 110 D mm.", "a4-chart-holder-wall-mounted", "White and black wall-mounted A4 patient chart holders"),
     P("a4-clipboard", P_HOLD, "A4 patient clipboard, vertical or horizontal", "SS-CCB-010 / 011 / 012", "From $29.50 ex GST", "White", "SS-CCB-010 vertical, SS-CCB-011 horizontal, SS-CCB-012 horizontal with 2 D-ring clips. Impact-resistant ABS, rollover top for the rail. 230 W × 360 H × 50 D mm.", "a4-patient-clipboard", "White ABS A4 patient clipboard with rollover top and clip"),
     P("a3-clipboard", P_HOLD, "A3 patient clipboard, horizontal", "SS-CCB-015", "From $37.80 ex GST", "White", "Impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 450 W × 360 H × 50 D mm.", "a3-patient-clipboard", "White ABS A3 horizontal patient clipboard with rollover top and clip"),
+    P("acrylic-chest-support", P_HOLD, "Acrylic chest support", "SOV-ACRYLIC-CHEST-160", "$310 ex GST", "Clear", "Clear acrylic, made in Tingalpa.", "acrylic-chest-support", "Clear acrylic chest support"),
     P("folder-colours", P_FOLD, "Patient chart folders, ten colours", "Colour codes 01 to 13", ASK, "10 stock colours. " + BLACK_NOTE, "Print in white or black. See the full colour list below.", "chart-folders-colour-range", "Ten colours of polypropylene patient chart folders, some printed with ward and bed"),
     P("folder-unprinted", P_FOLD, "Patient chart folder, unprinted", "SS-PCU-13 to 16", ASK, "10 colours. " + BLACK_NOTE, "Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-unprinted", "Open green unprinted patient chart folder with clip and 2-ring fitting"),
     P("folder-ward-bed", P_FOLD, "Patient chart folder, generic ward and bed print", "SS-PCU-03 to 06", ASK, "10 colours. " + BLACK_NOTE, "Generic print: blank Ward and Bed fields on the front and spine for staff to write in. To have your ward name and bed numbers printed, choose custom print. Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-ward-bed", "Green patient chart folder printed with ward and bed on the front and spine"),
@@ -59,6 +61,7 @@ ORDER_OPT = {
     "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder (30 mm spine)", "folder-hanging": "SS-PCU-13 H (30 mm spine)",
     "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SS-PCU-043 5-tab divider, blank",
     "dividers-printed": "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "dividers-custom": "Custom tab dividers (1 to 10 tabs)",
+    "acrylic-chest-support": "SOV-ACRYLIC-CHEST-160 acrylic chest support",
 }
 
 def _img(photo, alt):

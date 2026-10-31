@@ -305,6 +305,7 @@ var BPCF=(function(){
     if(!t)return null;
     if(t.indexOf('holder')>=0)return ['Black gloss','White gloss'];
     if(t.indexOf('clipboard')>=0)return ['White'];
+    if(t.indexOf('chest support')>=0)return ['Clear'];
     if(t.indexOf('custom tab divider')>=0)return ['Standard colours (white, red, orange, green, yellow)','Another colour from the range (add it to the notes)'];
     if(t.indexOf('divider')>=0)return ['Not applicable'];
     return FOLDER;

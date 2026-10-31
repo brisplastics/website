@@ -245,7 +245,7 @@ PRODUCTS = [
     dict(slug="printing-and-finishing", group="Other products", title="Printing, colours and finishing",
          card="Screen print, foil, embossing, digital print and our stock colours.",
          intro="Every product can be finished in house: screen printing, foil stamping, embossing and debossing, full-colour digital and encapsulated print, in our stock PVC and polypropylene colours.",
-         facts=[("Screen print", "In house, up to 600 × 800 mm"), ("Foil stamping", "Gold, silver and colours, up to 250 × 300 mm"),
+         facts=[("Screen print", "In house, up to 600 × 800 mm"), ("Foil stamping", "Gold, silver and colours, up to 250 × 300 mm, including book and Bible covers"),
                 ("Digital print", "Full-colour CMYK and UV flatbed print up to 1250 × 2500 mm"),
                 ("Colours", "28 standard PVC colours, leather-look, metallic-look, and a polypropylene colour range")],
          photos=["Colour Chart/", "Screenprint or foil stamp options.jpg", "screen printer/", "Digital Print/wallet.jpg", "Pocket Notebook Covers/CMYKdigiprint.jpg", "Ring Binders/digital print.JPG", "TAB Wallets/Digital print.jpg", "Tally Book Cover/Full colour digital print.jpg"],
