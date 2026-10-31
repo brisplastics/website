@@ -331,8 +331,8 @@ var BPCF=(function(){
     var F=BPCF, val=function(id){return F.val(f,id);}, L=[], n=0, items=['','ITEMS (one Xero line each)'];
     [].forEach.call(f.querySelectorAll('tr.order-line'),function(r){
       var it=r.querySelector('.ol-item'); if(!it.value)return; n++;
-      var c=r.querySelector('.ol-colour').value, p=r.querySelector('.ol-print').value.trim(), q=r.querySelector('.ol-qty').value.trim();
-      items.push('',n+'. Qty '+(q||'not given'),'   '+[it.options[it.selectedIndex].text,c&&c!=='Not applicable'?c:'',p?'print: '+p:''].filter(Boolean).join(', '));
+      var c=r.querySelector('.ol-colour').value, pf=r.querySelector('.ol-front').value.trim(), ps=r.querySelector('.ol-spine').value.trim(), q=r.querySelector('.ol-qty').value.trim();
+      items.push('',n+'. Qty '+(q||'not given'),'   '+[it.options[it.selectedIndex].text,c&&c!=='Not applicable'?c:'',pf?'front: '+pf:'',ps?'spine: '+ps:''].filter(Boolean).join(', '));
     });
     var type=F.radio(f,'order_type'), needed=F.dmy(val('needed_by'));
     L.push(['HOSPITAL ORDER',type,F.plural(n,'line'),needed?'needed by '+needed:''].filter(Boolean).join(' · '));

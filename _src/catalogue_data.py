@@ -142,7 +142,7 @@ PRODUCTS = [
     dict(slug="luggage-tags", group="Tags and cards", title="Branded luggage tags",
          card="240 × 65 mm luggage tags with your logo.",
          intro="Luggage tags printed with your logo and branding, with a standard or custom details insert.",
-         facts=[("Size", "240 mm long × 65 mm wide"), ("Colours", "28 standard colours, leather-look and metallic-look PVC"),
+         facts=[("Size", "240 mm long × 65 mm wide"), ("Material", "PVC, or 0.6 mm or 0.8 mm polypropylene"), ("Colours", "28 standard colours, leather-look and metallic-look PVC"),
                 ("Print", "Encapsulated full-colour, screen print, CMYK digital print, gold or silver foil")],
          photos=["Luggage Tags/"],
          related=["travel-wallets", "id-tags"]),

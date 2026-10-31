@@ -14,10 +14,10 @@ FOLDER_COLOURS_TEXT = "10 colours: Oxford Blue, Red, Yellow, Purple, Navy, Grey,
 
 ORDER_CODES = [
     ("Chart folders: unprinted", ["SS-PCU-13 (30 mm spine)", "SS-PCU-14 (40 mm spine)", "SS-PCU-15 (55 mm spine)", "SS-PCU-16 (68 mm spine)"]),
-    ("Chart folders: ward and bed print", ["SS-PCU-03 (30 mm spine)", "SS-PCU-04 (40 mm spine)", "SS-PCU-05 (55 mm spine)", "SS-PCU-06 (68 mm spine)"]),
+    ("Chart folders: generic print (blank Ward and Bed fields to write in)", ["SS-PCU-03 (30 mm spine)", "SS-PCU-04 (40 mm spine)", "SS-PCU-05 (55 mm spine)", "SS-PCU-06 (68 mm spine)"]),
     ("Hanging chart folders: unprinted", ["SS-PCU-13 H (30 mm spine)", "SS-PCU-14 H (40 mm spine)"]),
-    ("Hanging chart folders: ward and bed print", ["SS-PCU-03 H (30 mm spine)", "SS-PCU-04 H (40 mm spine)"]),
-    ("Custom printed folders", ["Custom printed chart folder (30 mm spine)", "Custom printed chart folder (40 mm spine)", "Custom printed chart folder (55 mm spine)", "Custom printed chart folder (68 mm spine)", "Custom printed hanging folder (30 mm spine)", "Custom printed hanging folder (40 mm spine)"]),
+    ("Hanging chart folders: generic print (blank Ward and Bed fields to write in)", ["SS-PCU-03 H (30 mm spine)", "SS-PCU-04 H (40 mm spine)"]),
+    ("Custom printed folders (your ward name and bed numbers printed)", ["Custom printed chart folder (30 mm spine)", "Custom printed chart folder (40 mm spine)", "Custom printed chart folder (55 mm spine)", "Custom printed chart folder (68 mm spine)", "Custom printed hanging folder (30 mm spine)", "Custom printed hanging folder (40 mm spine)"]),
     ("Chart holders and clipboards", ["SS-PCU-033 A3 chart holder, horizontal", "SS-PCU-034 A4 chart holder, vertical", "SS-PCU-038 A4 wall-mounted holder, horizontal", "SS-PCU-039 A4 wall-mounted holder, vertical", "SS-CCB-010 A4 patient clipboard, vertical", "SS-CCB-011 A4 patient clipboard, horizontal", "SS-CCB-012 A4 patient clipboard, horizontal with D-rings", "SS-CCB-015 A3 patient clipboard, horizontal"]),
     ("Dividers", ["SS-PCU-043 5-tab divider, blank", "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "Custom tab dividers (1 to 10 tabs)"]),
 ]
@@ -42,10 +42,10 @@ SOV_PRODUCTS = [
     P("a3-clipboard", P_HOLD, "A3 patient clipboard, horizontal", "SS-CCB-015", "From $37.80 ex GST", "White", "Impact-resistant ABS, rollover top for the rail. Clipboard clip or 2 D-ring clips. 450 W × 360 H × 50 D mm.", "a3-patient-clipboard", "White ABS A3 horizontal patient clipboard with rollover top and clip"),
     P("folder-colours", P_FOLD, "Patient chart folders, ten colours", "Colour codes 01 to 13", ASK, "10 stock colours. " + BLACK_NOTE, "Print in white or black. See the full colour list below.", "chart-folders-colour-range", "Ten colours of polypropylene patient chart folders, some printed with ward and bed"),
     P("folder-unprinted", P_FOLD, "Patient chart folder, unprinted", "SS-PCU-13 to 16", ASK, "10 colours. " + BLACK_NOTE, "Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-unprinted", "Open green unprinted patient chart folder with clip and 2-ring fitting"),
-    P("folder-ward-bed", P_FOLD, "Patient chart folder, ward and bed print", "SS-PCU-03 to 06", ASK, "10 colours. " + BLACK_NOTE, "Ward and bed printed on the front and spine. Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-ward-bed", "Green patient chart folder printed with ward and bed on the front and spine"),
+    P("folder-ward-bed", P_FOLD, "Patient chart folder, generic ward and bed print", "SS-PCU-03 to 06", ASK, "10 colours. " + BLACK_NOTE, "Generic print: blank Ward and Bed fields on the front and spine for staff to write in. To have your ward name and bed numbers printed, choose custom print. Polypropylene. 30, 40, 55 and 68 mm spines.", "chart-folder-ward-bed", "Green patient chart folder printed with ward and bed on the front and spine"),
     P("folder-custom", P_FOLD, "Custom printed patient chart folder", "Custom", ASK, "10 colours, print in any colour. " + BLACK_NOTE, "Your ward name and bed number on the front and spine. Artwork set-up charge applies.", "custom-printed-chart-folder", "Red and green chart folders custom printed Admissions and Day Stay Unit"),
     P("folder-hanging", P_FOLD, "Patient chart hanging folder, unprinted", "SS-PCU-13 H / 14 H", ASK, "10 colours. " + BLACK_NOTE, "Polypropylene. 30 and 40 mm spines.", "hanging-chart-folder", "Open red hanging patient chart folder with clip, rings and hanging strip"),
-    P("folder-hanging-printed", P_FOLD, "Hanging folder, ward and bed or custom print", "SS-PCU-03 H / 04 H, custom HC", ASK, "10 colours. " + BLACK_NOTE, "Ward and bed or custom print on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
+    P("folder-hanging-printed", P_FOLD, "Hanging folder, generic or custom print", "SS-PCU-03 H / 04 H, custom HC", ASK, "10 colours. " + BLACK_NOTE, "Generic print (blank Ward and Bed fields) or custom print with your ward name and bed numbers, on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
     P("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "From $12 ex GST per set", "", "Five blank tabs. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
     P("dividers-printed", P_DIV, "5-tab dividers, generic printed", "SS-PCU-045", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
     P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $28 ex GST per set", "", "Your wording on 1 to 10 tabs. Divider sheets in any colour from our colour range, not only the standard white, red, orange, green and yellow. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
@@ -314,7 +314,8 @@ def build():
         lines += f'''<tr class="order-line"{hid}>
 <td data-label="Item"><select class="ol-item" aria-label="Item {i}"{req}>{opts}</select></td>
 <td data-label="Colour"><select class="ol-colour" aria-label="Colour {i}">{colours}</select></td>
-<td data-label="Print (ward, beds)"><input class="ol-print" aria-label="Print text {i}" placeholder="e.g. Ward 4B, beds 1 to 24"></td>
+<td data-label="Front cover print"><input class="ol-front" aria-label="Front cover print {i}" placeholder="e.g. Ward 4B, beds 1 to 24"></td>
+<td data-label="Spine print"><input class="ol-spine" aria-label="Spine print {i}" placeholder="e.g. 4B 1 to 24"></td>
 <td data-label="Quantity"><input class="ol-qty" aria-label="Quantity {i}" inputmode="numeric" pattern="[0-9]*[1-9][0-9]*" title="Enter a whole number" placeholder="Qty"{req}></td>
 </tr>'''
     main = hero(cr, "Hospital order and reorder form", f"Order Sov Services products for your ward. We confirm price, print and delivery by return email before anything is made. Prefer email or phone? Send your purchase order to <a href=\"mailto:{SOV_EMAIL}\">{SOV_EMAIL}</a> or call <a href=\"tel:1300744104\">1300 744 104</a>.",
@@ -347,10 +348,11 @@ def build():
 <fieldset>
 <legend>Items</legend>
 <table class="items">
-<thead><tr><th style="width:42%">Item</th><th style="width:18%">Colour</th><th>Print (ward, beds)</th><th style="width:11%">Qty</th></tr></thead>
+<thead><tr><th style="width:34%">Item</th><th style="width:15%">Colour</th><th>Front cover print</th><th>Spine print</th><th style="width:9%">Qty</th></tr></thead>
 <tbody>{lines}</tbody>
 </table>
 <button type="button" class="btn ghost" id="add-line">Add another item</button>
+<p class="form-note"><strong>Generic print</strong> has blank Ward and Bed fields for staff to write in. To have your ward name and bed numbers printed, choose a <strong>custom printed</strong> folder and fill in the front cover and spine print. Need the spine print to read the other way? Say so in the notes.</p>
 <p class="form-note">Need more than eight lines? Attach your order sheet below or add it to the notes.</p>
 <script type="application/json" id="order-map">{_json.dumps(ORDER_OPT)}</script>
 </fieldset>
@@ -359,7 +361,7 @@ def build():
 <div class="grid2">
 <div class="field"><label for="needed_by">Needed by</label><input id="needed_by" type="date"></div>
 <div class="field"><label for="artwork">Order sheet or artwork</label> <span class="hint">PDF, PNG or JPG, up to 8 MB. Please do not include patient information.</span><input id="artwork" name="attachment" type="file" accept="{ART_ACCEPT}"><p id="artwork-error" class="error" role="alert"></p></div>
-<div class="field full"><label for="notes">Notes</label><textarea id="notes" placeholder="Bed numbers, print wording, delivery instructions, previous order reference"></textarea></div>
+<div class="field full"><label for="notes">Notes</label><textarea id="notes" placeholder="Print wording, spine print direction, delivery instructions, previous order reference"></textarea></div>
 <div class="field full"><label class="check"><input type="checkbox" id="new_supplier_details" value="yes"> Send our supply team Brisbane Plastics Company's vendor details (ABN and bank details, verified by phone)</label></div>
 </div>
 </fieldset>
