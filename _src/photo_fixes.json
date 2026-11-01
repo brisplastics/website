@@ -26,5 +26,6 @@
 "screen printer/pic1.jpg": "exclude",
 "screen printer/pic2.jpg": "exclude",
 "screen printer/pic3.jpg": "exclude",
-"screen printer/pic4.jpg": "exclude"
+"screen printer/pic4.jpg": "exclude",
+"screen printer/printer.jpg": -90
 }

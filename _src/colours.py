@@ -39,7 +39,7 @@ MATERIAL_RANGE = {"Standard PVC": "pvc", "Padded PVC": "pvc", "Leather-look PVC"
                   "Clear PVC": None, "Clear or frosted polypropylene": None, "Not sure": "pvc"}
 
 PRINTS = [
-    ("screen", "Screen print", "printing-and-finishing-15", 640, 480,
+    ("screen", "Screen print", "printing-and-finishing-15", 480, 640,
      "Best for logos and simple designs in one or a few solid colours, and the most economical for larger runs. Any PMS colour on white PVC; on coloured material we may print a white base first. In house, up to 600 × 800 mm."),
     ("foil", "Foil stamping", "printing-and-finishing-pu-01", 1600, 1200,
      "Gold, silver and coloured foils for a premium finish on binders, folders, and book and Bible covers. Up to 250 × 300 mm."),
