@@ -139,10 +139,23 @@ var BPCF=(function(){
       } else wrap.hidden=true;
       div.querySelector('.item-notes').placeholder=HINTS[g]||GENERIC;
     }
+    var COLOURS=__COLOURS__;
+    function onMaterial(div){
+      var n=div.getAttribute('data-n'), m=div.querySelector('#item_'+n+'_material').value, cs=div.querySelector('#item_'+n+'_colour'), keep=cs.value;
+      var r=COLOURS[m]||COLOURS['Standard PVC'], link=div.querySelector('.chart-link');
+      cs.innerHTML='<option value="">Choose one</option>';
+      r.list.forEach(function(x){var op=document.createElement('option');op.text=x;cs.add(op);});
+      (r.chart==='pvc'||!r.chart?['Clear','Other (add to notes)']:['Other (add to notes)']).forEach(function(x){var op=document.createElement('option');op.text=x;cs.add(op);});
+      cs.value=keep; if(cs.value!==keep)cs.selectedIndex=0;
+      if(r.chart==='pvc'){link.href='#colour-chart';link.removeAttribute('target');link.textContent='see colour chart';}
+      else if(r.chart){link.href='/products/printing-and-finishing#colours-'+r.chart;link.target='_blank';link.textContent='see colour chart (new tab)';}
+      else{link.href='/products/printing-and-finishing#colours';link.target='_blank';link.textContent='all colour charts (new tab)';}
+    }
     function show(div){div.hidden=false; addBtn.hidden=items.every(function(d){return !d.hidden;});}
     function selectSlug(div,slug){var s=div.querySelector('.item-product');for(var i=0;i<s.options.length;i++){if(s.options[i].getAttribute('data-slug')===slug){s.selectedIndex=i;break;}}onProduct(div);}
     items.forEach(function(div){
       div.querySelector('.item-product').addEventListener('change',function(){onProduct(div);});
+      div.querySelector('#item_'+div.getAttribute('data-n')+'_material').addEventListener('change',function(){onMaterial(div);});
       var r=div.querySelector('.item-remove');
       if(r)r.addEventListener('click',function(){
         var k=div.getAttribute('data-key'); if(k){drop(k);div.removeAttribute('data-key');renderButtons();}

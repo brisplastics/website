@@ -144,7 +144,7 @@ assert 'name="request"' in m
 m = m.replace('<li><strong>Factory</strong><br>45a Millennium Place, Tingalpa QLD 4173</li>', f'<li><strong>Factory and collection</strong><br><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a><br>{HOURS_TEXT}</li>\n<li><strong>Google reviews</strong><br><a href="{GBP_REVIEWS}" rel="noopener">Read our reviews</a> or <a href="{GBP_WRITE}" rel="noopener">leave one</a></li>')
 assert 'Factory and collection' in m
 m = m.replace('<li><strong>Live chat</strong>', f'<li><strong>Hospital orders</strong><br>Use the <a href="/hospital/order">hospital order form</a> or email <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li>\n<li><strong>Printing</strong><br>Use the <a href="/uv-printing/#quote">print quote form</a> for UV printing jobs.</li>\n<li><strong>Live chat</strong>')
-m = m.replace('</ul>\n</aside>', '</ul>\n<div id="colour-chart" class="colour-chart"><h3>PVC colour chart</h3><a class="lb" href="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10.jpg"><img src="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10-t.jpg" alt="Plastics Unique standard PVC colour chart, colours 1 to 35" loading="lazy" width="600" height="424"></a><p>The numbers match the colour list in the form. * pastel surcharge. Tap the chart to enlarge.</p><p><a href="/products/printing-and-finishing">Polypropylene, leather-look and tarp colours</a></p></div>\n</aside>', 1)
+m = m.replace('</ul>\n</aside>', '</ul>\n<div id="colour-chart" class="colour-chart"><h3>PVC colour chart</h3><a class="lb" href="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10.jpg"><img src="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10-t.jpg" alt="Plastics Unique standard PVC colour chart, colours 1 to 35" loading="lazy" width="600" height="424"></a><p>The numbers match the colour list in the form. * pastel surcharge. Tap the chart to enlarge.</p><p><a href="/products/printing-and-finishing#colours">Leather-look, polypropylene, metallic and tarp colours</a></p></div>\n</aside>', 1)
 assert 'colour-chart' in m
 pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Request a quote")])
 
@@ -254,7 +254,7 @@ js += '''
   document.addEventListener('keydown',function(e){if(!d.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1);});
 })();
 '''
-js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT)).replace("__ORDEROPT__", json.dumps(hospital.ORDER_OPT))
+js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT)).replace("__ORDEROPT__", json.dumps(hospital.ORDER_OPT)).replace("__COLOURS__", json.dumps(__import__("colours").form_data(), ensure_ascii=False))
 open(os.path.join(OUT, "assets/js/site.js"), "w", encoding="utf-8").write(js)
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "favicon.svg"))
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "assets/img/logo.svg"))
