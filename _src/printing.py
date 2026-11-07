@@ -118,12 +118,14 @@ def price_cards(keys=None, heading="Printed signs and guide prices", lede=""):
     lis = ""
     for x in items:
         rows = "".join(f"<tr><td>{a}</td><td>{b}</td></tr>" for a, b in x["prices"])
-        lis += (f'<li style="--tab:{x["tab"]}" id="sign-{x["key"]}"><h3>{x["name"]}</h3><p>{x["desc"]}</p>'
+        lis += (f'<li style="--tab:{x["tab"]}" id="sign-{x["key"]}"><a class="lb pimg-sign" href="/assets/img/products/signs/sign-{x["key"]}.jpg" data-w="1200" data-h="900">'
+                f'<img src="/assets/img/products/signs/sign-{x["key"]}-t.jpg" alt="{x["name"]}: digital mockup of a Plastics Unique sign" loading="lazy" width="600" height="450"></a>'
+                f'<h3>{x["name"]}</h3><p>{x["desc"]}</p>'
                 f'<table class="ptable"><tbody>{rows}</tbody></table>'
                 f'<a class="btn ghost pick" href="#quote" data-product="{x["name"]}" data-material="{x["material"]}" '
                 f'data-size="{x["size"]}" data-thick="{x["thick"]}" data-sides="{x["sides"]}">Quote this</a></li>')
     note = ('<p class="form-note" style="margin-top:1rem">Guide prices ex GST, for full-colour print from print-ready artwork. Most signs in 5 working days from artwork approval, express available. '
-            'collected from Tingalpa. Freight, artwork, stand-offs and fixings are extra. Your quote confirms the price.</p>')
+            'collected from Tingalpa. Freight, artwork, stand-offs and fixings are extra. Your quote confirms the price. Images are digital mockups of our own signs.</p>')
     return (f'<section class="block"><div class="wrap"><div class="section-head"><h2>{heading}</h2>'
             f'{f"<p class=lede>{lede}</p>" if lede else ""}</div><ul class="cards pcard-list">{lis}</ul>{note}</div></section>')
 
