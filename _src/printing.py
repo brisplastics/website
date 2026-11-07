@@ -41,7 +41,7 @@ SPEC_ROWS = [
     ("Inks", "CMYK plus white"),
     ("White ink uses", "Under-print on clear and dark materials, reverse (second-surface) printing on clear acrylic, diffuser layers for backlit panels"),
     ("Run lengths", "One-off prototypes to production runs"),
-    ("Turnaround", "10 to 15 working days from order and artwork approval. Ask about express turnaround"),
+    ("Turnaround", "Most signs in 5 working days from artwork approval. Express available"),
     ("Finishing in house", "Guillotining, die cutting, creasing, RF welding, foil blocking, eyelets and rivets"),
     ("Collection and freight", "Pick-up from Tingalpa, Brisbane, or freight Australia-wide"),
 ]
@@ -122,7 +122,7 @@ def price_cards(keys=None, heading="Printed signs and guide prices", lede=""):
                 f'<table class="ptable"><tbody>{rows}</tbody></table>'
                 f'<a class="btn ghost pick" href="#quote" data-product="{x["name"]}" data-material="{x["material"]}" '
                 f'data-size="{x["size"]}" data-thick="{x["thick"]}" data-sides="{x["sides"]}">Quote this</a></li>')
-    note = ('<p class="form-note" style="margin-top:1rem">Guide prices ex GST, for full-colour print from print-ready artwork, '
+    note = ('<p class="form-note" style="margin-top:1rem">Guide prices ex GST, for full-colour print from print-ready artwork. Most signs in 5 working days from artwork approval, express available. '
             'collected from Tingalpa. Freight, artwork, stand-offs and fixings are extra. Your quote confirms the price.</p>')
     return (f'<section class="block"><div class="wrap"><div class="section-head"><h2>{heading}</h2>'
             f'{f"<p class=lede>{lede}</p>" if lede else ""}</div><ul class="cards pcard-list">{lis}</ul>{note}</div></section>')
@@ -164,7 +164,7 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
 <div class="field"><label for="pq-qty">Quantity <span class="hint">list several for price breaks</span></label><input id="pq-qty" placeholder="e.g. 20, or 10 / 50 / 100"></div>
 <div class="field"><label for="pq-sides">Print</label><select id="pq-sides"><option>Full colour, one side</option><option>Full colour, both sides</option><option>Reverse print on clear (second surface)</option><option>White ink only or spot white</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-cut">Cutting</label><select id="pq-cut"><option>Supplied to size, no cutting</option><option>Straight cuts to size</option><option>Shaped or die cut</option><option>Not sure</option></select></div>
-<div class="field"><label for="pq-date">Needed by <span class="hint">standard 10 to 15 working days, express available</span></label><input id="pq-date" type="date"></div>
+<div class="field"><label for="pq-date">Needed by <span class="hint">most signs 5 working days from artwork approval, express available</span></label><input id="pq-date" type="date"></div>
 <div class="field"><label for="pq-post">Delivery suburb and postcode <span class="hint">for freight</span></label><input id="pq-post" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
 <div class="field"><label for="pq-repeat">Will you need this again?</label><select id="pq-repeat"><option>One-off</option><option>Yes, regularly</option><option>Not sure</option></select></div>
 {artwork_fields()}
@@ -221,7 +221,7 @@ def build():
         ("Do you print white ink?", "Yes. White is printed under colour on clear and dark materials, as a solid colour, or behind reverse-printed clear acrylic so the image reads through the face."),
         ("Is there a minimum order?", "No set minimum. We print single prototypes and production runs. Small items are ganged across the bed, so short runs stay economical."),
         ("Can I supply my own material or products?", "Yes. Trade customers often supply cut blanks or finished items. Tell us the material so we can confirm ink adhesion, and we will run a test piece if it is new to us."),
-        ("How long does a print job take?", "Standard jobs take 10 to 15 working days from order and artwork approval. Ask about express turnaround. Tell us your date on the quote form."),
+        ("How long does a print job take?", "Most signs are ready in 5 working days from artwork approval. Larger or fabricated jobs take longer, and express is available. Tell us your date on the quote form."),
         ("Do you print banners or fabric?", "Not at the moment. Our printer is set up for rigid sheet and objects. We do not print roll media such as banners, vinyl or fabric."),
     ]
     main = hero(C_HUB, "Printed signs in Brisbane: acrylic, ACM and PVC",
