@@ -5,7 +5,7 @@ from shell import *
 from forms import TRACKING, optin, artwork_fields
 
 HUB = "/uv-printing/"
-C_HUB = [("/", "Home"), (HUB, "UV Printing")]
+C_HUB = [("/", "Home"), (HUB, "Signs & Printing")]
 
 MATERIALS = ["Acrylic (clear, frosted, coloured)", "Foamed PVC sheet", "Rigid PVC", "Polycarbonate", "Styrene",
              "Polypropylene sheet", "Corflute (fluted polypropylene)", "Aluminium composite panel (ACM)", "Aluminium sheet",
@@ -73,7 +73,7 @@ def index_cards(exclude=None):
     return f'<ul class="cards">{lis}</ul>'
 
 def related(current):
-    return '<ul class="related">' + "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _, _ in PAGES_INDEX if h != current) + '<li><a href="/uv-printing/">UV Printing overview</a></li></ul>'
+    return '<ul class="related">' + "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _, _ in PAGES_INDEX if h != current) + '<li><a href="/uv-printing/">All signs and printing</a></li></ul>'
 
 MAT_OPTS = ["Not sure yet", "Acrylic", "Foamed PVC", "Rigid PVC", "Polycarbonate", "Corflute", "ACM / aluminium composite", "Aluminium sheet",
             "Wood, plywood or MDF", "Glass or tile", "Card or board", "Polypropylene", "Our own items or objects", "Other"]
