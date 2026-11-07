@@ -311,15 +311,17 @@ for host in ("https://sovservices.net.au", "https://www.sovservices.net.au"):
         rd += f'[[redirects]]\n  from = "{host}{old}"\n  to = "{SITE}{new}?from=sov"\n  status = 301\n  force = true\n\n'
 nt = open(os.path.join(OUT, "netlify.toml")).read() + rd
 open(os.path.join(OUT, "netlify.toml"), "w").write(nt)
-# 3. brisplastics.com.au -> plasticsunique.com.au (ACTIVE from cutover 07/11/2026). Host rules go first so every
+# 3. brisplastics.com.au -> plasticsunique.com.au. Built only with BPC_REDIRECT=1 (second deploy, after the switch). Host rules go first so every
 #    brisplastics.com.au address makes one hop to the same path on plasticsunique.com.au. Merge to main ONLY after
 #    plasticsunique.com.au is live on this Netlify site, or brisplastics visitors land on the old WordPress site.
 cut = "\n# ===== brisplastics.com.au -> plasticsunique.com.au (cutover 07/11/2026) =====\n"
 for host in ("https://brisplastics.com.au", "http://brisplastics.com.au", "https://www.brisplastics.com.au", "http://www.brisplastics.com.au"):
     cut += f'[[redirects]]\n  from = "{host}/*"\n  to = "https://plasticsunique.com.au/:splat"\n  status = 301\n  force = true\n\n'
 nt = open(os.path.join(OUT, "netlify.toml")).read()
-i = nt.index("[[redirects]]")
-open(os.path.join(OUT, "netlify.toml"), "w").write(nt[:i] + cut.lstrip("\n") + "\n" + nt[i:])
+if os.environ.get("BPC_REDIRECT") == "1":  # switch on only once plasticsunique.com.au is live on Netlify
+    i = nt.index("[[redirects]]")
+    nt = nt[:i] + cut.lstrip("\n") + "\n" + nt[i:]
+open(os.path.join(OUT, "netlify.toml"), "w").write(nt)
 open(os.path.join(OUT, ".gitignore"), "w").write("desktop.ini\n__pycache__/\n")
 for extra in ("README.md",):
     shutil.copy(os.path.join(HERE, extra), OUT)
