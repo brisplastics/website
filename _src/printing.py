@@ -41,7 +41,7 @@ SPEC_ROWS = [
     ("Inks", "CMYK plus white"),
     ("White ink uses", "Under-print on clear and dark materials, reverse (second-surface) printing on clear acrylic, diffuser layers for backlit panels"),
     ("Run lengths", "One-off prototypes to production runs"),
-    ("Turnaround", "10 to 15 working days from order and artwork approval. Ask about express turnaround"),
+    ("Turnaround", "Most signs in 5 working days from artwork approval. Express available"),
     ("Finishing in house", "Guillotining, die cutting, creasing, RF welding, foil blocking, eyelets and rivets"),
     ("Collection and freight", "Pick-up from Tingalpa, Brisbane, or freight Australia-wide"),
 ]
@@ -78,6 +78,55 @@ def related(current):
 MAT_OPTS = ["Not sure yet", "Acrylic", "Foamed PVC", "Rigid PVC", "Polycarbonate", "Corflute", "ACM / aluminium composite", "Aluminium sheet",
             "Wood, plywood or MDF", "Glass or tile", "Card or board", "Polypropylene", "Our own items or objects", "Other"]
 
+# Printed sign products with guide prices, ex GST (Bruce 07/11/2026: price competitively, review costs after a few months).
+# Benchmarks and sources: PU_UV_Print_Products_and_Market_Prices_v1_CAI.xlsx
+SIGN = "Reverse print on clear (second surface)"
+PRINT_PRODUCTS = [
+    dict(key="reception", name="Acrylic reception and logo signs", tab="var(--pvc-clear)",
+         desc="Clear acrylic printed on the back with a white layer, so the face stays glossy and the print can't scratch. Drilled for stand-offs.",
+         prices=[("A2, 420 × 594 mm", "$185"), ("A1, 594 × 841 mm", "$259"), ("Larger, up to 1250 × 2500 mm", "Quote")],
+         material="Acrylic", size="420 × 594", thick="3", sides=SIGN),
+    dict(key="door", name="Acrylic door and room signs", tab="var(--blue)",
+         desc="Printed acrylic plates for offices, consulting rooms, wards and classrooms. Tape or stand-off fixing.",
+         prices=[("300 × 100 mm, 5 or more", "$22 each"), ("Single sign", "Quote")],
+         material="Acrylic", size="300 × 100", thick="3", sides="Full colour, one side"),
+    dict(key="acm", name="ACM business and site signs", tab="var(--steel)",
+         desc="3 mm aluminium composite, printed direct with no laminate to peel. For shopfronts, builders' site signs, property and fences.",
+         prices=[("900 × 600 mm", "$119"), ("900 × 600 mm, 4 or more", "$79 each"), ("1200 × 900 mm", "$145"), ("2400 × 1200 mm full sheet", "$349")],
+         material="ACM / aluminium composite", size="900 × 600", thick="3", sides="Full colour, one side"),
+    dict(key="safety", name="Custom safety signs", tab="var(--pvc-yellow)",
+         desc="Your site's own wording, symbols and logo on 3 mm ACM. Matched sets for a whole site, printed in Tingalpa.",
+         prices=[("A3, 297 × 420 mm, 10 or more", "$25 each"), ("A4, singles and mixed sets", "Quote")],
+         material="ACM / aluminium composite", size="297 × 420", thick="3", sides="Full colour, one side"),
+    dict(key="pvc", name="Foam PVC signs", tab="var(--pvc-blue)",
+         desc="Light, rigid 3 mm foamed PVC for indoor signs, menu boards, point of sale and A-frame inserts.",
+         prices=[("A3, 297 × 420 mm", "$25"), ("A1, 594 × 841 mm", "$45"), ("A1, 10 or more", "$25 each")],
+         material="Foamed PVC", size="594 × 841", thick="3", sides="Full colour, one side"),
+    dict(key="corflute", name="Corflute signs", tab="var(--pvc-green)",
+         desc="5 mm corflute for real estate, events and temporary signs. Eyelets or H-stakes on request.",
+         prices=[("600 × 900 mm, 20 or more", "$14 each"), ("Larger runs", "Quote")],
+         material="Corflute", size="600 × 900", thick="5", sides="Full colour, one side"),
+]
+PRODUCT_NAMES = [x["name"] for x in PRINT_PRODUCTS]
+SUB_CARDS = {"/uv-printing/acrylic": ["reception", "door"], "/uv-printing/pvc-signs": ["pvc", "corflute"],
+             "/uv-printing/acm-aluminium-signs": ["acm", "safety"], "/uv-printing/safety-industrial-signs": ["safety", "acm"],
+             "/uv-printing/pos-displays": ["pvc", "reception"], "/uv-printing/office-signs": ["reception", "door"],
+             "/uv-printing/school-signs": ["acm", "door"], "/uv-printing/hospital-signs": ["door", "safety"]}
+
+def price_cards(keys=None, heading="Printed signs and guide prices", lede=""):
+    items = [x for x in PRINT_PRODUCTS if keys is None or x["key"] in keys]
+    lis = ""
+    for x in items:
+        rows = "".join(f"<tr><td>{a}</td><td>{b}</td></tr>" for a, b in x["prices"])
+        lis += (f'<li style="--tab:{x["tab"]}" id="sign-{x["key"]}"><h3>{x["name"]}</h3><p>{x["desc"]}</p>'
+                f'<table class="ptable"><tbody>{rows}</tbody></table>'
+                f'<a class="btn ghost pick" href="#quote" data-product="{x["name"]}" data-material="{x["material"]}" '
+                f'data-size="{x["size"]}" data-thick="{x["thick"]}" data-sides="{x["sides"]}">Quote this</a></li>')
+    note = ('<p class="form-note" style="margin-top:1rem">Guide prices ex GST, for full-colour print from print-ready artwork. Most signs in 5 working days from artwork approval, express available. '
+            'collected from Tingalpa. Freight, artwork, stand-offs and fixings are extra. Your quote confirms the price.</p>')
+    return (f'<section class="block"><div class="wrap"><div class="section-head"><h2>{heading}</h2>'
+            f'{f"<p class=lede>{lede}</p>" if lede else ""}</div><ul class="cards pcard-list">{lis}</ul>{note}</div></section>')
+
 def quote_form(path, heading="Get a print quote", trade_default=False):
     mats = "".join(f"<option>{m}</option>" for m in MAT_OPTS)
     t_chk = " checked" if trade_default else ""
@@ -105,6 +154,7 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
 <fieldset>
 <legend>The job</legend>
 <div class="grid2">
+<div class="field full"><label for="pq-product">Product</label><select id="pq-product">{"".join(f"<option>{n}</option>" for n in PRODUCT_NAMES)}<option selected>Something else</option></select></div>
 <div class="field"><label for="pq-use">What is it?</label><select id="pq-use"><option>Sign or panel</option><option>Display or stand</option><option>Label, nameplate or overlay</option><option>Award, plaque or gift</option><option>Printing on items I supply</option><option>Prototype or sample</option><option>Other</option></select></div>
 <div class="field"><label for="pq-where">Where will it be used?</label><select id="pq-where"><option>Indoors</option><option>Outdoors</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-material">Material</label><select id="pq-material">{mats}</select></div>
@@ -114,7 +164,7 @@ def quote_form(path, heading="Get a print quote", trade_default=False):
 <div class="field"><label for="pq-qty">Quantity <span class="hint">list several for price breaks</span></label><input id="pq-qty" placeholder="e.g. 20, or 10 / 50 / 100"></div>
 <div class="field"><label for="pq-sides">Print</label><select id="pq-sides"><option>Full colour, one side</option><option>Full colour, both sides</option><option>Reverse print on clear (second surface)</option><option>White ink only or spot white</option><option>Not sure</option></select></div>
 <div class="field"><label for="pq-cut">Cutting</label><select id="pq-cut"><option>Supplied to size, no cutting</option><option>Straight cuts to size</option><option>Shaped or die cut</option><option>Not sure</option></select></div>
-<div class="field"><label for="pq-date">Needed by <span class="hint">standard 10 to 15 working days, express available</span></label><input id="pq-date" type="date"></div>
+<div class="field"><label for="pq-date">Needed by <span class="hint">most signs 5 working days from artwork approval, express available</span></label><input id="pq-date" type="date"></div>
 <div class="field"><label for="pq-post">Delivery suburb and postcode <span class="hint">for freight</span></label><input id="pq-post" autocomplete="postal-code" placeholder="e.g. Tingalpa 4173, or collect"></div>
 <div class="field"><label for="pq-repeat">Will you need this again?</label><select id="pq-repeat"><option>One-off</option><option>Yes, regularly</option><option>Not sure</option></select></div>
 {artwork_fields()}
@@ -147,6 +197,9 @@ def sub(path, label, title, desc, h1, lede, body, faqs, trade_default=False):
     cr = C_HUB + [(path, label)]
     main = hero(cr, h1, lede, kicker="UV flatbed printing · Brisbane", buttons=[("#quote", "Get a quote"), ("/uv-printing/", "Printer specification")])
     main += body
+    keys = SUB_CARDS.get(path)
+    if keys:
+        main += price_cards(keys, "Guide prices")
     main += f'''<section class="block"><div class="wrap" style="max-width:860px">
 {faq_block(faqs)}
 <h2 style="margin-top:2.5rem;font-size:1.3rem">More printing</h2>
@@ -168,12 +221,12 @@ def build():
         ("Do you print white ink?", "Yes. White is printed under colour on clear and dark materials, as a solid colour, or behind reverse-printed clear acrylic so the image reads through the face."),
         ("Is there a minimum order?", "No set minimum. We print single prototypes and production runs. Small items are ganged across the bed, so short runs stay economical."),
         ("Can I supply my own material or products?", "Yes. Trade customers often supply cut blanks or finished items. Tell us the material so we can confirm ink adhesion, and we will run a test piece if it is new to us."),
-        ("How long does a print job take?", "Standard jobs take 10 to 15 working days from order and artwork approval. Ask about express turnaround. Tell us your date on the quote form."),
+        ("How long does a print job take?", "Most signs are ready in 5 working days from artwork approval. Larger or fabricated jobs take longer, and express is available. Tell us your date on the quote form."),
         ("Do you print banners or fabric?", "Not at the moment. Our printer is set up for rigid sheet and objects. We do not print roll media such as banners, vinyl or fabric."),
     ]
-    main = hero(C_HUB, "UV flatbed printing in Brisbane",
+    main = hero(C_HUB, "Printed signs in Brisbane: acrylic, ACM and PVC",
                 "Full-colour printing direct onto rigid sheet and objects up to 1250 × 2500 mm and 50.8 mm thick, with white ink. Printed on a Canon Arizona 135 GT in Tingalpa for trade and business customers across Brisbane and Australia.",
-                kicker="Trade and direct · Tingalpa, Brisbane",
+                kicker="UV flatbed printing · Trade and direct · Tingalpa",
                 buttons=[("#quote", "Get a print quote"), ("/uv-printing/trade", "Trade printing")])
     main += f'''<section class="block alt"><div class="wrap printer">
 <h2>The printer: Canon Arizona 135 GT</h2>
@@ -184,6 +237,7 @@ def build():
 <div class="section-head"><h2>What we print</h2><p class="lede">Direct to the material, no mounting or laminating. Choose the job closest to yours.</p></div>
 {index_cards()}
 </div></section>
+{price_cards(["reception", "door", "acm", "safety", "pvc"], "Popular signs and guide prices", "Printed direct in our Tingalpa factory. Pick one to start a quote, or describe your own job below.")}
 <section class="block alt"><div class="wrap split">
 <div><h2>Materials</h2>{materials_list()}</div>
 <div>
@@ -200,8 +254,8 @@ def build():
 </div></section>
 <section class="block"><div class="wrap" style="max-width:860px">{faq_block(faqs)}</div></section>
 {quote_form(HUB)}'''
-    desc = "UV flatbed printing in Brisbane on acrylic, PVC, ACM, wood, glass and more. Up to 1250 x 2500 mm and 50.8 mm thick, with white ink. Trade and direct. Tingalpa."
-    pages[HUB] = page(HUB, "UV Flatbed Printing Brisbane | Trade & Direct | Plastics Unique", desc, main, C_HUB,
+    desc = "Printed acrylic, ACM, foam PVC and safety signs in Brisbane. UV flatbed printing on acrylic, PVC, ACM, wood, glass and more. Up to 1250 x 2500 mm and 50.8 mm thick, with white ink. Trade and direct. Tingalpa."
+    pages[HUB] = page(HUB, "Acrylic, ACM & PVC Signs Brisbane | UV Printing | Plastics Unique", desc, main, C_HUB,
                       [service_schema(HUB, "UV flatbed printing", desc), faq_schema(faqs)])
 
     # ---------- TRADE ----------

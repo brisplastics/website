@@ -66,8 +66,8 @@ feature = ('<section class="block"><div class="wrap">\n<div class="section-head"
              "Ready-made lines in standard sizes: noren tags, chart folders, tally book refills, TAB wallets and X-ray sleeves.", "See standard products")
     + _route("/hospital/", "/assets/img/products/sov/chart-folders-colour-range-t.jpg", "Patient chart folders in ten colours", "Hospital range",
              "Sov Services patient chart folders, chart holders, clipboards and dividers, with the same item codes.", "Order or reorder")
-    + _route("/uv-printing/", "/assets/img/products/printed-polypropylene-sign.jpg", "Printed polypropylene venue sign", "UV Printing",
-             "Full colour and white ink direct onto rigid material from heavy card up to 50.8 mm thick and 1250 × 2500 mm: acrylic, foamed PVC, polycarbonate, ACM, aluminium, wood, MDF, glass, tile and corflute.", "Printing services")
+    + _route("/uv-printing/", "/assets/img/products/printed-polypropylene-sign.jpg", "Printed polypropylene venue sign", "Signs and printing",
+             "Acrylic reception signs, ACM business and site signs, custom safety signs and foam PVC signs, printed direct in Tingalpa. Guide prices online, trade printing welcome.", "Signs and guide prices")
     + '</ul>\n</div></section>\n')
 m = m.replace('<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>What we make</h2>', feature + '<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>What we make</h2>', 1)
 assert 'What can we help with?' in m
