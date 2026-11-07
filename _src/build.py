@@ -303,6 +303,10 @@ for old, new in PU_REDIRECTS.items():
         continue
     path, _, frag = new.partition("#")
     rd += f'[[redirects]]\n  from = "{old.rstrip("/")}"\n  to = "{path}?from=pu{"#" + frag if frag else ""}"\n  status = 301\n\n'
+# 1b. Spam posts injected into the old WordPress site in 2019-20 (dated /YYYY/MM/DD/ URLs): 410 Gone so Google drops them.
+rd += "# Spam posts from the old WordPress site: gone for good\n"
+for y in ("2018", "2019", "2020", "2021"):
+    rd += f'[[redirects]]\n  from = "/{y}/*"\n  to = "/404"\n  status = 410\n  force = true\n\n'
 # 2. sovservices.net.au -> hospital pages. Host rules only fire once that domain points at this Netlify site.
 SOV_HOST = [("/products", "/hospital/"), ("/contact", "/hospital/order"), ("/m/*", "/hospital/order"), ("/*", "/hospital/")]
 rd += "\n# ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====\n"

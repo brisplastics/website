@@ -280,18 +280,108 @@
   status = 301
 
 [[redirects]]
-  from = "/metallic-look-colour-range"
-  to = "/products/printing-and-finishing?from=pu#colours-metal"
-  status = 301
-
-[[redirects]]
   from = "/screenprinting"
   to = "/products/printing-and-finishing?from=pu#print-screen"
   status = 301
 
 [[redirects]]
-  from = "/encapsulated"
+  from = "/encapsulated-prints"
   to = "/products/printing-and-finishing?from=pu#print-encapsulated"
+  status = 301
+
+[[redirects]]
+  from = "/digital-printing"
+  to = "/products/printing-and-finishing?from=pu#print-digital"
+  status = 301
+
+[[redirects]]
+  from = "/foil-stamping"
+  to = "/products/printing-and-finishing?from=pu#print-foil"
+  status = 301
+
+[[redirects]]
+  from = "/debossing"
+  to = "/products/printing-and-finishing?from=pu#print-deboss"
+  status = 301
+
+[[redirects]]
+  from = "/standard-poly-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-poly"
+  status = 301
+
+[[redirects]]
+  from = "/trans-poly-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-tpoly"
+  status = 301
+
+[[redirects]]
+  from = "/metallic-poly-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-metal"
+  status = 301
+
+[[redirects]]
+  from = "/clear-poly-range"
+  to = "/products/printing-and-finishing?from=pu#colours"
+  status = 301
+
+[[redirects]]
+  from = "/tarp-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-tarp"
+  status = 301
+
+[[redirects]]
+  from = "/our-stuff"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/others"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/send-media-file"
+  to = "/contact?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/service-enquiry"
+  to = "/contact?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/home/request-a-quote"
+  to = "/contact?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/thank-you"
+  to = "/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/thank-you-2"
+  to = "/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/albums/*"
+  to = "/products?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/dt_testimonials/*"
+  to = "/about?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/category/healthcare"
+  to = "/hospital/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/category/*"
+  to = "/products?from=pu"
   status = 301
 
 [[redirects]]
@@ -323,6 +413,31 @@
   from = "/post-sitemap.xml"
   to = "/sitemap.xml?from=pu"
   status = 301
+
+# Spam posts from the old WordPress site: gone for good
+[[redirects]]
+  from = "/2018/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/2019/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/2020/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/2021/*"
+  to = "/404"
+  status = 410
+  force = true
 
 
 # ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====
