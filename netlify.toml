@@ -2,6 +2,32 @@
   publish = "."
 
 # Pretty URLs: /about serves about.html
+# ===== brisplastics.com.au -> plasticsunique.com.au (cutover 07/11/2026) =====
+[[redirects]]
+  from = "https://brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+
 [[redirects]]
   from = "/index.html"
   to = "/"
