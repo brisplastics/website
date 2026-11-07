@@ -301,7 +301,8 @@ rd = "\n# ===== Old Plastics Unique website paths (301 to the new pages) =====\n
 for old, new in PU_REDIRECTS.items():
     if old.strip("/") == new.strip("/"):
         continue
-    rd += f'[[redirects]]\n  from = "{old.rstrip("/")}"\n  to = "{new}?from=pu"\n  status = 301\n\n'
+    path, _, frag = new.partition("#")
+    rd += f'[[redirects]]\n  from = "{old.rstrip("/")}"\n  to = "{path}?from=pu{"#" + frag if frag else ""}"\n  status = 301\n\n'
 # 2. sovservices.net.au -> hospital pages. Host rules only fire once that domain points at this Netlify site.
 SOV_HOST = [("/products", "/hospital/"), ("/contact", "/hospital/order"), ("/m/*", "/hospital/order"), ("/*", "/hospital/")]
 rd += "\n# ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====\n"
@@ -310,12 +311,15 @@ for host in ("https://sovservices.net.au", "https://www.sovservices.net.au"):
         rd += f'[[redirects]]\n  from = "{host}{old}"\n  to = "{SITE}{new}?from=sov"\n  status = 301\n  force = true\n\n'
 nt = open(os.path.join(OUT, "netlify.toml")).read() + rd
 open(os.path.join(OUT, "netlify.toml"), "w").write(nt)
-# 3. brisplastics.com.au -> plasticsunique.com.au. NOT active: brisplastics.com.au serves this site today. Paste at cutover.
-cut = ("# CUTOVER ONLY. Paste into netlify.toml (top of the redirects) on the day plasticsunique.com.au is primary on Netlify.\n"
-       "# Until then brisplastics.com.au is the live address and this rule would send visitors to the old WordPress site.\n\n")
-for host in ("https://brisplastics.com.au", "https://www.brisplastics.com.au"):
+# 3. brisplastics.com.au -> plasticsunique.com.au (ACTIVE from cutover 07/11/2026). Host rules go first so every
+#    brisplastics.com.au address makes one hop to the same path on plasticsunique.com.au. Merge to main ONLY after
+#    plasticsunique.com.au is live on this Netlify site, or brisplastics visitors land on the old WordPress site.
+cut = "\n# ===== brisplastics.com.au -> plasticsunique.com.au (cutover 07/11/2026) =====\n"
+for host in ("https://brisplastics.com.au", "http://brisplastics.com.au", "https://www.brisplastics.com.au", "http://www.brisplastics.com.au"):
     cut += f'[[redirects]]\n  from = "{host}/*"\n  to = "https://plasticsunique.com.au/:splat"\n  status = 301\n  force = true\n\n'
-open(os.path.join(OUT, "brisplastics-redirect-CUTOVER.toml"), "w").write(cut)
+nt = open(os.path.join(OUT, "netlify.toml")).read()
+i = nt.index("[[redirects]]")
+open(os.path.join(OUT, "netlify.toml"), "w").write(nt[:i] + cut.lstrip("\n") + "\n" + nt[i:])
 open(os.path.join(OUT, ".gitignore"), "w").write("desktop.ini\n__pycache__/\n")
 for extra in ("README.md",):
     shutil.copy(os.path.join(HERE, extra), OUT)

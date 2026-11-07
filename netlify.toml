@@ -2,6 +2,32 @@
   publish = "."
 
 # Pretty URLs: /about serves about.html
+# ===== brisplastics.com.au -> plasticsunique.com.au (cutover 07/11/2026) =====
+[[redirects]]
+  from = "https://brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.brisplastics.com.au/*"
+  to = "https://plasticsunique.com.au/:splat"
+  status = 301
+  force = true
+
+
 [[redirects]]
   from = "/index.html"
   to = "/"
@@ -266,7 +292,62 @@
 
 [[redirects]]
   from = "/terms-and-conditions"
-  to = "/privacy?from=pu"
+  to = "/terms?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/standard-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-pvc"
+  status = 301
+
+[[redirects]]
+  from = "/leather-look-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-leather"
+  status = 301
+
+[[redirects]]
+  from = "/metallic-look-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-metal"
+  status = 301
+
+[[redirects]]
+  from = "/screenprinting"
+  to = "/products/printing-and-finishing?from=pu#print-screen"
+  status = 301
+
+[[redirects]]
+  from = "/encapsulated"
+  to = "/products/printing-and-finishing?from=pu#print-encapsulated"
+  status = 301
+
+[[redirects]]
+  from = "/Music-Folders"
+  to = "/products/music-folders?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/feed"
+  to = "/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/comments/feed"
+  to = "/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/sitemap_index.xml"
+  to = "/sitemap.xml?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/page-sitemap.xml"
+  to = "/sitemap.xml?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/post-sitemap.xml"
+  to = "/sitemap.xml?from=pu"
   status = 301
 
 
