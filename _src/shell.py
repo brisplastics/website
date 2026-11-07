@@ -39,7 +39,7 @@ NAV = [
     ("/", "Home", ""),
     ("/products", "Products", "/products"),
     ("/hospital/", "Hospital", "/hospital"),
-    ("/uv-printing/", "UV Printing", "/uv-printing"),
+    ("/uv-printing/", "Signs & Printing", "/uv-printing"),
     ("/about", "About us", "/about"),
 ]
 
@@ -152,7 +152,7 @@ def footer():
 </div>
 <div>
 <h2>Site</h2>
-<ul><li><a href="/products">Products</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">UV Printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms of Trade</a></li></ul>
+<ul><li><a href="/products">Products</a></li><li><a href="/hospital/">Hospital products</a></li><li><a href="/hospital/order">Hospital order form</a></li><li><a href="/uv-printing/">Signs and printing</a></li><li><a href="/uv-printing/trade">Trade printing</a></li><li><a href="/about">About us</a></li><li><a href="/contact">Request a quote</a></li><li><a href="/privacy">Privacy</a></li><li><a href="/terms">Terms of Trade</a></li></ul>
 </div>
 <p class="legal">© 2026 {LEGAL} · ACN {ACN} · <a href="https://abr.business.gov.au/ABN/View?id={ABN.replace(' ', '')}" rel="noopener">ABN {ABN}</a></p>
 </div>

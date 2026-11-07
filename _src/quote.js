@@ -334,10 +334,22 @@ var BPCF=(function(){
     var size=val('pq-size'), th=val('pq-thick');
     L.push(['UV PRINT QUOTE',F.radio(f,'customer_type').split(' (')[0],needed?'needed by '+needed:''].filter(Boolean).join(' · '));
     F.contact(L,{org:val('pq-company'),name:val('pq-name'),email:val('pq-email'),phone:val('pq-phone'),more:[['Delivery suburb and postcode',val('pq-post')]]});
-    L.push('','JOB (Xero quote line)','','1. Qty '+(val('pq-qty')||'not given'),
+    var prod=val('pq-product'); prod=(prod&&prod!=='Something else')?prod:'';
+    L.push('','JOB (Xero quote line)','','1. Qty '+(val('pq-qty')||'not given')+(prod?' · '+prod:''),
       '   '+['UV print: '+val('pq-use'),size?size+' mm':'',th?th+' mm thick':'',val('pq-material'),'material: '+val('pq-supply').toLowerCase(),val('pq-sides'),val('pq-cut'),val('pq-where').toLowerCase()].filter(Boolean).join(', '));
     var other=[]; F.row(other,'Repeat work',val('pq-repeat')); F.row(other,'File link',val('file_link')); F.row(other,'Notes',val('pq-notes')); F.row(other,'News opt-in',val('news_optin')); F.row(other,'Form page',val('pq-page'));
     L=L.concat(['','OTHER'],other);
-    F.finish(f,'UV print quote: '+(val('pq-company')||val('pq-name'))+', '+val('pq-use')+(needed?', needed '+needed:''),L);
+    F.finish(f,'UV print quote: '+(val('pq-company')||val('pq-name'))+', '+(prod||val('pq-use'))+(needed?', needed '+needed:''),L);
   });
+})();
+
+// Sign product cards: "Quote this" fills the print quote form
+(function(){
+  var f=document.querySelector('form[name=print-quote]'); if(!f)return;
+  function set(id,v){var el=f.querySelector('#'+id); if(!el||v==null)return;
+    if(el.tagName==='SELECT'){for(var i=0;i<el.options.length;i++){if(el.options[i].text===v){el.selectedIndex=i;break;}}}else{el.value=v;}}
+  document.querySelectorAll('a.pick').forEach(function(a){a.addEventListener('click',function(){
+    set('pq-product',a.dataset.product); set('pq-use','Sign or panel'); set('pq-material',a.dataset.material);
+    set('pq-size',a.dataset.size); set('pq-thick',a.dataset.thick); set('pq-sides',a.dataset.sides);
+  });});
 })();
