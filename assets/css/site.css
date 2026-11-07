@@ -489,3 +489,5 @@ section.block.alt .notice{background:#fff}
 .pcard-list li .ptable td{padding:.35rem 0;border-top:1px solid var(--rule)}
 .pcard-list li .ptable td:last-child{text-align:right;font-weight:700;color:var(--ink);white-space:nowrap;padding-left:.8rem}
 .pcard-list li .pick{margin-top:auto;align-self:flex-start}
+.pcard-list .pimg-sign{display:block;margin:-1.4rem -1.4rem 1rem;aspect-ratio:4/3;overflow:hidden;border-radius:var(--r) var(--r) 0 0}
+.pcard-list .pimg-sign img{width:100%;height:100%;object-fit:cover;display:block}
