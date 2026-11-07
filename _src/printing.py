@@ -230,16 +230,16 @@ def build():
                 "Full-colour printing direct onto rigid sheet and objects up to 1250 × 2500 mm and 50.8 mm thick, with white ink. Printed on a Canon Arizona 135 GT in Tingalpa for trade and business customers across Brisbane and Australia.",
                 kicker="UV flatbed printing · Trade and direct · Tingalpa",
                 buttons=[("#quote", "Get a print quote"), ("/uv-printing/trade", "Trade printing")])
-    main += f'''<section class="block alt"><div class="wrap printer">
-<h2>The printer: Canon Arizona 135 GT</h2>
-<div class="printer-bed">{BED_SVG}</div>
-{spec_table()}
-</div></section>
+    main += f'''{price_cards(["reception", "door", "acm", "safety", "pvc"], "Popular signs and guide prices", "Printed direct in our Tingalpa factory. Pick one to start a quote, or describe your own job below.")}
 <section class="block"><div class="wrap">
 <div class="section-head"><h2>What we print</h2><p class="lede">Direct to the material, no mounting or laminating. Choose the job closest to yours.</p></div>
 {index_cards()}
 </div></section>
-{price_cards(["reception", "door", "acm", "safety", "pvc"], "Popular signs and guide prices", "Printed direct in our Tingalpa factory. Pick one to start a quote, or describe your own job below.")}
+<section class="block alt"><div class="wrap printer">
+<h2>The printer: Canon Arizona 135 GT</h2>
+<div class="printer-bed">{BED_SVG}</div>
+{spec_table()}
+</div></section>
 <section class="block alt"><div class="wrap split">
 <div><h2>Materials</h2>{materials_list()}</div>
 <div>
