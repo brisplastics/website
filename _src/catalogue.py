@@ -2,11 +2,13 @@
 import os, json
 from shell import *
 from catalogue_data import PRODUCTS, EXTERNAL_RELATED, GROUP_ORDER, COVERS
+import colours
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MANIFEST = json.load(open(os.path.join(HERE, "photo_manifest.json")))
 # Photos pulled from the site after review (Elbe, 31/10/2026): reflection on the certificate pocket, fake checkerboard background on the bean lids
-EXCLUDE = {"certificate-pockets-06", "bean-lids-pu-02"}
+# printing-and-finishing-05: old 26-colour PVC chart whose numbers clash with the 35-colour chart (01/11/2026)
+EXCLUDE = {"certificate-pockets-06", "bean-lids-pu-02", "printing-and-finishing-05"}
 MANIFEST = {k: [x for x in v if x.get("file") not in EXCLUDE] for k, v in MANIFEST.items()}
 for _s, _src in COVERS.items():  # move the cover photo to the front
     _l = MANIFEST.get(_s, [])
@@ -29,6 +31,8 @@ def related_links(p):
 
 def product_gallery(p):
     photos = MANIFEST.get(p["slug"], [])
+    if p["slug"] == "printing-and-finishing":  # shown in the colour and print sections instead
+        photos = [x for x in photos if x["file"] not in colours.USED_PHOTOS]
     if not photos:
         return ""
     SHOW = 12
@@ -52,8 +56,11 @@ def product_page(p):
 <div><div class="table-wrap"><table class="spec"><caption class="hidden">{esc(p["title"])} options</caption><tbody>{rows}</tbody></table></div></div>
 <div><h2 style="font-size:1.3rem">Made to order in Tingalpa</h2>
 <ul class="ticks"><li>Australian made in our Brisbane factory</li><li>Your size, material, colour and print</li><li>Proof approved before anything is made</li><li>Short runs and repeat orders welcome</li><li>10 to 15 working day turnaround, express available</li></ul>
-<p class="btn-row" style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a><button type="button" class="btn ghost add-quote" data-key="pu:{p['slug']}" data-name="{esc(p['title'])}">Add to quote request</button></p></div>
+<p class="btn-row" style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a><button type="button" class="btn ghost add-quote" data-key="pu:{p['slug']}" data-name="{esc(p['title'])}">Add to quote request</button></p>
+{colours.sidebar() if p['slug'] != 'printing-and-finishing' else ''}</div>
 </div></section>'''
+    if p['slug'] == 'printing-and-finishing':
+        main += colours.section()
     main += product_gallery(p)
     SIGN_CALLOUT = {"Schools and education": ("/uv-printing/school-signs", "Need school signs or honour boards too? We print them in the same factory."),
                     "Hospitality and healthcare": ("/uv-printing/hospital-signs", "Need ward, room or wayfinding signs too? We print them in the same factory."),
@@ -75,7 +82,7 @@ def product_page(p):
               "url": url(path)}
     if photos:
         schema["image"] = [url(img_url(p["slug"], x["file"])) for x in photos[:5]]
-    return path, page(path, f"{p['title']} | Custom Made in Brisbane | Brisbane Plastics", desc, main, cr, [schema])
+    return path, page(path, f"{p['title']} | Custom Made in Brisbane | Plastics Unique", desc, main, cr, [schema])
 
 def index_page(materials_html):
     path = "/products"
@@ -106,10 +113,10 @@ def index_page(materials_html):
                '<p class="lede">Patient chart folders, holders, clipboards and dividers. Prices exclude GST. <a href="/hospital/">See the hospital range</a> or <a href="/hospital/order">order online</a>.</p>'
                + sov_link_tiles() + '</div></section>')
     main += groups + materials_html + cta()
-    schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Brisbane Plastics Company",
+    schema = {"@context": "https://schema.org", "@type": "ItemList", "name": "Products made by Plastics Unique",
               "itemListElement": [{"@type": "ListItem", "position": i + 1, "url": url(f"/products/{p['slug']}"), "name": p["title"]}
                                   for i, p in enumerate(PRODUCTS)]}
-    return path, page(path, "Custom PVC & Polypropylene Products | Brisbane Plastics Company",
+    return path, page(path, "Custom PVC & Polypropylene Products | Plastics Unique",
                       "Ring binders, notebook covers, glove box wallets, satchels, tags, compendiums, school and music folders, all custom made in Brisbane. Photos and options for every product.",
                       main, cr, [schema])
 

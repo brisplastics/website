@@ -47,7 +47,8 @@ ITEMS_MAX = 8
 PRINT_OPTS = "".join(f"<option>{o}</option>" for o in ["No print", "Screen print, 1 colour", "Screen print, 2 colours", "Screen print, 3 or more colours",
     "Full colour (CMYK)", "Full colour plus white", "Foil", "Embossing or debossing", "Encapsulated print", "Not sure"])
 PRINT_OPTS = '<option value="">Choose one</option>' + PRINT_OPTS
-MATERIALS = ["Standard PVC", "Clear PVC", "Leather-look PVC", "Padded PVC", "Polypropylene", "Clear or frosted polypropylene", "Tarp PVC", "Not sure"]
+MATERIALS = ["Standard PVC", "Clear PVC", "Leather-look PVC", "Padded PVC", "Polypropylene", "Clear or frosted polypropylene",
+             "Transparent coloured polypropylene", "Metallic polypropylene", "Tarp PVC", "Not sure"]
 MAT_OPTS = '<option value="">Choose one</option>' + "".join(f"<option>{m}</option>" for m in MATERIALS)
 
 
@@ -90,7 +91,7 @@ def item_block(n, generic_hint):
 <div class="field item-ring-wrap" hidden>{F(f"item_{n}_ring", "Rings", "", f'<select id="item_{n}_ring"></select>')}</div>
 <div class="field">{F(f"item_{n}_qty", "Quantity", "several for price breaks", f'<input id="item_{n}_qty" placeholder="e.g. 50, or 50 / 100 / 250">')}</div>
 <div class="field">{F(f"item_{n}_material", "Material", "", f'<select id="item_{n}_material">{MAT_OPTS}</select>')}</div>
-<div class="field">{F(f"item_{n}_colour", "Colour", '<a href="#colour-chart">see colour chart</a>', f'<select id="item_{n}_colour">{colours}</select>')}</div>
+<div class="field">{F(f"item_{n}_colour", "Colour", '<a class="chart-link" href="#colour-chart">see colour chart</a>', f'<select id="item_{n}_colour">{colours}</select>')}</div>
 <div class="field">{F(f"item_{n}_print", "Printing", "", f'<select id="item_{n}_print">{PRINT_OPTS}</select>')}</div>
 <div class="field">{F(f"item_{n}_ink", "Ink or foil colour", "e.g. gold, PMS 286", f'<input id="item_{n}_ink">')}</div>
 <div class="field full">{F("", "Where is the print?", "tick all that apply", f'<div class="choice inline item-pos">{pos}</div>')}</div>

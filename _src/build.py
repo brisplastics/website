@@ -14,6 +14,13 @@ def v6(name):
     title = html.unescape(re.search(r"<title>(.*?)</title>", t, re.S).group(1))
     desc = html.unescape(re.search(r'<meta name="description" content="(.*?)">', t, re.S).group(1))
     main = re.search(r'<main id="main">\n?(.*?)\n?</main>', t, re.S).group(1)
+    # rebrand 31/10/2026: titles and descriptions name Plastics Unique; the about page keeps the company story
+    if name == "about.html":
+        title = "About Plastics Unique | Owned by Brisbane Plastics Company"
+        desc = "Plastics Unique and Sov Services are owned and run by Brisbane Plastics Company Pty Ltd from the Tingalpa factory. Meet the directors."
+    else:
+        title = title.replace("Brisbane Plastics Company", "Plastics Unique")
+        desc = desc.replace("Brisbane Plastics Company", "Plastics Unique")
     return title, desc, main
 
 def fix(s):
@@ -23,6 +30,7 @@ def fix(s):
     s = s.replace("from 12 October 2026", "from 26 October 2026")
     s = s.replace("Owner of Plastics Unique and Sov Services from 12 October 2026", "Owner of Plastics Unique and Sov Services")
     s = s.replace("Orders placed before 12 October 2026 are passed to the Plastics Unique team to fulfil. ", "")
+    s = s.replace("sales@brisplastics.com.au", SALES)  # rebrand 31/10/2026: customers email Plastics Unique
     return s
 
 pages = {}
@@ -89,7 +97,7 @@ m = m.replace('<section class="block alt"><div class="wrap">\n<div class="sectio
     '<section class="block"><div class="wrap"><div class="section-head"><h2>What our customers say</h2><p class="lede">From Plastics Unique customers. <a href="' + GBP_REVIEWS + '" rel="noopener">Read our Google reviews</a>.</p></div><div class="quotes">' + quotes + '</div></div></section>\n<section class="block alt"><div class="wrap">\n<div class="section-head"><h2>How ordering works</h2>', 1)
 assert "What our customers say" in m
 pages["/"] = page("/", "Custom PVC & Polypropylene Products Brisbane | Plastics Unique & Sov Services",
-                  "Brisbane Plastics Company, home of Plastics Unique and Sov Services: custom PVC and polypropylene products, hospital chart folders and holders, and UV flatbed printing. Tingalpa.", m)
+                  "Plastics Unique, a Brisbane Plastics Company: custom PVC and polypropylene products, Sov Services hospital chart folders and holders, and UV flatbed printing. Made in Tingalpa, Brisbane.", m)
 
 # ---- Products: catalogue index plus one page per product ----
 t, d, m = v6("products.html")
@@ -105,17 +113,17 @@ t, d, m = v6("about.html")
 m = m.replace('<h2>Part of FormFill Group</h2>\n<p>Brisbane Plastics Company is part of <a href="https://www.formfill.com.au/" rel="noopener">FormFill Group</a>, an engineer-led group that buys and improves South East Queensland plastics manufacturers.</p>', '<h2>Owner-operated</h2>\n<p>Brisbane Plastics Company is run by its directors from the Tingalpa factory, bringing engineering, controls and commercial experience to a business that has made plastic products in Brisbane for 27 years.</p>')
 d = d.replace("Brisbane Plastics Company, part of FormFill Group, owns", "Brisbane Plastics Company owns")
 assert "FormFill" not in m and "FormFill" not in d
-brands = f'''<section class="block"><div class="wrap"><div class="section-head"><h2>Our brands</h2><p class="lede">Plastics Unique and Sov Services keep their names, products and customers. Both are made and supplied by Brisbane Plastics Company.</p></div>
+brands = f'''<section class="block"><div class="wrap"><div class="section-head"><h2>Our brands</h2><p class="lede">Plastics Unique and Sov Services keep their names, products and customers. Both are brands of Brisbane Plastics Company Pty Ltd.</p></div>
 <div class="brand-row"><a href="/products"><img src="{BRAND}PU_Logo_Endorsed_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="262" height="120" loading="lazy"></a>
 <a href="/hospital/"><img src="{BRAND}Sov_Logo_Endorsed_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="325" height="120" loading="lazy"></a></div></div></section>'''
 m = fix(m)
 m = m.replace('<p class="lede">Brisbane Plastics Company is a Queensland-owned manufacturer. From 26 October 2026 we own and run Plastics Unique and Sov Services, a Brisbane plastics fabricator trusted by local businesses for 27 years.</p>',
-  '<p class="lede">Brisbane Plastics Company is a Queensland-owned plastics printing and stationery manufacturer. From 26 October 2026 the business incorporates Plastics Unique and Sov Services, two service lines trusted by local businesses for 27 years.</p>')
+  '<p class="lede">Plastics Unique is a Queensland-owned plastics printing and stationery manufacturer in Tingalpa, trusted by local businesses for decades. Since 26 October 2026 Plastics Unique and its hospital range, Sov Services, have been owned and run by Brisbane Plastics Company Pty Ltd.</p>')
 m = m.replace("""<p>Bruce spent 20 years building a project management consultancy, LogiKal Projects, growing it to more than 100 consultants across Australia, Asia and the UK before selling it in 2022. His work spans major infrastructure and resources projects and managing complex programmes.</p>
 <p>At Brisbane Plastics Company he leads strategy, systems and investment, and finds the commercial opportunity inside the operational challenge.</p>""",
   """<p>Bruce is an engineer, a Graduate of the Australian Institute of Company Directors (GAICD) and a business mentor. He and Mathew first went into business together in 2017 with the IoT start-up Alertify.</p>
 <p>Brisbane Plastics Company is Bruce's third business venture. As Director he leads strategy, systems and investment: pricing and quoting, finance, and the systems that connect customers, the office and the factory.</p>""")
-assert "third business venture" in m and "stationery manufacturer" in m
+assert "third business venture" in m and "stationery manufacturer" in m and "Plastics Unique is a Queensland-owned" in m
 m = m.replace('<div class="monogram" aria-hidden="true">MB</div>', f'<img class="portrait" src="{BRAND}director-mathew-bowden.jpg" alt="Mathew Bowden, Managing Director" width="240" height="240" loading="lazy">')
 m = m.replace('<div class="monogram" aria-hidden="true">BB</div>', f'<img class="portrait" src="{BRAND}director-bruce-bairstow-v2.jpg" alt="Bruce Bairstow, Director" width="240" height="240" loading="lazy">')
 m = m.replace("two service lines trusted by local businesses for 27 years.", "two service lines trusted by local businesses for decades.")
@@ -136,14 +144,14 @@ assert 'name="request"' in m
 m = m.replace('<li><strong>Factory</strong><br>45a Millennium Place, Tingalpa QLD 4173</li>', f'<li><strong>Factory and collection</strong><br><a href="{GBP_MAP}" rel="noopener">{ADDRESS}</a><br>{HOURS_TEXT}</li>\n<li><strong>Google reviews</strong><br><a href="{GBP_REVIEWS}" rel="noopener">Read our reviews</a> or <a href="{GBP_WRITE}" rel="noopener">leave one</a></li>')
 assert 'Factory and collection' in m
 m = m.replace('<li><strong>Live chat</strong>', f'<li><strong>Hospital orders</strong><br>Use the <a href="/hospital/order">hospital order form</a> or email <a href="mailto:{SOV_EMAIL}">{SOV_EMAIL}</a></li>\n<li><strong>Printing</strong><br>Use the <a href="/uv-printing/#quote">print quote form</a> for UV printing jobs.</li>\n<li><strong>Live chat</strong>')
-m = m.replace('</ul>\n</aside>', '</ul>\n<div id="colour-chart" class="colour-chart"><h3>PVC colour chart</h3><a class="lb" href="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10.jpg"><img src="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10-t.jpg" alt="Plastics Unique standard PVC colour chart, colours 1 to 35" loading="lazy" width="600" height="424"></a><p>The numbers match the colour list in the form. * pastel surcharge. Tap the chart to enlarge.</p><p><a href="/products/printing-and-finishing">Polypropylene, leather-look and tarp colours</a></p></div>\n</aside>', 1)
+m = m.replace('</ul>\n</aside>', '</ul>\n<div id="colour-chart" class="colour-chart"><h3>PVC colour chart</h3><a class="lb" href="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10.jpg"><img src="/assets/img/products/printing-and-finishing/printing-and-finishing-pu-10-t.jpg" alt="Plastics Unique standard PVC colour chart, colours 1 to 35" loading="lazy" width="600" height="424"></a><p>The numbers match the colour list in the form. * pastel surcharge. Tap the chart to enlarge.</p><p><a href="/products/printing-and-finishing#colours">Leather-look, polypropylene, metallic and tarp colours</a></p></div>\n</aside>', 1)
 assert 'colour-chart' in m
 pages["/contact"] = page("/contact", t, d, m, [("/", "Home"), ("/contact", "Request a quote")])
 
 # ---- Privacy, thanks, 404 ----
 import legal
-pages["/privacy"] = page("/privacy", "Privacy | Brisbane Plastics Company", "How Brisbane Plastics Company (Plastics Unique and Sov Services) collects, uses, shares and protects your information, including card payments by Stripe.", legal.privacy_main(), [("/", "Home"), ("/privacy", "Privacy")])
-pages["/terms"] = page("/terms", "Terms of Trade | Brisbane Plastics Company", "Terms of Trade for Plastics Unique and Sov Services: quotes, artwork and proofs, turnaround, payment, returns and the Australian Consumer Law.", legal.terms_main(), [("/", "Home"), ("/terms", "Terms of Trade")])
+pages["/privacy"] = page("/privacy", "Privacy | Plastics Unique", "How Plastics Unique and Sov Services (Brisbane Plastics Company Pty Ltd) collect, use, share and protect your information, including card payments by Stripe.", legal.privacy_main(), [("/", "Home"), ("/privacy", "Privacy")])
+pages["/terms"] = page("/terms", "Terms of Trade | Plastics Unique", "Terms of Trade for Plastics Unique and Sov Services: quotes, artwork and proofs, turnaround, payment, returns and the Australian Consumer Law.", legal.terms_main(), [("/", "Home"), ("/terms", "Terms of Trade")])
 t, d, m = v6("thanks.html"); pages["/thanks"] = page("/thanks", t, d, fix(m), noindex=True)
 t, d, m = v6("404.html"); pages["/404"] = page("/404", t, d, fix(m), noindex=True)
 
@@ -187,6 +195,7 @@ shutil.copytree(os.path.join(HERE, "email"), os.path.join(OUT, "email"))
 css = open(os.path.join(V6, "assets/css/site.css"), encoding="utf-8").read() + open(os.path.join(HERE, "extra.css"), encoding="utf-8").read()
 open(os.path.join(OUT, "assets/css/site.css"), "w", encoding="utf-8").write(css)
 js = open(os.path.join(V6, "assets/js/site.js"), encoding="utf-8").read()
+js = js.replace("sales@brisplastics.com.au", SALES)
 js = js.replace("if(!/\\.(pdf|jpe?g)$/i.test(file.name)){err.textContent='Upload a PDF or JPG file.'", "if(!/\\.(pdf|jpe?g|png|ai|eps|svg)$/i.test(file.name)){err.textContent='Upload a PDF, AI, EPS, SVG, PNG or JPG file.'")
 assert 'png|ai|eps' in js
 js = js.replace("var TAWK_PROPERTY_ID='', TAWK_WIDGET_ID='default';", "var TAWK_PROPERTY_ID='6adc80751b93b634803314f9', TAWK_WIDGET_ID='1k5mlbjah';")
@@ -213,7 +222,7 @@ js += '''
     src={landing_page:location.pathname+location.search,referrer:document.referrer||'',utm_source:q.get('utm_source')||'',utm_medium:q.get('utm_medium')||'',
          utm_campaign:q.get('utm_campaign')||'',gclid:q.get('gclid')||'',came_from:q.get('from')||''};
     try{sessionStorage.setItem(K,JSON.stringify(src));}catch(e){}}
-  var line=['landing '+src.landing_page,src.referrer?'from '+src.referrer:'',src.utm_source?'utm '+[src.utm_source,src.utm_medium,src.utm_campaign].filter(Boolean).join(' / '):'',src.gclid?'Google Ads click '+src.gclid:'',src.came_from?'old site '+src.came_from:''].filter(Boolean).join(' | ');
+  var line=['landing '+src.landing_page,src.referrer?'from '+src.referrer.replace(/^https?:\/\//,'').replace(/\/$/,''):'',src.utm_source?'utm '+[src.utm_source,src.utm_medium,src.utm_campaign].filter(Boolean).join(' / '):'',src.gclid?'Google Ads click '+src.gclid:'',src.came_from?'old site '+src.came_from:''].filter(Boolean).join(' | ');
   [].forEach.call(document.querySelectorAll('input[name=lead_source]'),function(i){i.value=line;});
   window.BPC_SRC=src; window.BPC_SRC_LINE=line;
 })();
@@ -245,7 +254,7 @@ js += '''
   document.addEventListener('keydown',function(e){if(!d.open)return;if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1);});
 })();
 '''
-js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT)).replace("__ORDEROPT__", json.dumps(hospital.ORDER_OPT))
+js += "\n" + open(os.path.join(HERE, "quote.js"), encoding="utf-8").read().replace("__STANDARD__", json.dumps(forms.STANDARD, ensure_ascii=False)).replace("__HINTS__", json.dumps(forms.GROUP_HINTS)).replace("__GENERIC__", json.dumps(forms.GENERIC_HINT)).replace("__ORDEROPT__", json.dumps(hospital.ORDER_OPT)).replace("__COLOURS__", json.dumps(__import__("colours").form_data(), ensure_ascii=False))
 open(os.path.join(OUT, "assets/js/site.js"), "w", encoding="utf-8").write(js)
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "favicon.svg"))
 shutil.copy(os.path.join(HERE, "brand/BPC_Logo_Fan_v2_CAI.svg"), os.path.join(OUT, "assets/img/logo.svg"))
@@ -268,9 +277,9 @@ SECTIONS=[("Products (Plastics Unique)", lambda p: p=="/products" or p.startswit
           ("Hospital range (Sov Services)", lambda p: p.startswith("/hospital/") and p!="/hospital/order"),
           ("UV flatbed printing", lambda p: p.startswith("/uv-printing/")),
           ("Company and ordering", lambda p: p in ("/", "/about", "/contact", "/hospital/order"))]
-L=["# Brisbane Plastics Company", "",
-   "> Brisbane Plastics Company Pty Ltd (ABN " + ABN + ") makes custom PVC and polypropylene products in Tingalpa, Brisbane, Queensland, Australia. "
-   "It owns and runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, clipboards and dividers for hospitals since 1994), "
+L=["# Plastics Unique", "",
+   "> Plastics Unique makes custom PVC and polypropylene products in Tingalpa, Brisbane, Queensland, Australia. It is owned by Brisbane Plastics Company Pty Ltd (ABN " + ABN + "). "
+   "The company runs Plastics Unique (custom folders, binders, wallets, satchels, tags and school products) and Sov Services (patient chart folders, chart holders, clipboards and dividers for hospitals since 1994), "
    "and offers UV flatbed printing on rigid sheet up to 1250 x 2500 mm and 50.8 mm thick, with white ink.", "",
    "- Address: 45a Millennium Place, Tingalpa QLD 4173", "- Phone: (07) 3396 3744",
    "- Quotes: " + SALES + "; hospital orders: " + SOV_EMAIL, "- Delivers Australia-wide; all products are made to order in the Tingalpa factory.", "- Turnaround: 10 to 15 working days from order and artwork approval for standard jobs; ask about express turnaround.", ""]
@@ -285,15 +294,36 @@ nt=open(os.path.join(V6, "netlify.toml")).read()
 nt+="\n# Glove box holders discontinued 26/10/2026 (Elbe)\n[[redirects]]\n  from = \"/hospital/glove-box-holders\"\n  to = \"/hospital/\"\n  status = 301\n"
 nt+="\n# Keep the page generator source private\n[[redirects]]\n  from = \"/_src/*\"\n  to = \"/404\"\n  status = 404\n  force = true\n"
 open(os.path.join(OUT, "netlify.toml"),"w").write(nt)
-pu = "# plasticsunique.com.au redirects. NOT ACTIVE. Activate when the domain moves (Bruce, parked 24/10/2026).\n# Swap TARGET for the live domain, paste above the existing redirects in netlify.toml, deploy, test.\n\n"
+# ---- Redirects (rebrand 31/10/2026) ----
+# 1. Old plasticsunique.com.au WordPress paths -> new pages. Path rules, not forced: a real page at the same path always wins,
+#    so they are safe on any domain and take effect the moment plasticsunique.com.au points here. Unknown old paths get the 404 page.
+rd = "\n# ===== Old Plastics Unique website paths (301 to the new pages) =====\n"
 for old, new in PU_REDIRECTS.items():
-    for host in ("https://plasticsunique.com.au", "https://www.plasticsunique.com.au"):
-        pu += f'[[redirects]]\n  from = "{host}{old}"\n  to = "https://TARGET{new.split('#')[0]}?from=pu{('#'+new.split('#')[1]) if '#' in new else ''}"\n  status = 301\n  force = true\n\n'
-for host in ("https://plasticsunique.com.au", "https://www.plasticsunique.com.au"):
-    pu += f'[[redirects]]\n  from = "{host}/*"\n  to = "https://TARGET/?from=pu"\n  status = 301\n  force = true\n\n'
-open(os.path.join(OUT, "plasticsunique-redirects-PENDING.toml"), "w").write(pu)
+    if old.strip("/") == new.strip("/"):
+        continue
+    path, _, frag = new.partition("#")
+    rd += f'[[redirects]]\n  from = "{old.rstrip("/")}"\n  to = "{path}?from=pu{"#" + frag if frag else ""}"\n  status = 301\n\n'
+# 2. sovservices.net.au -> hospital pages. Host rules only fire once that domain points at this Netlify site.
+SOV_HOST = [("/products", "/hospital/"), ("/contact", "/hospital/order"), ("/m/*", "/hospital/order"), ("/*", "/hospital/")]
+rd += "\n# ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====\n"
+for host in ("https://sovservices.net.au", "https://www.sovservices.net.au"):
+    for old, new in SOV_HOST:
+        rd += f'[[redirects]]\n  from = "{host}{old}"\n  to = "{SITE}{new}?from=sov"\n  status = 301\n  force = true\n\n'
+nt = open(os.path.join(OUT, "netlify.toml")).read() + rd
+open(os.path.join(OUT, "netlify.toml"), "w").write(nt)
+# 3. brisplastics.com.au -> plasticsunique.com.au. Built only with BPC_REDIRECT=1 (second deploy, after the switch). Host rules go first so every
+#    brisplastics.com.au address makes one hop to the same path on plasticsunique.com.au. Merge to main ONLY after
+#    plasticsunique.com.au is live on this Netlify site, or brisplastics visitors land on the old WordPress site.
+cut = "\n# ===== brisplastics.com.au -> plasticsunique.com.au (cutover 07/11/2026) =====\n"
+for host in ("https://brisplastics.com.au", "http://brisplastics.com.au", "https://www.brisplastics.com.au", "http://www.brisplastics.com.au"):
+    cut += f'[[redirects]]\n  from = "{host}/*"\n  to = "https://plasticsunique.com.au/:splat"\n  status = 301\n  force = true\n\n'
+nt = open(os.path.join(OUT, "netlify.toml")).read()
+if os.environ.get("BPC_REDIRECT") == "1":  # switch on only once plasticsunique.com.au is live on Netlify
+    i = nt.index("[[redirects]]")
+    nt = nt[:i] + cut.lstrip("\n") + "\n" + nt[i:]
+open(os.path.join(OUT, "netlify.toml"), "w").write(nt)
 open(os.path.join(OUT, ".gitignore"), "w").write("desktop.ini\n__pycache__/\n")
-for extra in ("README.md", "sovservices-redirects-PENDING.toml"):
+for extra in ("README.md",):
     shutil.copy(os.path.join(HERE, extra), OUT)
 shutil.copytree(HERE, os.path.join(OUT, "_src"), ignore=shutil.ignore_patterns("__pycache__", "README.md", "sovservices-redirects-PENDING.toml"))
 print(len(pages), "pages")

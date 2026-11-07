@@ -2344,7 +2344,7 @@
    "h": 480,
    "tw": 600,
    "th": 450,
-   "alt": "Large noren tag, 130 \u00d7 140 mm",
+   "alt": "Large noren tag, 130 × 140 mm",
    "source": "Noren tags/norenlarge.JPG"
   },
   {
@@ -2353,7 +2353,7 @@
    "h": 640,
    "tw": 450,
    "th": 600,
-   "alt": "Small noren tag, 70 \u00d7 70 mm",
+   "alt": "Small noren tag, 70 × 70 mm",
    "source": "Noren tags/norensmall.JPG"
   },
   {
@@ -2362,7 +2362,7 @@
    "h": 640,
    "tw": 450,
    "th": 600,
-   "alt": "Standard noren tag, 75 \u00d7 100 mm",
+   "alt": "Standard noren tag, 75 × 100 mm",
    "source": "Noren tags/norenstandard.JPG"
   }
  ],
@@ -3444,10 +3444,10 @@
   },
   {
    "file": "printing-and-finishing-15",
-   "w": 640,
-   "h": 480,
-   "tw": 600,
-   "th": 450,
+   "w": 480,
+   "h": 640,
+   "tw": 450,
+   "th": 600,
    "alt": "Screen printing press in our factory",
    "source": "screen printer/printer.jpg"
   },

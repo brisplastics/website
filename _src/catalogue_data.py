@@ -247,7 +247,7 @@ PRODUCTS = [
          intro="Every product can be finished in house: screen printing, foil stamping, embossing and debossing, full-colour digital and encapsulated print, in our stock PVC and polypropylene colours.",
          facts=[("Screen print", "In house, up to 600 × 800 mm"), ("Foil stamping", "Gold, silver and colours, up to 250 × 300 mm, including book and Bible covers"),
                 ("Digital print", "Full-colour CMYK and UV flatbed print up to 1250 × 2500 mm"),
-                ("Colours", "28 standard PVC colours, leather-look, metallic-look, and a polypropylene colour range")],
+                ("Colours", "35 standard PVC colours, leather-look PVC, tarp PVC, and standard, transparent and metallic polypropylene. Numbered charts below")],
          photos=["Colour Chart/", "Screenprint or foil stamp options.jpg", "screen printer/", "Digital Print/wallet.jpg", "Pocket Notebook Covers/CMYKdigiprint.jpg", "Ring Binders/digital print.JPG", "TAB Wallets/Digital print.jpg", "Tally Book Cover/Full colour digital print.jpg"],
          related=["ring-binders", "uv-printing"]),
 ]
@@ -285,7 +285,17 @@ PU_REDIRECTS = {
     "/32-8-bean-lids/": "/products/bean-lids", "/take-5-safety-book/": "/products/take-5-safety-books",
     "/corporate-and-promo/": "/products", "/construction/": "/products", "/automotive/": "/products",
     "/healthcare/": "/hospital/", "/travel-hospitality/": "/products", "/education/": "/products",
-    "/private-policy/": "/privacy", "/terms-and-conditions/": "/privacy",
+    "/private-policy/": "/privacy", "/terms-and-conditions/": "/terms",
+    # Added 07/11/2026: colour range and print pages linked from every old product page, case variant seen in Google,
+    # WordPress feeds and sitemaps
+    "/standard-colour-range/": "/products/printing-and-finishing#colours-pvc",
+    "/leather-look-colour-range/": "/products/printing-and-finishing#colours-leather",
+    "/metallic-look-colour-range/": "/products/printing-and-finishing#colours-metal",
+    "/screenprinting/": "/products/printing-and-finishing#print-screen",
+    "/encapsulated/": "/products/printing-and-finishing#print-encapsulated",
+    "/Music-Folders/": "/products/music-folders",
+    "/feed/": "/", "/comments/feed/": "/",
+    "/sitemap_index.xml": "/sitemap.xml", "/page-sitemap.xml": "/sitemap.xml", "/post-sitemap.xml": "/sitemap.xml",
 }
 
 # Cover photo (Drive source path) shown first and on the product card

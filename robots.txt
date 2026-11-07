@@ -4,4 +4,4 @@ Disallow: /thanks
 Disallow: /hospital/thanks
 Disallow: /uv-printing/thanks
 
-Sitemap: https://brisplastics.com.au/sitemap.xml
+Sitemap: https://plasticsunique.com.au/sitemap.xml

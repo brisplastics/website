@@ -3,7 +3,7 @@ cancellation clauses are flagged for a lawyer's review before they are relied on
 from shell import *
 
 UPDATED = "30/10/2026"
-EMAIL = "sales@brisplastics.com.au"
+EMAIL = "sales@plasticsunique.com.au"
 
 
 def _wrap(h1, intro, body):
@@ -66,7 +66,7 @@ def privacy_main():
 
 <h2>Access, correction and complaints</h2>
 <p>To see, correct or remove the information we hold about you, or to make a privacy complaint, email <a href="mailto:{EMAIL}">{EMAIL}</a> or call <a href="tel:0733963744">(07) 3396 3744</a>. We reply within 30 days. If you are not satisfied with our response, you can contact the Office of the Australian Information Commissioner at <a href="https://www.oaic.gov.au" rel="noopener">oaic.gov.au</a>.</p>'''
-    return _wrap("Privacy", "How Brisbane Plastics Company collects, uses, shares and protects your information.", body)
+    return _wrap("Privacy", "How Plastics Unique and Sov Services (Brisbane Plastics Company Pty Ltd) collect, use, share and protect your information.", body)
 
 
 def terms_main():

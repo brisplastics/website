@@ -1,16 +1,17 @@
-"""Shared page shell for the Brisbane Plastics Company static site.
+"""Shared page shell for the Plastics Unique static site (Plastics Unique and Sov Services, brands of Brisbane Plastics Company Pty Ltd).
 
-Output is plain HTML, so Netlify needs no build step. Change SITE at cutover
-(for example to https://plasticsunique.com.au) and re-run build.py.
+Output is plain HTML, so Netlify needs no build step. SITE is the address the site is served on: it drives canonical links,
+the sitemap and the schema. Rebranded to Plastics Unique for the move to plasticsunique.com.au (Bruce, 31/10/2026).
+Set SITE_URL in the environment to build for another address.
 """
 import json, html, os
 
-SITE = "https://brisplastics.com.au"
-NAME = "Brisbane Plastics Company"
+SITE = os.environ.get("SITE_URL", "https://plasticsunique.com.au")
+NAME = "Plastics Unique"
 LEGAL = "Brisbane Plastics Company Pty Ltd"
 ACN = "699 248 658"
 ABN = "14 699 248 658"
-SALES = "sales@brisplastics.com.au"
+SALES = "sales@plasticsunique.com.au"
 SOV_EMAIL = "support@sovservices.net.au"
 # Google Business Profile: Plastics Unique (place ID from Google Places, 26/10/2026). Hours as listed there.
 GBP_ID = "ChIJq8TfafNekWsREC4BYQTPcIg"
@@ -57,7 +58,7 @@ BUSINESS = {
     "address": {"@type": "PostalAddress", "streetAddress": "45a Millennium Place", "addressLocality": "Tingalpa", "addressRegion": "QLD", "postalCode": "4173", "addressCountry": "AU"},
     "areaServed": "Australia",
     "brand": [{"@type": "Brand", "name": "Plastics Unique"}, {"@type": "Brand", "name": "Sov Services"}],
-    "alternateName": ["Plastics Unique", "Sov Services", "BPC"],
+    "alternateName": ["Brisbane Plastics Company", "Sov Services"],
     "sameAs": ["https://plasticsunique.com.au/", "https://sovservices.net.au/"],
     "hasMap": "https://www.google.com/maps/search/?api=1&query=Plastics%20Unique%20Tingalpa&query_place_id=ChIJq8TfafNekWsREC4BYQTPcIg",
     "openingHoursSpecification": [
@@ -113,7 +114,7 @@ def header(path):
 <div class="topbar"><div class="wrap"><span>{ADDRESS}</span><span><a href="tel:{TEL_07}">{PHONE_07}</a></span></div></div>
 <header class="site-head">
 <div class="wrap">
-<a class="brand" href="/" aria-label="Brisbane Plastics Company home"><img src="{BRAND}BPC_Logo_Fan_Stacked_v1_CAI.svg" alt="Brisbane Plastics Company" width="193" height="52"></a>
+<a class="brand" href="/" aria-label="Plastics Unique home"><img src="{BRAND}PU_Logo_Endorsed_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="140" height="64"></a>
 <nav aria-label="Main">
 <button class="nav-toggle" aria-expanded="false" aria-controls="menu">Menu</button>
 <ul id="menu">{"".join(lis)}</ul>
@@ -137,12 +138,11 @@ def footer():
     return f'''<footer class="site-foot">
 <div class="wrap">
 <div>
-<img class="foot-logo" src="{BRAND}BPC_Logo_Fan_Stacked_White_v1_CAI.svg" alt="Brisbane Plastics Company" width="223" height="60" loading="lazy">
+<img class="foot-logo" src="{BRAND}PU_Logo_Endorsed_White_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="153" height="70" loading="lazy">
 <p>Custom PVC and polypropylene products, hospital products and UV printing, made in Tingalpa, Brisbane.</p>
 <p class="strap">{STRAPLINE}</p>
-<span class="foot-label">Our brands</span>
+<span class="foot-label">Hospital range</span>
 <div class="foot-brands">
-<a href="/products" aria-label="Plastics Unique products"><img src="{BRAND}PU_Logo_Endorsed_White_v2_CAI.svg" alt="Plastics Unique, a Brisbane Plastics Company" width="131" height="60" loading="lazy"></a>
 <a href="/hospital/" aria-label="Sov Services hospital range"><img src="{BRAND}Sov_Logo_Endorsed_White_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="163" height="60" loading="lazy"></a></div>
 {eco_badges()}
 </div>
@@ -211,6 +211,9 @@ def cta(heading="Need a quote or a repeat order?", primary=("/contact", "Request
 
 def hero(crumbs, h1, lede, kicker=None, buttons=None):
     k = f'<span class="kicker">{kicker}</span>' if kicker else ""
+    if kicker and kicker.startswith("Sov Services"):  # hospital pages keep the Sov Services brand (Bruce, 31/10/2026)
+        k = f'<img class="hero-brand" src="{BRAND}Sov_Logo_Endorsed_White_v2_CAI.svg" alt="Sov Services, a Brisbane Plastics Company" width="163" height="60">'
+
     b = ""
     if buttons:
         b = '<div class="btn-row">' + "".join(
