@@ -5,7 +5,7 @@ from shell import *
 from forms import TRACKING, optin, artwork_fields
 
 HUB = "/uv-printing/"
-C_HUB = [("/", "Home"), (HUB, "UV Printing")]
+C_HUB = [("/", "Home"), (HUB, "Signs & Printing")]
 
 MATERIALS = ["Acrylic (clear, frosted, coloured)", "Foamed PVC sheet", "Rigid PVC", "Polycarbonate", "Styrene",
              "Polypropylene sheet", "Corflute (fluted polypropylene)", "Aluminium composite panel (ACM)", "Aluminium sheet",
@@ -73,7 +73,7 @@ def index_cards(exclude=None):
     return f'<ul class="cards">{lis}</ul>'
 
 def related(current):
-    return '<ul class="related">' + "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _, _ in PAGES_INDEX if h != current) + '<li><a href="/uv-printing/">UV Printing overview</a></li></ul>'
+    return '<ul class="related">' + "".join(f'<li><a href="{h}">{t}</a></li>' for h, t, _, _ in PAGES_INDEX if h != current) + '<li><a href="/uv-printing/">All signs and printing</a></li></ul>'
 
 MAT_OPTS = ["Not sure yet", "Acrylic", "Foamed PVC", "Rigid PVC", "Polycarbonate", "Corflute", "ACM / aluminium composite", "Aluminium sheet",
             "Wood, plywood or MDF", "Glass or tile", "Card or board", "Polypropylene", "Our own items or objects", "Other"]
@@ -230,16 +230,16 @@ def build():
                 "Full-colour printing direct onto rigid sheet and objects up to 1250 × 2500 mm and 50.8 mm thick, with white ink. Printed on a Canon Arizona 135 GT in Tingalpa for trade and business customers across Brisbane and Australia.",
                 kicker="UV flatbed printing · Trade and direct · Tingalpa",
                 buttons=[("#quote", "Get a print quote"), ("/uv-printing/trade", "Trade printing")])
-    main += f'''<section class="block alt"><div class="wrap printer">
-<h2>The printer: Canon Arizona 135 GT</h2>
-<div class="printer-bed">{BED_SVG}</div>
-{spec_table()}
-</div></section>
+    main += f'''{price_cards(["reception", "door", "acm", "safety", "pvc"], "Popular signs and guide prices", "Printed direct in our Tingalpa factory. Pick one to start a quote, or describe your own job below.")}
 <section class="block"><div class="wrap">
 <div class="section-head"><h2>What we print</h2><p class="lede">Direct to the material, no mounting or laminating. Choose the job closest to yours.</p></div>
 {index_cards()}
 </div></section>
-{price_cards(["reception", "door", "acm", "safety", "pvc"], "Popular signs and guide prices", "Printed direct in our Tingalpa factory. Pick one to start a quote, or describe your own job below.")}
+<section class="block alt"><div class="wrap printer">
+<h2>The printer: Canon Arizona 135 GT</h2>
+<div class="printer-bed">{BED_SVG}</div>
+{spec_table()}
+</div></section>
 <section class="block alt"><div class="wrap split">
 <div><h2>Materials</h2>{materials_list()}</div>
 <div>

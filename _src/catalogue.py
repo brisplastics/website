@@ -77,9 +77,11 @@ def product_page(p):
         end = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
         desc = (cut[:end + 1] if end > 60 else cut.rsplit(" ", 1)[0].rstrip(",;:-") + ".") + " Made in Brisbane."
     photos = MANIFEST.get(p["slug"], [])
-    schema = {"@context": "https://schema.org", "@type": "Product", "name": p["title"], "description": p["intro"],
-              "brand": {"@type": "Brand", "name": "Plastics Unique"}, "manufacturer": {"@id": SITE + "/#business"},
-              "url": url(path)}
+    # Custom, made-to-quote products: described as a Service (no price to publish). Product markup without
+    # offers/reviews is flagged critical by Google (Search Console, 08/11/2026).
+    schema = {"@context": "https://schema.org", "@type": "Service", "name": p["title"], "description": p["intro"],
+              "serviceType": p["title"], "provider": {"@id": SITE + "/#business"},
+              "areaServed": {"@type": "Country", "name": "Australia"}, "url": url(path)}
     if photos:
         schema["image"] = [url(img_url(p["slug"], x["file"])) for x in photos[:5]]
     return path, page(path, f"{p['title']} | Custom Made in Brisbane | Plastics Unique", desc, main, cr, [schema])

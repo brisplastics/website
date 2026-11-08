@@ -465,6 +465,11 @@
   status = 410
   force = true
 
+[[redirects]]
+  from = "/printing"
+  to = "/uv-printing/"
+  status = 301
+
 
 # ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====
 [[redirects]]

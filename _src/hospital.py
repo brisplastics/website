@@ -1,3 +1,4 @@
+import re
 """Hospital section: Sov Services range, rebuilt from sovservices.net.au (read 24/10/2026)."""
 from shell import *
 from forms import TRACKING, ART_ACCEPT
@@ -100,14 +101,22 @@ def sov_product_tiles(page_path):
 def sov_schema():
     items = []
     for i, p in enumerate(SOV_PRODUCTS):
-        prod = {"@type": "Product", "name": p["name"], "sku": p["code"], "description": p["spec"], "url": url(f'{p["page"]}#{p["id"]}'),
+        # Only priced items are marked up as Products (Google flags a Product with no offers as critical, 08/11/2026)
+        if not p["price"].startswith("From $"):
+            continue
+        prod = {"@type": "Product", "name": p["name"], "description": p["spec"], "url": url(f'{p["page"]}#{p["id"]}'),
                 "image": url(f'/assets/img/products/sov/{p["photo"]}.jpg'), "brand": {"@type": "Brand", "name": "Sov Services"}}
-        if p["price"].startswith("From $"):
+        if re.fullmatch(r"[A-Z0-9][A-Z0-9-]*", p["code"] or ""):
+            prod["sku"] = p["code"]
+        if True:
             amt = p["price"].split("$")[1].split(" ")[0]
             prod["offers"] = {"@type": "Offer", "priceCurrency": "AUD", "price": amt,
                               "priceSpecification": {"@type": "UnitPriceSpecification", "price": amt, "priceCurrency": "AUD", "valueAddedTaxIncluded": False},
-                              "availability": "https://schema.org/InStock", "seller": {"@id": SITE + "/#business"}}
-        items.append({"@type": "ListItem", "position": i + 1, "item": prod})
+                              "availability": "https://schema.org/InStock", "seller": {"@id": SITE + "/#business"},
+                              "hasMerchantReturnPolicy": {"@type": "MerchantReturnPolicy", "applicableCountry": "AU",
+                                  "returnPolicyCategory": "https://schema.org/MerchantReturnNotPermitted",
+                                  "merchantReturnLink": url("/terms")}}
+        items.append({"@type": "ListItem", "position": len(items) + 1, "item": prod})
     return {"@context": "https://schema.org", "@type": "ItemList", "name": "Sov Services hospital range", "itemListElement": items}
 
 HUB = "/hospital/"

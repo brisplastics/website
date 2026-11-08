@@ -307,6 +307,7 @@ for old, new in PU_REDIRECTS.items():
 rd += "# Spam posts from the old WordPress site: gone for good\n"
 for y in ("2018", "2019", "2020", "2021"):
     rd += f'[[redirects]]\n  from = "/{y}/*"\n  to = "/404"\n  status = 410\n  force = true\n\n'
+rd += '[[redirects]]\n  from = "/printing"\n  to = "/uv-printing/"\n  status = 301\n\n'
 # 2. sovservices.net.au -> hospital pages. Host rules only fire once that domain points at this Netlify site.
 SOV_HOST = [("/products", "/hospital/"), ("/contact", "/hospital/order"), ("/m/*", "/hospital/order"), ("/*", "/hospital/")]
 rd += "\n# ===== sovservices.net.au (inactive until the domain is added to this Netlify site) =====\n"
