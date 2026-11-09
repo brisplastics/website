@@ -316,6 +316,16 @@
   status = 301
 
 [[redirects]]
+  from = "/metallic-look-colour-range"
+  to = "/products/printing-and-finishing?from=pu#colours-metal"
+  status = 301
+
+[[redirects]]
+  from = "/dividers"
+  to = "/hospital/chart-dividers?from=pu"
+  status = 301
+
+[[redirects]]
   from = "/digital-printing"
   to = "/products/printing-and-finishing?from=pu#print-digital"
   status = 301
@@ -461,6 +471,192 @@
 
 [[redirects]]
   from = "/2021/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/author/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/feed/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wp-content/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/assets/content/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/category/uncategorized/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteamap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitebmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitecmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitedmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteemap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitefmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitegmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitehmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteimap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitejmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitekmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitelmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitemmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitenmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteomap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitepmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteqmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitermap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitesmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitetmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteumap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitevmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitewmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitexmap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websiteymap.xml"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/websitezmap.xml"
   to = "/404"
   status = 410
   force = true
