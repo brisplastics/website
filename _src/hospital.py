@@ -21,7 +21,7 @@ ORDER_CODES = [
     ("Custom printed folders (your ward name and bed numbers printed)", ["Custom printed chart folder (30 mm spine)", "Custom printed chart folder (40 mm spine)", "Custom printed chart folder (55 mm spine)", "Custom printed chart folder (68 mm spine)", "Custom printed hanging folder (30 mm spine)", "Custom printed hanging folder (40 mm spine)"]),
     ("Chart holders and clipboards", ["SS-PCU-033 A3 chart holder, horizontal", "SS-PCU-034 A4 chart holder, vertical", "SS-PCU-038 A4 wall-mounted holder, horizontal", "SS-PCU-039 A4 wall-mounted holder, vertical", "SS-CCB-010 A4 patient clipboard, vertical", "SS-CCB-011 A4 patient clipboard, horizontal", "SS-CCB-012 A4 patient clipboard, horizontal with D-rings", "SS-CCB-015 A3 patient clipboard, horizontal"]),
     ("Ward accessories", ["SOV-ACRYLIC-CHEST-160 acrylic chest support"]),
-    ("Dividers", ["SS-PCU-043 5-tab divider, blank", "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "Custom tab dividers (1 to 10 tabs)"]),
+    ("Dividers", ["SOV-MED-DIV-A4-5TAB-PLAIN 5-tab divider, blank", "SOV-MED-DIV-A4-5TAB-PRINT 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "SOV-MED-DIV-[1-6]TAB-CUSTOM Custom tab dividers (1 to 10 tabs)"]),
 ]
 
 import json as _json, os as _os
@@ -49,9 +49,9 @@ SOV_PRODUCTS = [
     P("folder-custom", P_FOLD, "Custom printed patient chart folder", "Custom", ASK, "10 colours, print in any colour. " + BLACK_NOTE, "Your ward name and bed number on the front and spine. Artwork set-up charge applies.", "custom-printed-chart-folder", "Red and green chart folders custom printed Admissions and Day Stay Unit"),
     P("folder-hanging", P_FOLD, "Patient chart hanging folder, unprinted", "SS-PCU-13 H / 14 H", ASK, "10 colours. " + BLACK_NOTE, "Polypropylene. 30 and 40 mm spines.", "hanging-chart-folder", "Open red hanging patient chart folder with clip, rings and hanging strip"),
     P("folder-hanging-printed", P_FOLD, "Hanging folder, generic or custom print", "SS-PCU-03 H / 04 H, custom HC", ASK, "10 colours. " + BLACK_NOTE, "Generic print (blank Ward and Bed fields) or custom print with your ward name and bed numbers, on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
-    P("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "From $12 ex GST per set", "", "Five blank tabs. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
-    P("dividers-printed", P_DIV, "5-tab dividers, generic printed", "SS-PCU-045", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
-    P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $13.90 ex GST per set", "", "1 tab $13.90, 3 tabs $23.25, 5 tabs $32.45, 6 tabs $36.90 per set. Your wording on 1 to 10 tabs. Divider sheets in any colour from our colour range, not only the standard white, red, orange, green and yellow. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
+    P("dividers-blank", P_DIV, "5-tab dividers, blank", "SOV-MED-DIV-A4-5TAB-PLAIN", "From $12 ex GST per set", "", "Five blank tabs. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
+    P("dividers-printed", P_DIV, "5-tab dividers, generic printed", "SOV-MED-DIV-A4-5TAB-PRINT", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
+    P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "SOV-MED-DIV-1TAB-CUSTOM to 6TAB", "From $13.90 ex GST per set", "", "1 tab $13.90, 3 tabs $23.25, 5 tabs $32.45, 6 tabs $36.90 per set. Your wording on 1 to 10 tabs. Divider sheets in any colour from our colour range, not only the standard white, red, orange, green and yellow. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
 ]
 
 # Product tile id -> the order-form line it preselects (/hospital/order?item=<id>). Colour-chart card has no line.
@@ -60,8 +60,8 @@ ORDER_OPT = {
     "a4-wall-holder": "SS-PCU-038 A4 wall-mounted holder, horizontal", "a4-clipboard": "SS-CCB-010 A4 patient clipboard, vertical",
     "a3-clipboard": "SS-CCB-015 A3 patient clipboard, horizontal", "folder-unprinted": "SS-PCU-13 (30 mm spine)",
     "folder-ward-bed": "SS-PCU-03 (30 mm spine)", "folder-custom": "Custom printed chart folder (30 mm spine)", "folder-hanging": "SS-PCU-13 H (30 mm spine)",
-    "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SS-PCU-043 5-tab divider, blank",
-    "dividers-printed": "SS-PCU-045 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "dividers-custom": "Custom tab dividers (1 to 10 tabs)",
+    "folder-hanging-printed": "SS-PCU-03 H (30 mm spine)", "dividers-blank": "SOV-MED-DIV-A4-5TAB-PLAIN 5-tab divider, blank",
+    "dividers-printed": "SOV-MED-DIV-A4-5TAB-PRINT 5-tab divider, generic printed (Obs, Meds, Fluids, Care Plans, Other)", "dividers-custom": "SOV-MED-DIV-[1-6]TAB-CUSTOM Custom tab dividers (1 to 10 tabs)",
     "acrylic-chest-support": "SOV-ACRYLIC-CHEST-160 acrylic chest support",
 }
 
@@ -296,14 +296,14 @@ def build():
 <caption class="hidden">Chart divider options</caption>
 <thead><tr><th>Item code</th><th>Divider</th><th>Tabs</th><th>Minimum order</th></tr></thead>
 <tbody>
-<tr><td><code>SS-PCU-043</code></td><th scope="row">5-tab divider, blank</th><td>Five blank tabs</td><td>None</td></tr>
-<tr><td><code>SS-PCU-045</code></td><th scope="row">5-tab divider, generic printed</th><td>Observations, Medications, Fluids, Care Plans, Other</td><td>None</td></tr>
-<tr><td>Custom</td><th scope="row">Custom tab divider</th><td>1 to 10 tabs, your wording, sheets in any colour from our range</td><td>50 sets</td></tr>
+<tr><td><code>SOV-MED-DIV-A4-5TAB-PLAIN</code></td><th scope="row">5-tab divider, blank</th><td>Five blank tabs</td><td>None</td></tr>
+<tr><td><code>SOV-MED-DIV-A4-5TAB-PRINT</code></td><th scope="row">5-tab divider, generic printed</th><td>Observations, Medications, Fluids, Care Plans, Other</td><td>None</td></tr>
+<tr><td><code>SOV-MED-DIV-1TAB-CUSTOM</code> to <code>6TAB-CUSTOM</code></td><th scope="row">Custom tab divider</th><td>1 to 10 tabs, your wording, sheets in any colour from our range</td><td>50 sets</td></tr>
 </tbody></table></div>
 <div class="table-wrap" style="margin-top:1.2rem"><table class="spec">
 <caption>Custom printed tab dividers: price per set, ex GST</caption>
 <thead><tr><th>Tabs</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7 to 10</th></tr></thead>
-<tbody><tr><th scope="row">Per set</th><td>$13.90</td><td>$20.80</td><td>$23.25</td><td>$27.05</td><td>$32.45</td><td>$36.90</td><td>Quote</td></tr></tbody></table></div>
+<tbody><tr><th scope="row">Per set</th><td>$13.90</td><td>$20.80</td><td>$23.25</td><td>$27.05</td><td>$32.45</td><td>$36.90</td><td>On request</td></tr></tbody></table></div>
 <p class="form-note" style="margin-top:.8rem">Suits hospitals, medical centres and health administration. Fits A4 2-ring (2D) binders.</p>
 </div></section>
 {gallery([("printed-tab-dividers.jpg","5-tab dividers with printed coloured tabs","Printed 5-tab dividers"),("hospital-dividers-5-tab.jpg","Coloured 5-tab chart dividers for A4 2-ring binders","Coloured tabs for quick section finding"),("polypropylene-tab-dividers.jpg","White polypropylene tab divider with punched holes","Polypropylene dividers, punched for 2-ring binders")])}
