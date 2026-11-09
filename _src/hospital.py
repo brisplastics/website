@@ -28,7 +28,7 @@ import json as _json, os as _os
 _SIZES = _json.load(open(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)), "sov_photo_sizes.json")))
 
 # Sov range per sovservices.net.au/products (read 25/10/2026), corrected after Elbe's review (26/10/2026):
-# glove box holders and basket discontinued; hanging folders 30 and 40 mm only; custom dividers from $28.
+# glove box holders and basket discontinued; hanging folders 30 and 40 mm only; custom dividers priced per tab count, 1 tab $13.90 to 6 tabs $36.90 ex GST (Xero items, 09/11/2026).
 # Prices ex GST. Folder prices are not published.
 P_FOLD, P_HOLD, P_DIV = "/hospital/patient-chart-folders", "/hospital/patient-chart-holders", "/hospital/chart-dividers"
 SOV_GROUPS = [(P_HOLD, "Patient clipboards, chart holders and accessories"), (P_FOLD, "Patient chart folders and hanging folders"), (P_DIV, "Chart dividers")]
@@ -51,7 +51,7 @@ SOV_PRODUCTS = [
     P("folder-hanging-printed", P_FOLD, "Hanging folder, generic or custom print", "SS-PCU-03 H / 04 H, custom HC", ASK, "10 colours. " + BLACK_NOTE, "Generic print (blank Ward and Bed fields) or custom print with your ward name and bed numbers, on the front and spine, landscape on the front. 30 and 40 mm spines.", "hanging-chart-folder-printed", "Blue hanging chart folder printed with bed number 34A"),
     P("dividers-blank", P_DIV, "5-tab dividers, blank", "SS-PCU-043", "From $12 ex GST per set", "", "Five blank tabs. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-blank", "Set of blank coloured 5-tab dividers"),
     P("dividers-printed", P_DIV, "5-tab dividers, generic printed", "SS-PCU-045", "From $13.90 ex GST per set", "", "Tabs printed Observations, Medications, Fluids, Care Plans, Other. No minimum order. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Set of 5-tab dividers printed Observations, Medications, Fluids, Care Plans and Other"),
-    P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $28 ex GST per set", "", "Your wording on 1 to 10 tabs. Divider sheets in any colour from our colour range, not only the standard white, red, orange, green and yellow. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
+    P("dividers-custom", P_DIV, "Custom tab dividers, 1 to 10 tabs", "Custom", "From $13.90 ex GST per set", "", "1 tab $13.90, 3 tabs $23.25, 5 tabs $32.45, 6 tabs $36.90 per set. Your wording on 1 to 10 tabs. Divider sheets in any colour from our colour range, not only the standard white, red, orange, green and yellow. 50 sets minimum. Suits A4 2-ring binders.", "dividers-5-tab-printed", "Printed coloured tab dividers"),
 ]
 
 # Product tile id -> the order-form line it preselects (/hospital/order?item=<id>). Colour-chart card has no line.
@@ -300,6 +300,10 @@ def build():
 <tr><td><code>SS-PCU-045</code></td><th scope="row">5-tab divider, generic printed</th><td>Observations, Medications, Fluids, Care Plans, Other</td><td>None</td></tr>
 <tr><td>Custom</td><th scope="row">Custom tab divider</th><td>1 to 10 tabs, your wording, sheets in any colour from our range</td><td>50 sets</td></tr>
 </tbody></table></div>
+<div class="table-wrap" style="margin-top:1.2rem"><table class="spec">
+<caption>Custom printed tab dividers: price per set, ex GST</caption>
+<thead><tr><th>Tabs</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7 to 10</th></tr></thead>
+<tbody><tr><th scope="row">Per set</th><td>$13.90</td><td>$20.80</td><td>$23.25</td><td>$27.05</td><td>$32.45</td><td>$36.90</td><td>Quote</td></tr></tbody></table></div>
 <p class="form-note" style="margin-top:.8rem">Suits hospitals, medical centres and health administration. Fits A4 2-ring (2D) binders.</p>
 </div></section>
 {gallery([("printed-tab-dividers.jpg","5-tab dividers with printed coloured tabs","Printed 5-tab dividers"),("hospital-dividers-5-tab.jpg","Coloured 5-tab chart dividers for A4 2-ring binders","Coloured tabs for quick section finding"),("polypropylene-tab-dividers.jpg","White polypropylene tab divider with punched holes","Polypropylene dividers, punched for 2-ring binders")])}
