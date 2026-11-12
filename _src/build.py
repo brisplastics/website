@@ -308,7 +308,7 @@ rd += "# Spam posts from the old WordPress site: gone for good\n"
 for y in ("2018", "2019", "2020", "2021"):
     rd += f'[[redirects]]\n  from = "/{y}/*"\n  to = "/404"\n  status = 410\n  force = true\n\n'
 # More spam and old WordPress debris seen in Search Console (09/11/2026), plus the hacker's 2020 sitemaps
-for pat in ("/author/*", "/feed/*", "/wp-content/*", "/assets/content/*", "/category/uncategorized/*"):
+for pat in ("/author/*", "/feed/*", "/wp-content/*", "/assets/content/*", "/category/uncategorized/*", "/wp-includes/*", "/wp-json/*"):
     rd += f'[[redirects]]\n  from = "{pat}"\n  to = "/404"\n  status = 410\n  force = true\n\n'
 for ch in "abcdefghijklmnopqrstuvwxyz":
     rd += f'[[redirects]]\n  from = "/website{ch}map.xml"\n  to = "/404"\n  status = 410\n  force = true\n\n'

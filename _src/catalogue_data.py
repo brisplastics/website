@@ -305,7 +305,7 @@ PU_REDIRECTS = {
     "/tarp-colour-range/": "/products/printing-and-finishing#colours-tarp",
     # Added 07/11/2026 from the old WordPress sitemaps (Bruce)
     "/our-stuff/": "/products", "/others/": "/products", "/send-media-file/": "/contact", "/service-enquiry/": "/contact",
-    "/home/request-a-quote/": "/contact", "/thank-you/": "/", "/thank-you-2/": "/",
+    "/home/": "/", "/index.php": "/", "/home/request-a-quote/": "/contact", "/thank-you/": "/", "/thank-you-2/": "/",
     "/albums/*": "/products", "/dt_testimonials/*": "/about",
     "/category/healthcare/": "/hospital/", "/category/*": "/products",
     "/Music-Folders/": "/products/music-folders",

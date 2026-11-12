@@ -386,6 +386,16 @@
   status = 301
 
 [[redirects]]
+  from = "/home"
+  to = "/?from=pu"
+  status = 301
+
+[[redirects]]
+  from = "/index.php"
+  to = "/?from=pu"
+  status = 301
+
+[[redirects]]
   from = "/home/request-a-quote"
   to = "/contact?from=pu"
   status = 301
@@ -501,6 +511,18 @@
 
 [[redirects]]
   from = "/category/uncategorized/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wp-includes/*"
+  to = "/404"
+  status = 410
+  force = true
+
+[[redirects]]
+  from = "/wp-json/*"
   to = "/404"
   status = 410
   force = true
