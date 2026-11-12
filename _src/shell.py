@@ -30,7 +30,7 @@ LASTMOD = "2026-10-26"
 import time as _t
 BUILD = _t.strftime("%Y%m%d%H%M")  # cache-buster: CSS and JS are cached for 7 days, so each build gets a new URL
 
-# Solar and recyclable badges in the footer. Claims are being checked with Chris (25/10/2026).
+# Australian Made and solar badges in the footer. Recyclable claim removed 13/11/2026 (Bruce): offcut recycling is not continuous.
 # Set to False and rebuild to remove them. Australian Made icon added 26/10/2026; PU holds the Australian Made licence and it transfers to BPC (Bruce 26/10/2026).
 SHOW_ECO_BADGES = True
 BRAND = "/assets/img/brand/"
@@ -122,7 +122,7 @@ def header(path):
 </div>
 </header>'''
 
-STRAPLINE = "Australian made in Tingalpa · Recyclable plastics · 20 kW rooftop solar"
+STRAPLINE = "Australian made in Tingalpa · 20 kW rooftop solar"
 
 def eco_badges(dark=True):
     """Australian Made, solar and recyclable icons in one row. Set SHOW_ECO_BADGES = False to remove."""
@@ -131,8 +131,7 @@ def eco_badges(dark=True):
     v = "White_on_Navy" if dark else "Colour"
     return (f'<div class="eco-badges" data-removable="eco">'
             f'<img src="{BRAND}Icon_AustralianMade_{v}_v1_CAI.svg" alt="Australian made" width="56" height="52" loading="lazy">'
-            f'<img src="{BRAND}Icon_SolarPowered_{v}_v1_CAI.svg" alt="20 kW solar on our factory roof" width="52" height="52" loading="lazy">'
-            f'<img src="{BRAND}Icon_Recyclable_{v}_v1_CAI.svg" alt="Recyclable plastics" width="55" height="52" loading="lazy"></div>')
+            f'<img src="{BRAND}Icon_SolarPowered_{v}_v1_CAI.svg" alt="20 kW solar on our factory roof" width="52" height="52" loading="lazy"></div>')
 
 def footer():
     return f'''<footer class="site-foot">

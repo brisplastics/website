@@ -54,9 +54,7 @@ def product_page(p):
     rows = "".join(f'<tr><th scope="row">{esc(a)}</th><td>{b}</td></tr>' for a, b in p["facts"] + [("Turnaround", LEAD)])
     main += f'''<section class="block" style="padding-top:1rem"><div class="wrap two-col">
 <div><div class="table-wrap"><table class="spec"><caption class="hidden">{esc(p["title"])} options</caption><tbody>{rows}</tbody></table></div></div>
-<div><h2 style="font-size:1.3rem">Made to order in Tingalpa</h2>
-<ul class="ticks"><li>Australian made in our Brisbane factory</li><li>Your size, material, colour and print</li><li>Proof approved before anything is made</li><li>Short runs and repeat orders welcome</li><li>10 to 15 working day turnaround, express available</li></ul>
-<p class="btn-row" style="margin-top:1rem"><a class="btn" href="{quote}">Request a quote</a><button type="button" class="btn ghost add-quote" data-key="pu:{p['slug']}" data-name="{esc(p['title'])}">Add to quote request</button></p>
+<div><p class="btn-row" style="margin-top:0"><a class="btn" href="{quote}">Request a quote</a><button type="button" class="btn ghost add-quote" data-key="pu:{p['slug']}" data-name="{esc(p['title'])}">Add to quote request</button></p>
 {colours.sidebar() if p['slug'] != 'printing-and-finishing' else ''}</div>
 </div></section>'''
     if p['slug'] == 'printing-and-finishing':
