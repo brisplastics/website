@@ -58,6 +58,7 @@ PRODUCTS = [
          card="Top or side opening notebook covers, soft or hard, with swing pockets.",
          intro="Pocket notebook covers for safety pads, promotional giveaways and field notebooks. Top or side opening, soft or hard cover, single or multi-panel.",
          facts=[("Styles", "Top or side opening, single or multi-panel concertina, soft or hard (card-lined)"),
+                ("Sizes", "A7 (74 × 105 mm notebooks), top opening 257 × 85 mm, side opening 125 × 200 or 140 × 190 mm, or custom"),
                 ("Colours", "28 standard colours, plus leather-look and metallic-look ranges"),
                 ("Print", "Screen print, foil, full-colour encapsulated print, CMYK digital print, embossing or debossing"),
                 ("Options", "Swing pockets, clear insert pages, pen loop, notebooks supplied and inserted"),

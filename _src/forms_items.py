@@ -22,7 +22,7 @@ STANDARD = {
         ["Small ID tag 115 × 106 mm", "Large ID tag 115 × 170 mm", "Card wallet 100 × 130 mm open", "Custom size"]),
     "music-folders": S("Clear diagonal pocket inside front and back, and a business card pocket on the outside front, top right.",
         ["555 × 355 mm open (standard)", "A4", "Custom size"]),
-    "notebook-covers": S("Standard PVC.", ["Top opening 257 × 85 mm open", "Side opening 125 × 200 mm open", "Side opening 140 × 190 mm open", "Custom size"],
+    "notebook-covers": S("Standard PVC.", ["Top opening 257 × 85 mm open", "Side opening 125 × 200 mm open", "Side opening 140 × 190 mm open", "A7 notebook cover (74 × 105 mm notebook)", "Custom size"],
         ["Hard cover (with board)", "Clear overlay front and back", "Clear pages", "Spine weld", "Double thickness PVC", "Pen loop", "Notebooks supplied", "Notebooks supplied and inserted"]),
     "tally-books": S("Hard cover with 1200 micron board and a clear pocket inside front and back. Notebook not included.",
         ["Large 198 × 208 mm open", "Small 150 × 200 mm open"],

@@ -61,7 +61,7 @@ var BPCF=(function(){
   // Contact block in the order Xero's new contact screen asks for it
   function contact(L,c){
     var p=(c.name||'').trim().split(/\s+/), first=p.shift()||'', last=p.join(' ');
-    L.push('','CONTACT (for Xero)');
+    L.push('','CONTACT DETAILS');
     row(L,'Contact name',c.org||c.name); row(L,'First name',first); row(L,'Last name',last);
     row(L,'Email',c.email); row(L,'Phone',c.phone);
     (c.more||[]).forEach(function(x){row(L,x[0],x[1]);});
@@ -187,7 +187,7 @@ var BPCF=(function(){
         F.row(lines,'Quantity',val('repeat_qty')); F.row(lines,'Changes',val('repeat_same')); F.row(lines,'What has changed',val('repeat_changes'));
         subject='Repeat order: '+who+(val('repeat_ref')?', ref '+val('repeat_ref'):'');
       } else {
-        lines.push('','ITEMS (one Xero quote line each)');
+        lines.push('','ITEMS');
         items.forEach(function(div){
           if(div.hidden)return; var ps=div.querySelector('.item-product'); if(!ps.value)return; n++;
           var pr=v(div,'print'), pos=checked(div,'.item-pos'), ink=v(div,'ink'), ex=checked(div,'.item-extras');
@@ -308,7 +308,7 @@ var BPCF=(function(){
 (function(){
   var f=document.querySelector('form[name=hospital-order]'); if(!f)return;
   f.addEventListener('submit',function(){
-    var F=BPCF, val=function(id){return F.val(f,id);}, L=[], n=0, items=['','ITEMS (one Xero line each)'];
+    var F=BPCF, val=function(id){return F.val(f,id);}, L=[], n=0, items=['','ITEMS'];
     [].forEach.call(f.querySelectorAll('tr.order-line'),function(r){
       var it=r.querySelector('.ol-item'); if(!it.value)return; n++;
       var c=r.querySelector('.ol-colour').value, pf=r.querySelector('.ol-front').value.trim(), ps=r.querySelector('.ol-spine').value.trim(), q=r.querySelector('.ol-qty').value.trim();
@@ -335,7 +335,7 @@ var BPCF=(function(){
     L.push(['UV PRINT QUOTE',F.radio(f,'customer_type').split(' (')[0],needed?'needed by '+needed:''].filter(Boolean).join(' · '));
     F.contact(L,{org:val('pq-company'),name:val('pq-name'),email:val('pq-email'),phone:val('pq-phone'),more:[['Delivery suburb and postcode',val('pq-post')]]});
     var prod=val('pq-product'); prod=(prod&&prod!=='Something else')?prod:'';
-    L.push('','JOB (Xero quote line)','','1. Qty '+(val('pq-qty')||'not given')+(prod?' · '+prod:''),
+    L.push('','JOB','','1. Qty '+(val('pq-qty')||'not given')+(prod?' · '+prod:''),
       '   '+['UV print: '+val('pq-use'),size?size+' mm':'',th?th+' mm thick':'',val('pq-material'),'material: '+val('pq-supply').toLowerCase(),val('pq-sides'),val('pq-cut'),val('pq-where').toLowerCase()].filter(Boolean).join(', '));
     var other=[]; F.row(other,'Repeat work',val('pq-repeat')); F.row(other,'File link',val('file_link')); F.row(other,'Notes',val('pq-notes')); F.row(other,'News opt-in',val('news_optin')); F.row(other,'Form page',val('pq-page'));
     L=L.concat(['','OTHER'],other);
