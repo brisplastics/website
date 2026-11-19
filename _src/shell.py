@@ -109,7 +109,10 @@ def header(path):
         current = (path == "/") if href == "/" else (prefix and path.startswith(prefix))
         cur = ' aria-current="page"' if current else ""
         lis.append(f'<li><a href="{href}"{cur}>{label}</a></li>')
-    lis.append('<li><a class="btn" href="/contact">Request a quote</a></li>')
+    if path.startswith("/hospital"):
+        lis.append('<li><a class="btn" href="/hospital/order">Hospital order form</a></li>')
+    else:
+        lis.append('<li><a class="btn" href="/contact">Request a quote</a></li>')
     return f'''<a class="skip" href="#main">Skip to content</a>
 <div class="topbar"><div class="wrap"><span>{ADDRESS}</span><span><a href="tel:{TEL_07}">{PHONE_07}</a></span></div></div>
 <header class="site-head">

@@ -257,7 +257,9 @@ var BPCF=(function(){
     var queue=list.filter(function(x){return x.key.indexOf('pu:')===0;});
     if(q&&!queue.some(function(x){return x.key==='pu:'+q;}))queue.unshift({key:'pu:'+q,fromLink:true});
     queue.slice(0,items.length).forEach(function(x,i){var div=items[i]; show(div); if(!x.fromLink)div.setAttribute('data-key',x.key); selectSlug(div,x.key.slice(3));});
-    document.getElementById('route-sov').hidden=!list.some(function(x){return x.key.indexOf('sov:')===0;});
+    var routeSov=document.getElementById('route-sov'), hasSov=list.some(function(x){return x.key.indexOf('sov:')===0;}), pastSel=document.getElementById('past');
+    function updRoute(){routeSov.hidden=!(hasSov||/Sov/.test(pastSel.value));}
+    pastSel.addEventListener('change',updRoute); updRoute();
     items.forEach(function(d){if(!d.hidden)onProduct(d);});
 
     // On send: one plain block for the email, contact details first, then one line per item ready for a Xero quote line
@@ -292,6 +294,11 @@ var BPCF=(function(){
         subject=(kind==='order'?'Order: ':kind==='general'?'Enquiry: ':'Quote request: ')+who+(n?', '+F.plural(n,'item'):'');
       }
       if(needed){head.push('needed by '+needed);subject+=', needed '+needed;}
+      var hospText=[val('company'),val('email'),val('details'),val('repeat_product')].concat(items.map(function(d){return d.hidden?'':v(d,'notes');})).join(' ');
+      if(/Sov/.test(val('past'))||/hospital|health|ward\b|medical|clinic|nurs|aged care|patient|theatre|chart folder/i.test(hospText)){
+        L.push('*** CHECK: POSSIBLE HOSPITAL (SOV SERVICES) CUSTOMER. Sov chart folders are polypropylene: quote from the Sov price list, not as PVC. ***','');
+        subject='HOSPITAL? '+subject;
+      }
       L.push(head.join(' · '));
       F.contact(L,{org:val('company'),name:val('name'),email:val('email'),phone:val('phone'),more:[
         ['Delivery suburb and postcode',val('postcode')],['Customer PO',val('reference')],
