@@ -150,7 +150,7 @@ def build():
         ("Can you print our ward name and bed numbers?", "Yes. Folders can be printed with the ward name and bed number on the front and spine in black or white. Tell us the ward name and the bed numbers you need on the order form."),
     ]
     main = hero(C_HUB, "Patient chart folders, chart holders and hospital ward products",
-                "The Sov Services hospital range: patient chart folders, hanging folders, chart holders, clipboards and tab dividers. Australian made, infection control approved, and preferred supplier to more than 250 medical establishments across Australia since 1994. Now made and supplied by Brisbane Plastics Company in Tingalpa, Brisbane.",
+                "The Sov Services hospital range: patient chart folders, hanging folders, chart holders, clipboards and tab dividers. Australian made, and supplied to more than 250 medical establishments across Australia since 1994. Now made and supplied by Brisbane Plastics Company in Tingalpa, Brisbane.",
                 kicker="Sov Services · Australian made",
                 buttons=[("/hospital/order", "Order or reorder online"), ("#range", "See the range")])
     range_groups = "".join(
@@ -169,7 +169,7 @@ def build():
 <h2>Why wards keep reordering</h2>
 <ul class="ticks">
 <li>Australian made in our Tingalpa factory.</li>
-<li>Infection control approved, and trusted by more than 250 medical establishments across Australia.</li>
+<li>Trusted by more than 250 hospitals and wards across Australia.</li>
 <li>Designed with nursing and theatre staff, and refined from their feedback since 1994.</li>
 <li>Colour-coded folders make the right chart easy to find at the bedside.</li>
 <li>Wipe-clean polypropylene and gloss finishes for ward cleaning routines.</li>

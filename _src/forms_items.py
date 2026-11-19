@@ -22,7 +22,7 @@ STANDARD = {
         ["Small ID tag 115 × 106 mm", "Large ID tag 115 × 170 mm", "Card wallet 100 × 130 mm open", "Custom size"]),
     "music-folders": S("Clear diagonal pocket inside front and back, and a business card pocket on the outside front, top right.",
         ["555 × 355 mm open (standard)", "A4", "Custom size"]),
-    "notebook-covers": S("Standard PVC.", ["Top opening 257 × 85 mm open", "Side opening 125 × 200 mm open", "Side opening 140 × 190 mm open", "Custom size"],
+    "notebook-covers": S("Standard PVC.", ["Top opening 257 × 85 mm open", "Side opening 125 × 200 mm open", "Side opening 140 × 190 mm open", "A7 notebook cover (74 × 105 mm notebook)", "Custom size"],
         ["Hard cover (with board)", "Clear overlay front and back", "Clear pages", "Spine weld", "Double thickness PVC", "Pen loop", "Notebooks supplied", "Notebooks supplied and inserted"]),
     "tally-books": S("Hard cover with 1200 micron board and a clear pocket inside front and back. Notebook not included.",
         ["Large 198 × 208 mm open", "Small 150 × 200 mm open"],
@@ -107,6 +107,7 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <input type="hidden" name="form-name" value="quote-request">
 {tracking}
 <p class="hidden" aria-hidden="true"><label>Do not fill this in <input name="hp_check" tabindex="-1" autocomplete="off"></label></p>
+<div class="notice hosp-route"><p><strong>Ordering for a hospital or ward?</strong> Patient chart folders, chart holders, clipboards and dividers are made in polypropylene and have their own form with item codes, colours and ward print.</p><p style="margin:.5rem 0 0"><a class="btn" href="/hospital/order">Go to the hospital order form</a></p></div>
 <fieldset>
 <legend>What do you need?</legend>
 <div class="choice">
@@ -141,7 +142,7 @@ def contact_form(tracking, artwork, optin_html, generic_hint):
 <fieldset class="items-fs">
 <legend>Items you have chosen</legend>
 <p class="form-note">Products you added with "Add to quote request" appear here. Add more below, up to {ITEMS_MAX} items.</p>
-<div class="notice" id="route-sov" hidden><p>You also chose hospital items. Order those on the <a href="/hospital/order">hospital order form</a>, which asks for item code, colour and ward print.</p></div>
+<div class="notice" id="route-sov" hidden><p><strong>Hospital or ward order?</strong> Please use the <a href="/hospital/order">hospital order form</a>, which asks for item code, colour and ward print. This form is for custom Plastics Unique products.</p></div>
 {items}
 <button type="button" class="btn ghost" id="add-item">Add another product</button>
 </fieldset>
